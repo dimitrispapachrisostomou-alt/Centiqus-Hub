@@ -1,0 +1,2822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centiqus — Operations Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E87722;
+    --orange-dark: #C4611A;
+    --orange-glow: rgba(232,119,34,0.15);
+    --charcoal: #1E1E1E;
+    --surface: #242424;
+    --surface2: #2C2C2C;
+    --surface3: #333333;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #F0F0F0;
+    --text-dim: #888;
+    --text-muted: #555;
+    --green: #3DD68C;
+    --red: #FF5C5C;
+    --yellow: #FFD166;
+    --blue: #60A5FA;
+    --purple: #B89EFF;
+    --radius: 8px;
+    --radius-lg: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--charcoal);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* ─── SIDEBAR ──────────────────────────────── */
+  .sidebar {
+    width: 240px;
+    min-width: 240px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo-mark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--orange);
+    letter-spacing: -0.5px;
+  }
+
+  .logo-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
+
+  .nav-section-label {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 14px 10px 8px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 6px;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: 400;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+
+  .nav-item.active {
+    background: var(--orange-glow);
+    color: var(--orange);
+    font-weight: 500;
+  }
+
+  .nav-item svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-foot {
+    padding: 14px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ─── MAIN ──────────────────────────────── */
+  .main {
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topbar {
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    background: var(--charcoal);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .topbar h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.3px;
+  }
+
+  .topbar-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .content {
+    padding: 28px;
+    flex: 1;
+  }
+
+  /* ─── BUTTONS ──────────────────────────────── */
+  .btn {
+    padding: 9px 16px;
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    background: var(--surface2);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.15s;
+  }
+
+  .btn:hover { background: var(--surface3); border-color: rgba(255,255,255,0.2); }
+
+  .btn-primary {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+  }
+
+  .btn-primary:hover { background: var(--orange-dark); border-color: var(--orange-dark); }
+
+  .btn-ghost { background: transparent; border-color: transparent; color: var(--text-dim); }
+  .btn-ghost:hover { background: var(--surface2); color: var(--text); border-color: transparent; }
+
+  .btn svg { width: 15px; height: 15px; }
+
+  .btn-sm { padding: 5px 10px; font-size: 12px; }
+  .btn-icon { padding: 7px; }
+
+  /* ─── STATS ROW ──────────────────────────────── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+  }
+
+  .stat-label {
+    font-size: 10.5px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  .stat-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  .stat-sub .up { color: var(--green); }
+  .stat-sub .down { color: var(--red); }
+
+  /* ─── PANEL ──────────────────────────────── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+
+  .panel-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .panel-head h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.2px;
+  }
+
+  .panel-body { padding: 20px; }
+
+  /* ─── CALENDAR ──────────────────────────────── */
+  .cal-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+  }
+
+  .cal-nav { display: flex; gap: 8px; align-items: center; }
+
+  .cal-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    min-width: 180px;
+  }
+
+  .cal-view-toggle {
+    display: flex;
+    gap: 2px;
+    background: var(--surface2);
+    padding: 3px;
+    border-radius: 6px;
+  }
+
+  .cal-view-toggle button {
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .cal-view-toggle button.active {
+    background: var(--surface3);
+    color: var(--text);
+  }
+
+  /* Week view */
+  .cal-week-grid {
+    display: grid;
+    grid-template-columns: 64px repeat(7, 1fr);
+    border-top: 1px solid var(--border);
+  }
+
+  .cal-week-header {
+    padding: 12px 8px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .cal-week-header .dow {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .cal-week-header .dnum {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 2px;
+  }
+
+  .cal-week-header.today .dnum { color: var(--orange); }
+  .cal-week-header.today { background: rgba(232,119,34,0.06); }
+
+  .cal-time-col {
+    border-right: 1px solid var(--border);
+  }
+
+  .cal-time {
+    height: 64px;
+    padding: 4px 6px 0;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    text-align: right;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cal-day-col {
+    position: relative;
+    border-right: 1px solid var(--border);
+  }
+
+  .cal-day-col:last-child { border-right: none; }
+
+  .cal-hour-slot {
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+
+  .cal-hour-slot:hover { background: var(--surface2); }
+
+  .cal-event {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 11.5px;
+    cursor: pointer;
+    overflow: hidden;
+    border-left: 3px solid;
+    transition: transform 0.1s;
+  }
+
+  .cal-event:hover { transform: scale(1.02); z-index: 5; }
+
+  .cal-event .e-title {
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cal-event .e-meta {
+    font-size: 10.5px;
+    opacity: 0.85;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Mission color by service */
+  .cal-event.svc-c10       { background: rgba(232,119,34,0.2);  border-left-color: var(--orange); color: #FFD2A8; }
+  .cal-event.svc-pv        { background: rgba(96,165,250,0.2);  border-left-color: var(--blue);    color: #C7DFFF; }
+  .cal-event.svc-thermal   { background: rgba(184,158,255,0.2); border-left-color: var(--purple);  color: #E1D3FF; }
+  .cal-event.svc-agri      { background: rgba(61,214,140,0.2);  border-left-color: var(--green);   color: #B3F0D0; }
+  .cal-event.svc-mapping   { background: rgba(255,209,102,0.2); border-left-color: var(--yellow);  color: #FFE8A8; }
+  .cal-event.svc-training  { background: rgba(255,92,92,0.18);  border-left-color: var(--red);     color: #FFBBBB; }
+  .cal-event.svc-maint     { background: rgba(120,120,120,0.25);border-left-color: #888;           color: #CCC; }
+
+  .cal-event.status-tentative { opacity: 0.6; border-left-style: dashed; }
+
+  /* ─── MONTH VIEW ──────────────────────────────── */
+  .cal-month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 1px solid var(--border);
+  }
+
+  .cal-month-dow {
+    padding: 10px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .cal-month-dow:last-child { border-right: none; }
+
+  .cal-month-cell {
+    min-height: 110px;
+    padding: 6px 8px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+
+  .cal-month-cell:nth-child(7n) { border-right: none; }
+  .cal-month-cell:hover { background: var(--surface2); }
+
+  .cal-month-cell.other-month { opacity: 0.35; }
+  .cal-month-cell.today { background: rgba(232,119,34,0.06); }
+  .cal-month-cell.today .cm-date { color: var(--orange); font-weight: 700; }
+
+  .cm-date {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .cm-event {
+    font-size: 10.5px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 2px solid;
+  }
+
+  /* ─── CREW PANEL ──────────────────────────────── */
+  .crew-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .crew-row {
+    display: grid;
+    grid-template-columns: 36px 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    background: var(--surface2);
+    border-radius: 8px;
+    transition: background 0.1s;
+  }
+
+  .crew-row:hover { background: var(--surface3); }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--orange-glow);
+    color: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 13px;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .crew-info .name { font-weight: 500; font-size: 13.5px; }
+  .crew-info .role { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+  .crew-status {
+    font-size: 10.5px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .status-available   { background: rgba(61,214,140,0.15);  color: var(--green); }
+  .status-assigned    { background: rgba(232,119,34,0.15);  color: var(--orange); }
+  .status-off         { background: rgba(120,120,120,0.2); color: var(--text-dim); }
+  .status-training    { background: rgba(184,158,255,0.15); color: var(--purple); }
+
+  .crew-hours {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    text-align: right;
+  }
+
+  .crew-hours .bignum { color: var(--text); font-size: 14px; font-weight: 600; }
+
+  /* ─── MODAL ──────────────────────────────── */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(2px);
+  }
+
+  .modal-backdrop.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-lg);
+    width: 600px;
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 60px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-head {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-head h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+  }
+
+  .modal-body {
+    padding: 22px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .modal-foot {
+    padding: 14px 22px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  /* ─── FORM ──────────────────────────────── */
+  .form-row {
+    margin-bottom: 16px;
+  }
+
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 6px;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--charcoal);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    transition: border-color 0.15s;
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: var(--orange);
+  }
+
+  .form-textarea {
+    min-height: 70px;
+    resize: vertical;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Crew selector */
+  .crew-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .crew-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12.5px;
+    transition: all 0.15s;
+    background: var(--charcoal);
+  }
+
+  .crew-chip:hover { border-color: var(--border2); }
+
+  .crew-chip.selected {
+    background: var(--orange-glow);
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+
+  .crew-chip .mini-av {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--surface3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600;
+  }
+
+  .crew-chip.selected .mini-av { background: rgba(232,119,34,0.25); color: var(--orange); }
+
+  /* Color legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 20px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  /* Missions list view */
+  .mission-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mission-card {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 14px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border-radius: 10px;
+    border-left: 3px solid;
+    cursor: pointer;
+    align-items: center;
+  }
+
+  .mission-card:hover { background: var(--surface3); }
+
+  .mission-date {
+    text-align: center;
+  }
+
+  .mission-date .d {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .mission-date .m {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    margin-top: 2px;
+  }
+
+  .mission-date .t {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    margin-top: 4px;
+  }
+
+  .mission-body .m-title { font-weight: 600; font-size: 14px; }
+  .mission-body .m-client { font-size: 12px; color: var(--text-dim); margin-top: 3px; }
+  .mission-body .m-crew { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-family: 'DM Mono', monospace; }
+
+  .mission-svc {
+    font-size: 10px;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .mission-svc.svc-c10-t       { background: rgba(232,119,34,0.15);  color: var(--orange); }
+  .mission-svc.svc-pv-t        { background: rgba(96,165,250,0.15);  color: var(--blue); }
+  .mission-svc.svc-thermal-t   { background: rgba(184,158,255,0.15); color: var(--purple); }
+  .mission-svc.svc-agri-t      { background: rgba(61,214,140,0.15);  color: var(--green); }
+  .mission-svc.svc-mapping-t   { background: rgba(255,209,102,0.15); color: var(--yellow); }
+  .mission-svc.svc-training-t  { background: rgba(255,92,92,0.15);   color: var(--red); }
+  .mission-svc.svc-maint-t     { background: rgba(120,120,120,0.2);  color: var(--text-dim); }
+
+  /* Empty state */
+  .empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-dim);
+  }
+
+  .empty .empty-ico {
+    width: 48px; height: 48px;
+    margin: 0 auto 14px;
+    background: var(--surface2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted);
+  }
+
+  .hidden { display: none !important; }
+
+  /* Filters */
+  .filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .filter-pill {
+    padding: 5px 11px;
+    font-size: 11.5px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    cursor: pointer;
+    color: var(--text-dim);
+    transition: all 0.15s;
+  }
+
+  .filter-pill.active {
+    background: var(--orange-glow);
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+
+  .filter-pill:hover:not(.active) { border-color: var(--border2); color: var(--text); }
+
+  /* Detail view */
+  .detail-section { margin-bottom: 18px; }
+  .detail-section:last-child { margin-bottom: 0; }
+
+  .detail-label {
+    font-size: 10.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 6px;
+  }
+
+  .detail-value { font-size: 14px; color: var(--text); }
+
+  .crew-chip-static {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 10px;
+    background: var(--surface2);
+    border-radius: 18px;
+    font-size: 12px;
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+
+  .crew-chip-static .mini-av { width: 22px; height: 22px; border-radius: 50%; background: var(--orange-glow); color: var(--orange); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+
+  /* Mini cal for detail */
+  .conflict-warn {
+    background: rgba(255,92,92,0.1);
+    border: 1px solid rgba(255,92,92,0.3);
+    color: #FFB5B5;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .conflict-warn svg { flex-shrink: 0; margin-top: 1px; color: var(--red); }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--charcoal); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* ═════════════════════════════════════════════════════════════
+     DOCUMENTS VIEW (Portal) — all styles scoped to #view-documents
+     ═════════════════════════════════════════════════════════════ */
+  #view-documents {
+    --dp-orange:#E87722;
+    --dp-orange-deep:#C45E0A;
+    --dp-orange-glow:rgba(232,119,34,0.15);
+    --dp-dark:#111111;
+    --dp-dark-2:#1A1A1A;
+    --dp-dark-3:#222222;
+    --dp-border:rgba(255,255,255,0.07);
+    --dp-border-orange:rgba(232,119,34,0.4);
+    --dp-text:#F0EDE8;
+    --dp-text-muted:#888880;
+    --dp-text-dim:#555550;
+    --dp-green:#2ECC71;
+    --dp-green-dim:rgba(46,204,113,0.12);
+    font-family:'Barlow',sans-serif;
+    color:var(--dp-text);
+    background:var(--dp-dark);
+    margin:-28px;      /* break out of parent .content padding */
+    padding:0;
+    min-height:calc(100vh - 60px);
+    position:relative;
+  }
+  #view-documents::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(232,119,34,0.12) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 90% 80%,rgba(232,119,34,0.06) 0%,transparent 50%);pointer-events:none;z-index:0}
+  #view-documents::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.015) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+  #view-documents .dp-header{position:sticky;top:0;z-index:10;padding:0 32px;border-bottom:1px solid var(--dp-border);background:rgba(17,17,17,0.97);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;height:64px}
+  #view-documents .dp-logo-area{display:flex;align-items:center;gap:12px}
+  #view-documents .dp-logo-icon{width:30px;height:30px;border:1.5px solid var(--dp-orange);border-radius:4px;display:flex;align-items:center;justify-content:center}
+  #view-documents .dp-logo-text{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:0.08em;color:#fff;text-transform:uppercase}
+  #view-documents .dp-logo-text span{color:var(--dp-orange)}
+  #view-documents .dp-header-meta{font-size:11px;color:var(--dp-text-muted);letter-spacing:0.04em;text-align:right;line-height:1.7}
+  #view-documents .dp-header-meta strong{color:var(--dp-orange)}
+  #view-documents .dp-hero{position:relative;z-index:1;padding:48px 32px 32px;max-width:1400px;margin:0 auto}
+  #view-documents .dp-hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--dp-orange);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+  #view-documents .dp-hero-eyebrow::before{content:'';display:block;width:24px;height:2px;background:var(--dp-orange)}
+  #view-documents .dp-hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,4.5vw,60px);font-weight:800;line-height:0.95;letter-spacing:-0.01em;text-transform:uppercase;color:#fff;margin:0 0 16px 0}
+  #view-documents .dp-hero-title em{font-style:normal;color:var(--dp-orange)}
+  #view-documents .dp-hero-sub{font-size:14px;color:var(--dp-text-muted);max-width:520px;line-height:1.7;margin:0 0 28px 0;font-weight:300}
+  #view-documents .dp-stats-bar{display:flex;width:fit-content;border:1px solid var(--dp-border-orange);border-radius:4px;overflow:hidden}
+  #view-documents .dp-stat{padding:10px 22px;border-right:1px solid var(--dp-border-orange)}
+  #view-documents .dp-stat:last-child{border-right:none}
+  #view-documents .dp-stat-num{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--dp-orange);line-height:1}
+  #view-documents .dp-stat-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dp-text-muted);margin-top:2px}
+  #view-documents .dp-content{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 32px 60px}
+  #view-documents .dp-section-header{display:flex;align-items:center;gap:14px;margin:36px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--dp-border)}
+  #view-documents .dp-section-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;color:var(--dp-orange);background:var(--dp-orange-glow);border:1px solid var(--dp-border-orange);padding:3px 8px;border-radius:2px}
+  #view-documents .dp-section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--dp-text-muted)}
+  #view-documents .dp-section-count{margin-left:auto;font-size:11px;color:var(--dp-text-dim)}
+  #view-documents .dp-doc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+  #view-documents .dp-doc-card{background:var(--dp-dark-2);border:1px solid var(--dp-border);border-radius:6px;padding:16px 18px;cursor:pointer;transition:all 0.2s ease;text-decoration:none;display:block;position:relative;overflow:hidden;color:var(--dp-text)}
+  #view-documents .dp-doc-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--dp-orange);opacity:0;transition:opacity 0.2s ease}
+  #view-documents .dp-doc-card:hover{border-color:var(--dp-border-orange);background:var(--dp-dark-3);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.4),0 0 0 1px rgba(232,119,34,0.15)}
+  #view-documents .dp-doc-card:hover::before{opacity:1}
+  #view-documents .dp-doc-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+  #view-documents .dp-doc-ref{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;color:var(--dp-orange);background:var(--dp-orange-glow);border:1px solid var(--dp-border-orange);padding:3px 7px;border-radius:2px}
+  #view-documents .dp-badges{display:flex;gap:4px;flex-wrap:wrap}
+  #view-documents .dp-doc-badge{font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:2px 6px;border-radius:2px}
+  #view-documents .dp-badge-existing{background:rgba(255,255,255,0.06);color:var(--dp-text-muted);border:1px solid var(--dp-border)}
+  #view-documents .dp-badge-new{background:var(--dp-green-dim);color:var(--dp-green);border:1px solid rgba(46,204,113,0.3)}
+  #view-documents .dp-file-type{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.08em;padding:2px 5px;border-radius:2px;text-transform:uppercase}
+  #view-documents .dp-type-pdf{background:rgba(232,119,34,0.12);color:var(--dp-orange);border:1px solid var(--dp-border-orange)}
+  #view-documents .dp-type-xlsx{background:rgba(34,178,104,0.12);color:var(--dp-green);border:1px solid rgba(46,204,113,0.3)}
+  #view-documents .dp-type-docx{background:rgba(64,128,232,0.12);color:#60A5FA;border:1px solid rgba(96,165,250,0.3)}
+  #view-documents .dp-doc-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px;letter-spacing:-0.01em}
+  #view-documents .dp-doc-desc{font-size:12.5px;line-height:1.55;color:var(--dp-text-muted);font-weight:300}
+  #view-documents .dp-doc-footer{margin-top:12px;padding-top:10px;border-top:1px solid var(--dp-border);display:flex;align-items:center;justify-content:space-between}
+  #view-documents .dp-doc-rev{font-size:10px;color:var(--dp-text-dim);font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em}
+  #view-documents .dp-doc-open-btn{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;color:var(--dp-orange);text-transform:uppercase;display:flex;align-items:center;gap:7px;transition:gap 0.2s ease}
+  #view-documents .dp-doc-open-btn svg{width:10px;height:10px}
+  #view-documents .dp-doc-card:hover .dp-doc-open-btn{gap:9px}
+  #view-documents .dp-drive-banner{margin:40px 0 24px;padding:18px 22px;border:1px solid var(--dp-border-orange);border-radius:6px;background:linear-gradient(135deg,rgba(232,119,34,0.05) 0%,rgba(232,119,34,0.01) 100%);display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  #view-documents .dp-drive-banner-left{display:flex;align-items:center;gap:14px}
+  #view-documents .dp-drive-icon{width:36px;height:36px;border:1.5px solid var(--dp-border-orange);border-radius:4px;display:flex;align-items:center;justify-content:center;background:var(--dp-orange-glow)}
+  #view-documents .dp-drive-text h3{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;margin:0 0 3px 0;letter-spacing:-0.01em}
+  #view-documents .dp-drive-text p{font-size:12px;color:var(--dp-text-muted);margin:0;font-weight:300}
+  #view-documents .dp-drive-btn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#fff;background:var(--dp-orange);padding:9px 18px;border-radius:4px;text-decoration:none;transition:background 0.2s ease;white-space:nowrap}
+  #view-documents .dp-drive-btn:hover{background:var(--dp-orange-deep)}
+  #view-documents .dp-footer{position:relative;z-index:1;border-top:1px solid var(--dp-border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  #view-documents .dp-footer-left{font-size:11px;color:var(--dp-text-dim);line-height:1.7}
+  #view-documents .dp-footer-right{font-size:10px;color:var(--dp-text-dim);letter-spacing:0.04em;text-align:right}
+  #view-documents .dp-footer-right span{color:var(--dp-orange)}
+  #view-documents .dp-fade-in{opacity:0;transform:translateY(14px);animation:dpFadeUp 0.4s ease both}
+  @keyframes dpFadeUp{to{opacity:1;transform:translateY(0)}}
+
+  /* ═════════════════════════════════════════════════════════════
+     SYNC BAR (Export / Import JSON for crew scheduling)
+     ═════════════════════════════════════════════════════════════ */
+  .sync-toast {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 12px 18px;
+    max-width: 360px;
+    z-index: 200;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    font-size: 13px;
+    color: var(--text);
+  }
+  .sync-toast.show { transform: translateY(0); opacity: 1; }
+  .sync-toast strong { color: var(--orange); }
+  .sync-toast.error strong { color: var(--red); }
+
+  @media (max-width: 900px) {
+    .sidebar { width: 60px; min-width: 60px; }
+    .sidebar-logo, .nav-item span:not(.dot), .nav-section-label, .sidebar-foot { display: none; }
+    .nav-item { justify-content: center; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .crew-grid { grid-template-columns: 1fr !important; }
+  }
+
+  /* ─── CREW CARDS ──────────────────────────────── */
+  .crew-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+  }
+
+  .crew-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    position: relative;
+    transition: border-color 0.15s, transform 0.15s;
+    overflow: hidden;
+  }
+
+  .crew-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-1px);
+  }
+
+  .crew-card.inactive { opacity: 0.55; }
+
+  .crew-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--orange));
+  }
+
+  .crew-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .crew-card .avatar-lg {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .crew-card .cc-info { flex: 1; min-width: 0; }
+  .crew-card .cc-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+  .crew-card .cc-role { font-size: 12px; color: var(--text-dim); }
+
+  .crew-card-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .icon-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: 6px;
+    color: var(--text-dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.12s;
+  }
+
+  .icon-btn:hover { color: var(--text); border-color: var(--border2); background: var(--surface3); }
+  .icon-btn.danger:hover { color: var(--red); border-color: rgba(255,92,92,0.35); background: rgba(255,92,92,0.08); }
+  .icon-btn svg { width: 14px; height: 14px; }
+
+  .cc-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10.5px;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 12px;
+  }
+
+  .cc-status::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .cc-status.s-active    { background: rgba(61,214,140,0.13);  color: var(--green); }
+  .cc-status.s-training  { background: rgba(184,158,255,0.13); color: var(--purple); }
+  .cc-status.s-part_time { background: rgba(96,165,250,0.13);  color: var(--blue); }
+  .cc-status.s-inactive  { background: rgba(120,120,120,0.2);  color: var(--text-dim); }
+
+  .cc-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cc-meta-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .cc-meta-row svg {
+    width: 13px;
+    height: 13px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .cc-meta-row .cc-val {
+    color: var(--text);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
+  }
+
+  .cc-meta-row.muted .cc-val { color: var(--text-muted); font-style: italic; }
+
+  .cc-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cc-stat {
+    padding: 8px 10px;
+    background: var(--charcoal);
+    border-radius: 6px;
+  }
+
+  .cc-stat .cs-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 3px;
+  }
+
+  .cc-stat .cs-value {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ─── COLOR PICKER ──────────────────────────────── */
+  .color-picker {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .color-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    transition: transform 0.12s;
+  }
+
+  .color-swatch:hover { transform: scale(1.1); }
+
+  .color-swatch.selected {
+    border-color: white;
+    box-shadow: 0 0 0 2px var(--charcoal);
+  }
+
+  .color-swatch.selected::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+
+  /* ─── DELETE WARNING ──────────────────────────────── */
+  .delete-warn-box {
+    background: rgba(255,92,92,0.08);
+    border: 1px solid rgba(255,92,92,0.3);
+    color: #FFBFBF;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    margin-bottom: 16px;
+  }
+
+  .delete-warn-box strong { color: #FF8C8C; }
+
+  .delete-warn-box ul { margin: 6px 0 0 18px; }
+  .delete-warn-box li { margin-bottom: 2px; }
+
+  /* Empty crew state */
+  .crew-grid-empty {
+    grid-column: 1 / -1;
+    padding: 50px 20px;
+    text-align: center;
+    color: var(--text-dim);
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── SIDEBAR ──────────────────────────────── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">CENTIQUS</div>
+    <div class="logo-sub">Operations Hub</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section-label">Library</div>
+    <div class="nav-item active" data-view="documents">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <span>Documents</span>
+    </div>
+
+    <div class="nav-section-label">Planning</div>
+    <div class="nav-item" data-view="calendar">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span>Calendar</span>
+    </div>
+    <div class="nav-item" data-view="missions">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span>Missions</span>
+    </div>
+    <div class="nav-item" data-view="crew">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Crew</span>
+    </div>
+
+    <div class="nav-section-label">Workload</div>
+    <div class="nav-item" data-view="workload">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <span>Hours &amp; Rest</span>
+    </div>
+
+    <div class="nav-section-label">Data</div>
+    <div class="nav-item" id="btnExportJson" title="Download a JSON backup of missions &amp; crew">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span>Export backup</span>
+    </div>
+    <div class="nav-item" id="btnImportJson" title="Restore a previous JSON backup">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <span>Import backup</span>
+    </div>
+    <input type="file" id="importFileInput" accept="application/json,.json" style="display:none;">
+  </div>
+  <div class="sidebar-foot">
+    v2.0 · Apr 2026<br>
+    CTQ-OPS
+  </div>
+</nav>
+
+<!-- ─── MAIN ──────────────────────────────── -->
+<main class="main">
+  <div class="topbar">
+    <h1 id="pageTitle">Documents</h1>
+    <div class="topbar-actions" id="schedulerTopActions" style="display:none;">
+      <button class="btn btn-ghost" id="btnToday">Today</button>
+      <button class="btn btn-primary" id="btnNewMission">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        New mission
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═════════ DOCUMENTS VIEW (Portal) ═════════ -->
+    <div class="view" id="view-documents">
+      <header class="dp-header">
+        <div class="dp-logo-area">
+          <div class="dp-logo-icon">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+              <path d="M10 2L4 5.5V11C4 14.3 6.6 17.4 10 18.5C13.4 17.4 16 14.3 16 11V5.5L10 2Z" stroke="#E87722" stroke-width="1.2" fill="none"/>
+              <path d="M7 10L9 12L13 8" stroke="#E87722" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="dp-logo-text">CENTI<span>QUS</span></div>
+        </div>
+        <div class="dp-header-meta"><strong>DOCUMENT PORTAL</strong><br>DCA Auth: CYPm6mwtn852ewzr &nbsp;|&nbsp; Nicosia, Cyprus</div>
+      </header>
+
+      <section class="dp-hero dp-fade-in">
+        <div class="dp-hero-eyebrow">Precision From Above</div>
+        <h1 class="dp-hero-title">Document<br><em>Portal</em></h1>
+        <p class="dp-hero-sub">Official operational documentation for Centiqus Holdings Ltd. All documents are controlled under the Operations Manual document control procedure. Click any document to open it directly.</p>
+        <div class="dp-stats-bar">
+          <div class="dp-stat"><div class="dp-stat-num">27</div><div class="dp-stat-label">Documents</div></div>
+          <div class="dp-stat"><div class="dp-stat-num">8</div><div class="dp-stat-label">Categories</div></div>
+          <div class="dp-stat"><div class="dp-stat-num">2026</div><div class="dp-stat-label">Current Issue</div></div>
+          <div class="dp-stat"><div class="dp-stat-num">SAIL II</div><div class="dp-stat-label">Auth Level</div></div>
+        </div>
+      </section>
+
+      <div class="dp-content">
+
+      <!-- 01 CORE MANUALS -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">01</span><span class="dp-section-title">Core Manuals &amp; Procedures</span><span class="dp-section-count">5 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/16Su5jZeUJNPtbk6g1465S53srjYVOX0O/view?usp=drive_link" target="_blank" onclick="trackOpen('Document Map and Usage Guide','CTQ-MAP-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-MAP-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Document Map &amp; Usage Guide</div>
+          <div class="dp-doc-desc">Master navigation guide for the entire Centiqus document library. Maps every document to its lifecycle stage. Start here to find the right document fast.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 20.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1n7TsnvsGpQBX-8YtZz94PLxDsrknh53F/view?usp=drive_link" target="_blank" onclick="trackOpen('Operations Manual v2','CTQ-OM-002')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-OM-002</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-existing">Existing</span></div></div>
+          <div class="dp-doc-title">Operations Manual v2</div>
+          <div class="dp-doc-desc">Master regulatory document governing all Centiqus UAS operations. Organisation, personnel roles, flight planning, weather, occurrence reporting, contingency &amp; emergency procedures, UAS specifications, and maintenance.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: Original &nbsp;|&nbsp; 30.03.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/10gSa2VpdotOriyvjNDznxeheFpBj7Kmf/view?usp=drive_link" target="_blank" onclick="trackOpen('Training Manual','CTQ-TM-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-TM-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Training Manual (Part D)</div>
+          <div class="dp-doc-desc">Defines training requirements and assessment methods for all 12 modules: regulations, airspace, airmanship, UAS systems, inspection, normal/contingency/emergency procedures, ERP, occurrence reporting, agricultural spray, battery handling, and maintenance.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1wj-WHCExK-byoSwsvUysofMfo6wF0Cgr/view?usp=drive_link" target="_blank" onclick="trackOpen('Startup Shutdown Procedure','CTQ-SP-002')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-SP-002</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-existing">Existing</span></div></div>
+          <div class="dp-doc-title">Startup / Shutdown Procedure</div>
+          <div class="dp-doc-desc">Step-by-step startup and shutdown checklist. Covers pre-power-on checks, system initialisation, arming/disarming, wind limit confirmation (&lt;10 m/s), and post-flight shutdown. Read-and-do by the RPIC before and after every flight.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.3 &nbsp;|&nbsp; Prior</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1vQB1oH82jexgxEKlnMLopA1uLtu_8jLI/view?usp=drive_link" target="_blank" onclick="trackOpen('Pre-Flight Post-Flight Inspection Procedure','CTQ-SP-003')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-SP-003</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-existing">Existing</span></div></div>
+          <div class="dp-doc-title">Pre-Flight / Post-Flight Inspection</div>
+          <div class="dp-doc-desc">Detailed inspection procedure for the ABZ platform fleet. Crew fitness, document availability, geo-zone and weather verification, UAS physical inspection, battery state, payload configuration. Requires calibrated anemometer and 0.0% BAC confirmation.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.1 &nbsp;|&nbsp; Prior</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- 02 SAFETY -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">02</span><span class="dp-section-title">Safety, Health &amp; Compliance</span><span class="dp-section-count">4 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1Oo1XUwmvfbwe-anRlVG6B0R_MW1w9_PZ/view?usp=drive_link" target="_blank" onclick="trackOpen('Safety Health Risk Assessment','CTQ-SH-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-SH-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-existing">Existing</span></div></div>
+          <div class="dp-doc-title">Safety, Health &amp; Occupational Risk</div>
+          <div class="dp-doc-desc">Occupational health and safety risk assessment. Workplace hazards (physical, chemical, ergonomic, environmental), likelihood/severity, control measures. Field ops, warehouse, vehicles, and chemical handling for agri spray.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; Prior</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/16SNAZVG5lqmZg9WCmcIFvC51W3cNsCpV/view?usp=drive_link" target="_blank" onclick="trackOpen('Quality Assurance Procedure','CTQ-QA-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-QA-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Quality Assurance Procedure</div>
+          <div class="dp-doc-desc">The company's quality management framework. 5-point quality policy, 13 KPIs, internal audit programme, NCR workflow, document and records control, supplier quality, complaint handling, quarterly management review.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 20.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/15yCs63ME1ZJm2QqbxyCKymUvO4-Vd4bm/view?usp=drive_link" target="_blank" onclick="trackOpen('UAS Occurrence Report','CTQ-OR-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-OR-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-existing">Existing</span></div></div>
+          <div class="dp-doc-title">UAS Occurrence Report</div>
+          <div class="dp-doc-desc">Standardised form for reporting safety occurrences per EU 376/2014. Event details, persons involved, UAS and flight information, description, immediate actions, contributing factors, follow-up.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; Prior</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1nxp8RvJnCsB2nYyQbem8H85q_hkg3ZQf/view?usp=drive_link" target="_blank" onclick="trackOpen('Incident Response Protocol','CTQ-IR-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-IR-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Incident Response Protocol</div>
+          <div class="dp-doc-desc">Crew-carried emergency playbook. 5 severity levels, 5 universal immediate actions, 9 scenario cards (C2 loss, fly-away, battery fire, crash, injury, near-miss, airspace infringement, chemical spray, high-pressure water). Contact ladder + pocket quick-card.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 20.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- 03 PERSONNEL -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">03</span><span class="dp-section-title">Personnel Registers</span><span class="dp-section-count">5 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1SLgEoBvcami9j6heu_52KspxQCq5NhQq/view?usp=drive_link" target="_blank" onclick="trackOpen('Auth Maintenance Personnel','CTQ-TF-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-TF-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Authorised Maintenance Personnel</div>
+          <div class="dp-doc-desc">Register of persons authorised to perform maintenance on Centiqus UAS. Name, model(s), authorisation type, validity. Signed off by the Accountable Manager.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1pn5_t8vHRWrtw9SKMaV9JyVzFciqgT-x/view?usp=drive_link" target="_blank" onclick="trackOpen('Auth Inspection Personnel','CTQ-TF-002')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-TF-002</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Authorised Inspection Personnel</div>
+          <div class="dp-doc-desc">Register of persons authorised to conduct pre-flight and post-flight inspections. Only listed persons may sign off inspections in the Technical Logbook.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/12g6PD4JIiffT8wmkZJyzf1sCh4HpMKRZ/view?usp=drive_link" target="_blank" onclick="trackOpen('Personnel Qualifications Record','CTQ-TF-003')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-TF-003</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Personnel Qualifications &amp; Training</div>
+          <div class="dp-doc-desc">Individual training record, one per person. Qualifications, licences, completion records for all 12 modules, instructor sign-off, expiry dates, and flight currency by platform. Retained for minimum 3 years.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1qJfLtTZnl6fv_A-fIxBBnI82sND_giUQ/view?usp=drive_link" target="_blank" onclick="trackOpen('Auth Remote Pilots','CTQ-TF-004')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-TF-004</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Authorised Remote Pilots Register</div>
+          <div class="dp-doc-desc">Official list of all pilots authorised to act as RPIC or Co-Pilot. Valid A2 or STS certificate, current ERP currency (12 months), current flight currency (90 days). Must be available on-site during every operation.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/16W5J_HFtnPPAqlg3cMsLA4DkScx7w_xo/view?usp=drive_link" target="_blank" onclick="trackOpen('ERP Training Register','CTQ-TF-005')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-TF-005</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">ERP Training Register</div>
+          <div class="dp-doc-desc">Attendance register for Emergency Response Plan training. Participant name, date, type (table-top / practical / combined), scenarios covered, assessor sign-off.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- 04 OPERATIONAL LOGS -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">04</span><span class="dp-section-title">Operational Logs &amp; Records</span><span class="dp-section-count">5 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/175P4vwa428Ws5F8a8Z4kQht603V6YWhp/view?usp=drive_link" target="_blank" onclick="trackOpen('Technical Logbook','CTQ-TL-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-TL-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Technical Logbook</div>
+          <div class="dp-doc-desc">Per-aircraft log of every pre-flight and post-flight inspection, every anomaly, and every maintenance action. Populated in real time, retained for life of aircraft plus 2 years.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1nrGVbbCdMjioUBbg4UPMOmD3tdcXHhPv/view?usp=drive_link" target="_blank" onclick="trackOpen('Flight Test Evidence','CTQ-FT-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-FT-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Flight Test Evidence Log</div>
+          <div class="dp-doc-desc">Pre-operational flight tests required to prove each aircraft's behaviour matches the SORA / OM. Completed once per aircraft, retained for life.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1diJnYPqlDIPNWh8dK27BkP8qyvvdi1vd/view?usp=drive_link" target="_blank" onclick="trackOpen('Mission Planning Record','CTQ-F-009')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-F-009</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Mission Planning Record</div>
+          <div class="dp-doc-desc">Per-mission formal plan signed by the RPIC before wheels turn. Objective, aircraft, crew, timings, weather limits, launch/recovery zones, contingencies.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1Yc5if9zQk15aMrg1MfaxVuclbMJMEtrJ/view?usp=drive_link" target="_blank" onclick="trackOpen('Spray Application Record','CTQ-F-010')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-F-010</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Spray Application Record</div>
+          <div class="dp-doc-desc">Agricultural spraying data per mission: product, batch, concentration, area, weather, start/end times. Delivered to client within 2 working days.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1xT3LkStbckPSJ8kk6c-LCM11dibC4nND/view?usp=drive_link" target="_blank" onclick="trackOpen('Battery Log','CTQ-F-011')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-F-011</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Battery Log</div>
+          <div class="dp-doc-desc">LiPo battery charge / discharge / storage cycles. Safety and warranty critical. One entry per battery per cycle.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- 05 SITE & PLANNING -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">05</span><span class="dp-section-title">Site &amp; Planning Forms</span><span class="dp-section-count">2 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1N6aI3LNmkSLg2_BG-2t2qEvMvVPxo83R/view?usp=drive_link" target="_blank" onclick="trackOpen('Site Survey','CTQ-F-008')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-F-008</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Site Survey &amp; Assessment</div>
+          <div class="dp-doc-desc">Physical or desktop recce of the client site — hazards, access, airspace, utilities, safety cordon plan, emergency contacts. Feeds the SORA / risk assessment.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1EVKz7TtfdeW5iy9V-sNxIlGkhNhkOWxB/view?usp=drive_link" target="_blank" onclick="trackOpen('Safety Briefing','CTQ-F-014')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-F-014</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">On-Site Safety Briefing Sheet</div>
+          <div class="dp-doc-desc">Briefing attendance record signed by every person present before work starts. Covers site hazards, roles, stop-authority, and emergency procedures.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- 06 ASSET TRACKERS -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">06</span><span class="dp-section-title">Asset &amp; Compliance Trackers</span><span class="dp-section-count">3 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1uRhwZMcBpMNEp_J5Fsi8rr6q6zYQEfzr/view?usp=drive_link" target="_blank" onclick="trackOpen('Equipment Register','CTQ-F-012')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-F-012</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Equipment Register</div>
+          <div class="dp-doc-desc">Every aircraft, battery, controller, pressure pump, generator, tank — with serial numbers, purchase date, next-service date. The source of truth for what exists.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1kFT1L5JIlUSFOjMk7pYk5XmfHbLZ75lP/view?usp=drive_link" target="_blank" onclick="trackOpen('Insurance Tracker','CTQ-F-013')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-F-013</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Insurance &amp; Authorisation Tracker</div>
+          <div class="dp-doc-desc">All insurance policies, the DCA Authorisation, manufacturer warranties. Tracks expiry dates and renewal windows.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 15.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1adR0-MmVJr_iFrjFwT8YzLYE9F2yHf_L/view?usp=drive_link" target="_blank" onclick="trackOpen('DCA Operational Auth','CYPm6mwtn852ewzr')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">DCA AUTH</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-existing">Existing</span></div></div>
+          <div class="dp-doc-title">DCA Operational Authorisation</div>
+          <div class="dp-doc-desc">The official Specific Category Operational Authorisation issued by DCA Cyprus (No. CYPm6mwtn852ewzr). Defines the conditions, limitations and geographical scope of Centiqus flights.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: Issued &nbsp;|&nbsp; Prior</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- 07 WAREHOUSE -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">07</span><span class="dp-section-title">Warehouse &amp; Logistics</span><span class="dp-section-count">1 document</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://docs.google.com/spreadsheets/d/1b8Xs8MTCVSOiYRRUY2b-rBDPsV3OsTKN/edit?usp=drive_link" target="_blank" onclick="trackOpen('Warehouse Checklist','CTQ-WH-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-WH-001</span><div class="dp-badges"><span class="dp-file-type dp-type-xlsx">XLSX</span><span class="dp-doc-badge dp-badge-existing">Existing</span></div></div>
+          <div class="dp-doc-title">Warehouse Checklist</div>
+          <div class="dp-doc-desc">Excel-based checklist. Incoming goods inspection, stock organisation, battery storage, equipment return condition, cleaning tasks, outbound equipment preparation.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; Prior</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- 08 CLIENT COMMITMENTS -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">08</span><span class="dp-section-title">Client Commitments &amp; Service Standards</span><span class="dp-section-count">2 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1geiRQroBTAuR648840dQ0i3YREeVFrw3/view?usp=drive_link" target="_blank" onclick="trackOpen('Client SLA','CTQ-SLA-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-SLA-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">SLA — Client Edition</div>
+          <div class="dp-doc-desc">Client-facing SLA attached to every signed service agreement. Service commitments, response and resolution targets, deliverables per service line, client responsibilities, cancellation terms, complaint escalation, and quarterly KPI reporting with service credits.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 20.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1hgCgTJOC8ToYZ0t4gHf9Znm4XG_lKN3U/view?usp=drive_link" target="_blank" onclick="trackOpen('Internal SLA Standard','CTQ-SLA-002')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-SLA-002</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">SLA — Internal Standard</div>
+          <div class="dp-doc-desc">Internal operational standard paired with CTQ-SLA-001. Pairs every client-facing target with a tighter internal target. Per-service operational discipline, record discipline, crew fitness, duty and rest limits, escalation triggers, monthly ops meeting, and formal deviation process.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 20.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- DRIVE BANNER -->
+      <div class="dp-drive-banner dp-fade-in">
+        <div class="dp-drive-banner-left">
+          <div class="dp-drive-icon">
+            <svg width="18" height="14" viewBox="0 0 87 78" fill="none">
+              <path d="M29 0L58 50H0L29 0Z" fill="#E87722" opacity="0.7"/>
+              <path d="M58 50L87 0L87 50H58Z" fill="#E87722" opacity="0.5"/>
+              <path d="M0 50H87L72.5 78H14.5L0 50Z" fill="#E87722"/>
+            </svg>
+          </div>
+          <div class="dp-drive-text">
+            <h3>All documents are stored on Google Drive</h3>
+            <p>Click any document card to open that file directly, or browse the full folder below.</p>
+          </div>
+        </div>
+        <a class="dp-drive-btn" href="https://drive.google.com/drive/u/0/folders/1DoYRW5YNRvNkfLuv0UrFE33h2jXu47HF" target="_blank" onclick="trackOpen('Google Drive Folder','ALL')">Browse All Files &rarr;</a>
+      </div>
+
+      </div><!-- /dp-content -->
+
+      <footer class="dp-footer">
+        <div class="dp-footer-left"><strong style="color:var(--dp-orange)">Centiqus Holdings Ltd</strong><br>Stasinou 8, Office 402, Nicosia 1060, Cyprus &nbsp;|&nbsp; +357 99 348 239 &nbsp;|&nbsp; demetris@centiqus.com.cy</div>
+        <div class="dp-footer-right">DCA Auth: <span>CYPm6mwtn852ewzr</span> &nbsp;|&nbsp; EASA Specific Category &nbsp;|&nbsp; SAIL II<br>Portal Rev 2.0 &nbsp;|&nbsp; 20 April 2026</div>
+      </footer>
+    </div><!-- /view-documents -->
+
+    <!-- ─── SCHEDULER SHELL (stats + scheduler views) ──────────── -->
+    <div id="schedulerShell" class="hidden">
+
+    <!-- ─── STATS ROW ──────────────────────────────── -->
+    <div class="stats-row" id="statsRow">
+      <div class="stat-card">
+        <div class="stat-label">This week</div>
+        <div class="stat-value" id="statWeekMissions">—</div>
+        <div class="stat-sub">missions scheduled</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Next mission</div>
+        <div class="stat-value" id="statNextMission" style="font-size:18px">—</div>
+        <div class="stat-sub" id="statNextSub">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Crew utilisation</div>
+        <div class="stat-value" id="statUtil">—</div>
+        <div class="stat-sub">this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Conflicts</div>
+        <div class="stat-value" id="statConflicts">—</div>
+        <div class="stat-sub" id="statConflictsSub">all clear</div>
+      </div>
+    </div>
+
+    <!-- ─── VIEW: CALENDAR ──────────────────────────────── -->
+    <div class="view hidden" id="view-calendar">
+      <div class="panel">
+        <div class="cal-toolbar">
+          <div class="cal-nav">
+            <button class="btn btn-icon btn-ghost" id="calPrev"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+            <div class="cal-title" id="calTitle">—</div>
+            <button class="btn btn-icon btn-ghost" id="calNext"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+          </div>
+          <div class="cal-view-toggle">
+            <button class="active" data-viewmode="week">Week</button>
+            <button data-viewmode="month">Month</button>
+          </div>
+        </div>
+        <div id="calBody"></div>
+        <div class="legend">
+          <div class="legend-item"><span class="legend-dot" style="background:var(--orange)"></span>C10 cleaning</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span>PV cleaning</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--purple)"></span>Thermal inspection</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>Agri spraying</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--yellow)"></span>Mapping / survey</div>
+          <div class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>Training</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#888"></span>Maintenance</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── VIEW: MISSIONS ──────────────────────────────── -->
+    <div class="view hidden" id="view-missions">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>All missions</h3>
+          <div class="filters" id="missionFilters">
+            <div class="filter-pill active" data-filter="all">All</div>
+            <div class="filter-pill" data-filter="upcoming">Upcoming</div>
+            <div class="filter-pill" data-filter="past">Past</div>
+            <div class="filter-pill" data-filter="c10">C10</div>
+            <div class="filter-pill" data-filter="pv">PV</div>
+            <div class="filter-pill" data-filter="thermal">Thermal</div>
+            <div class="filter-pill" data-filter="agri">Agri</div>
+            <div class="filter-pill" data-filter="mapping">Mapping</div>
+          </div>
+        </div>
+        <div class="panel-body" id="missionListBody"></div>
+      </div>
+    </div>
+
+    <!-- ─── VIEW: CREW ──────────────────────────────── -->
+    <div class="view hidden" id="view-crew">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h3>Crew roster</h3>
+            <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Manage crew members, roles and availability</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <div class="filters" id="crewFilters">
+              <div class="filter-pill active" data-crewfilter="all">All</div>
+              <div class="filter-pill" data-crewfilter="active">Active</div>
+              <div class="filter-pill" data-crewfilter="training">Training</div>
+              <div class="filter-pill" data-crewfilter="part_time">Part-time</div>
+              <div class="filter-pill" data-crewfilter="inactive">Inactive</div>
+            </div>
+            <button class="btn btn-primary" id="btnAddCrew">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              Add crew
+            </button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="crew-grid" id="crewGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── VIEW: WORKLOAD ──────────────────────────────── -->
+    <div class="view hidden" id="view-workload">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Hours &amp; rest — this week</h3>
+          <div style="font-size:12px;color:var(--text-dim);">Duty hours and rest compliance per CTQ-SLA-002 §5.3</div>
+        </div>
+        <div class="panel-body" id="workloadBody"></div>
+      </div>
+    </div>
+
+    </div><!-- /schedulerShell -->
+
+  </div>
+</main>
+
+<!-- ─── SYNC TOAST ──────────────────────────────── -->
+<div class="sync-toast" id="syncToast"></div>
+
+<!-- ─── NEW/EDIT MISSION MODAL ──────────────────────────────── -->
+<div class="modal-backdrop" id="missionModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">New mission</h3>
+      <button class="btn btn-icon btn-ghost" id="modalClose">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="conflictBox"></div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">Client</label>
+          <input class="form-input" id="fClient" placeholder="e.g. Photos Photiades Breweries">
+        </div>
+        <div>
+          <label class="form-label">Service</label>
+          <select class="form-select" id="fService">
+            <option value="c10">C10 facade / window cleaning</option>
+            <option value="pv">PV cleaning</option>
+            <option value="thermal">Thermal PV inspection</option>
+            <option value="agri">Agricultural spraying</option>
+            <option value="mapping">Mapping / survey</option>
+            <option value="training">Training</option>
+            <option value="maint">Maintenance</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Site / location</label>
+        <input class="form-input" id="fSite" placeholder="e.g. 360 Nicosia Tower, Nicosia">
+      </div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">Date</label>
+          <input type="date" class="form-input" id="fDate">
+        </div>
+        <div>
+          <label class="form-label">Start / end (24h)</label>
+          <div style="display:flex;gap:8px;">
+            <input type="time" class="form-input" id="fStart" value="09:00">
+            <input type="time" class="form-input" id="fEnd" value="13:00">
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Assign crew</label>
+        <div class="crew-selector" id="crewSelector"></div>
+      </div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">Status</label>
+          <select class="form-select" id="fStatus">
+            <option value="confirmed">Confirmed</option>
+            <option value="tentative">Tentative</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Mission reference</label>
+          <input class="form-input" id="fRef" placeholder="auto-generated">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="fNotes" placeholder="Site access notes, water/power, client contact, weather window..."></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="btnDelete" style="color:var(--red);border-color:rgba(255,92,92,0.3);">Delete</button>
+      <div style="display:flex;gap:8px;">
+        <button class="btn" id="btnCancel">Cancel</button>
+        <button class="btn btn-primary" id="btnSave">Save mission</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── NEW/EDIT CREW MODAL ──────────────────────────────── -->
+<div class="modal-backdrop" id="crewModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="crewModalTitle">New crew member</h3>
+      <button class="btn btn-icon btn-ghost" id="crewModalClose">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="crewDeleteWarn"></div>
+      <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px;padding:14px;background:var(--surface2);border-radius:10px;">
+        <div class="avatar" id="crewPreviewAvatar" style="width:56px;height:56px;font-size:18px;">??</div>
+        <div style="flex:1;">
+          <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-family:'DM Mono',monospace;margin-bottom:6px;">Avatar colour</div>
+          <div class="color-picker" id="colorPicker"></div>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">Full name *</label>
+          <input class="form-input" id="cfName" placeholder="e.g. Andreas Constantinides" maxlength="60">
+        </div>
+        <div>
+          <label class="form-label">Initials *</label>
+          <input class="form-input" id="cfInitials" placeholder="e.g. AC" maxlength="3" style="text-transform:uppercase;">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Role / title *</label>
+        <input class="form-input" id="cfRole" placeholder="e.g. Pilot 1, Technical Manager, Ground crew">
+      </div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">Status</label>
+          <select class="form-select" id="cfStatus">
+            <option value="active">Active</option>
+            <option value="training">In training</option>
+            <option value="part_time">Part-time</option>
+            <option value="inactive">Inactive (unassignable)</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-label">Joined</label>
+          <input type="date" class="form-input" id="cfJoined">
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div>
+          <label class="form-label">Phone</label>
+          <input class="form-input" id="cfPhone" placeholder="+357 99 ...">
+        </div>
+        <div>
+          <label class="form-label">Email</label>
+          <input class="form-input" id="cfEmail" placeholder="name@centiqus.com.cy" type="email">
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Licence / authorisation</label>
+        <input class="form-input" id="cfLicence" placeholder="e.g. A1/A3 + STS-01, or Ground crew">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="btnCrewDelete" style="color:var(--red);border-color:rgba(255,92,92,0.3);">Remove crew</button>
+      <div style="display:flex;gap:8px;">
+        <button class="btn" id="btnCrewCancel">Cancel</button>
+        <button class="btn btn-primary" id="btnCrewSave">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════════
+let CREW = [
+  { id: 'cr01', name: 'Demetris Papachrysostomou', initials: 'DP', role: 'COO / RPIC',                color: '#E87722', status: 'active',    phone: '+357 99 348 239', email: 'demetris@centiqus.com.cy', licence: 'A1/A3 + Specific Cat.', joined: '2025-01-15' },
+  { id: 'cr02', name: 'Andreas Constantinides',    initials: 'AC', role: 'Pilot 1',                    color: '#60A5FA', status: 'active',    phone: '', email: '', licence: 'A1/A3 + STS-01', joined: '2025-06-10' },
+  { id: 'cr03', name: 'Christos Kalos',            initials: 'CK', role: 'Pilot 2',                    color: '#3DD68C', status: 'training',  phone: '', email: '', licence: 'Licensing in progress', joined: '2026-02-01' },
+  { id: 'cr04', name: 'Loizos Ioannou',            initials: 'LI', role: 'Technical / Maintenance',    color: '#FFD166', status: 'active',    phone: '', email: '', licence: 'Maintenance authorisation', joined: '2025-09-01' },
+  { id: 'cr05', name: 'Elias Kokkinos',            initials: 'EK', role: 'Director / Ground support',  color: '#B89EFF', status: 'active',    phone: '', email: '', licence: 'Ground crew', joined: '2024-01-01' },
+  { id: 'cr06', name: 'Margrét H. Pétursdóttir',   initials: 'MP', role: 'Compliance Officer',         color: '#FF5C5C', status: 'part_time', phone: '', email: '', licence: 'Compliance (part-time retainer)', joined: '2025-04-01' }
+];
+
+let editingCrewId = null;
+let crewCounter = CREW.length + 1;
+
+const SERVICES = {
+  c10:      { label: 'C10 facade / window', short: 'C10' },
+  pv:       { label: 'PV cleaning',          short: 'PV' },
+  thermal:  { label: 'Thermal inspection',   short: 'Thermal' },
+  agri:     { label: 'Agri spraying',        short: 'Agri' },
+  mapping:  { label: 'Mapping / survey',     short: 'Mapping' },
+  training: { label: 'Training',             short: 'Training' },
+  maint:    { label: 'Maintenance',          short: 'Maint' }
+};
+
+// Seed missions — anchored around today so the UI is immediately useful
+const today = new Date(); today.setHours(0,0,0,0);
+function dAdd(n) { const d = new Date(today); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
+
+let missions = [
+  { id: 'm01', ref: 'CTQ-M-0001', client: 'Photos Photiades Breweries', service: 'c10',     site: 'Photiades HQ, Latsia', date: dAdd(1),  start: '08:00', end: '12:00', crew: ['cr02','cr04','cr05'], status: 'confirmed', notes: 'Annual contract visit #1. Water source on-site. Demi to lead briefing.' },
+  { id: 'm02', ref: 'CTQ-M-0002', client: '360 Nicosia Tower',         service: 'c10',     site: '360 Tower, Nicosia',   date: dAdd(3),  start: '07:00', end: '13:00', crew: ['cr02','cr03','cr05'], status: 'confirmed', notes: 'Demonstration mission for Kyriacos Danos. Start at first light before wind picks up.' },
+  { id: 'm03', ref: 'CTQ-M-0003', client: 'PwC Cyprus — Limassol',     service: 'c10',     site: 'PwC Limassol building', date: dAdd(5),  start: '09:00', end: '14:00', crew: ['cr02','cr03','cr04'], status: 'tentative', notes: 'Awaiting sqm confirmation from Popi Tziapoura.' },
+  { id: 'm04', ref: 'CTQ-M-0004', client: 'Abios PV Park — Paphos',    service: 'thermal', site: 'Abios solar park', date: dAdd(2),  start: '10:00', end: '14:00', crew: ['cr03','cr04'],        status: 'confirmed', notes: 'Irradiance check pre-flight. Report due within 3 working days.' },
+  { id: 'm05', ref: 'CTQ-M-0005', client: 'G. Petrou — Nicosia',       service: 'agri',    site: 'Olive grove, Peristerona', date: dAdd(6),  start: '06:00', end: '10:00', crew: ['cr02','cr05'],        status: 'confirmed', notes: 'L10 spraying. Wind forecast below 3 m/s at dawn.' },
+  { id: 'm06', ref: 'CTQ-M-0006', client: 'Internal',                  service: 'training',site: 'Centiqus HQ / test field', date: dAdd(4),  start: '09:00', end: '17:00', crew: ['cr02','cr03','cr06'], status: 'confirmed', notes: 'Quarterly ERP table-top drill + C10 currency flights.' },
+  { id: 'm07', ref: 'CTQ-M-0007', client: 'Internal',                  service: 'maint',   site: 'Workshop',             date: dAdd(0),  start: '14:00', end: '17:00', crew: ['cr04'],               status: 'confirmed', notes: 'L30 50-hour inspection; replace propellers set 3.' },
+  { id: 'm08', ref: 'CTQ-M-0008', client: 'Wargaming Global HQ',       service: 'c10',     site: 'Wargaming HQ, Nicosia',date: dAdd(10), start: '07:30', end: '13:30', crew: ['cr02','cr03','cr05'], status: 'tentative', notes: 'Quote under review. Provisional slot held.' },
+  { id: 'm09', ref: 'CTQ-M-0009', client: 'The Landmark Nicosia',      service: 'c10',     site: 'Landmark, Nicosia',    date: dAdd(-3), start: '08:00', end: '13:00', crew: ['cr02','cr04','cr05'], status: 'confirmed', notes: 'Completed. Client sign-off received.' }
+];
+
+let missionCounter = missions.length + 1;
+let editingMissionId = null;
+let currentView = 'documents';
+let calMode = 'week';
+let calAnchor = new Date(); calAnchor.setHours(0,0,0,0);
+let currentFilter = 'all';
+
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
+const $ = sel => document.querySelector(sel);
+const $$ = sel => document.querySelectorAll(sel);
+
+function parseDT(d, t) { const [h,m] = t.split(':').map(Number); const x = new Date(d+'T00:00:00'); x.setHours(h,m,0,0); return x; }
+function missionStart(m) { return parseDT(m.date, m.start); }
+function missionEnd(m)   { return parseDT(m.date, m.end); }
+function missionHours(m) { return (missionEnd(m) - missionStart(m)) / 36e5; }
+
+function fmtDateLong(d) { return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }); }
+function fmtMonthYear(d) { return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }); }
+function fmtDayMonth(d) { return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); }
+
+function startOfWeek(d) { const x = new Date(d); const day = x.getDay(); const diff = (day === 0 ? -6 : 1-day); x.setDate(x.getDate()+diff); x.setHours(0,0,0,0); return x; }
+function sameDay(a, b) { return a.toDateString() === b.toDateString(); }
+
+function crewById(id) {
+  return CREW.find(c => c.id === id) || { id, name: 'Removed', initials: '??', role: '', color: '#666', status: 'inactive' };
+}
+
+// Check conflict: does crew member have overlapping mission?
+function findConflicts(missionDraft, ignoreId) {
+  const conflicts = [];
+  const s = missionStart(missionDraft); const e = missionEnd(missionDraft);
+  missions.forEach(m => {
+    if (m.id === ignoreId) return;
+    if (m.date !== missionDraft.date) return;
+    const ms = missionStart(m); const me = missionEnd(m);
+    if (s < me && e > ms) {
+      const sharedCrew = m.crew.filter(c => missionDraft.crew.includes(c));
+      if (sharedCrew.length) conflicts.push({ mission: m, crew: sharedCrew });
+    }
+  });
+  return conflicts;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════════
+$$('.nav-item').forEach(el => {
+  el.addEventListener('click', () => {
+    const v = el.dataset.view;
+    // Items without data-view (Export, Import) are handled separately — skip view switching
+    if (!v) return;
+
+    $$('.nav-item[data-view]').forEach(n => n.classList.toggle('active', n === el));
+    $$('.view').forEach(x => x.classList.add('hidden'));
+    const targetView = document.getElementById('view-' + v);
+    if (targetView) targetView.classList.remove('hidden');
+    currentView = v;
+    $('#pageTitle').textContent = el.textContent.trim();
+
+    // Toggle the scheduler shell (stats row + scheduler views) vs documents
+    const isDocs = (v === 'documents');
+    $('#schedulerShell').classList.toggle('hidden', isDocs);
+    $('#schedulerTopActions').style.display = isDocs ? 'none' : 'flex';
+    // Also hide the scroll on the outer container if we're in docs (portal has its own)
+    document.querySelector('.main').scrollTop = 0;
+
+    render();
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// EXPORT / IMPORT JSON — crew schedule backup
+// ═══════════════════════════════════════════════════════════════════
+function showSyncToast(message, isError) {
+  const t = $('#syncToast');
+  t.innerHTML = message;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+$('#btnExportJson').addEventListener('click', () => {
+  const payload = {
+    meta: {
+      app: 'Centiqus Operations Hub',
+      exportedAt: new Date().toISOString(),
+      version: '2.0'
+    },
+    crew: CREW,
+    missions: missions,
+    counters: { mission: missionCounter, crew: crewCounter }
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const dateStr = new Date().toISOString().slice(0,10);
+  a.download = `centiqus_schedule_backup_${dateStr}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showSyncToast(`<strong>Backup exported</strong><br>Upload this file to your Google Drive folder for safekeeping.`);
+});
+
+$('#btnImportJson').addEventListener('click', () => {
+  $('#importFileInput').click();
+});
+
+$('#importFileInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const payload = JSON.parse(ev.target.result);
+      if (!payload || !Array.isArray(payload.crew) || !Array.isArray(payload.missions)) {
+        throw new Error('Invalid backup file format.');
+      }
+      if (!confirm(`Restore backup from ${payload.meta?.exportedAt || 'unknown date'}?\n\nThis will replace current crew (${CREW.length}) and missions (${missions.length}) with the backup (${payload.crew.length} crew, ${payload.missions.length} missions).`)) {
+        e.target.value = '';
+        return;
+      }
+      CREW = payload.crew;
+      missions = payload.missions;
+      if (payload.counters) {
+        missionCounter = payload.counters.mission || missions.length + 1;
+        crewCounter = payload.counters.crew || CREW.length + 1;
+      }
+      render();
+      showSyncToast(`<strong>Backup restored</strong><br>${CREW.length} crew · ${missions.length} missions loaded.`);
+    } catch (err) {
+      showSyncToast(`<strong>Import failed</strong><br>${err.message}`, true);
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════════════════════════
+function renderStats() {
+  const ws = startOfWeek(today);
+  const we = new Date(ws); we.setDate(we.getDate()+7);
+  const wk = missions.filter(m => { const d = new Date(m.date); return d >= ws && d < we; });
+  $('#statWeekMissions').textContent = wk.length;
+
+  // Next mission
+  const upcoming = missions
+    .filter(m => missionStart(m) >= new Date())
+    .sort((a,b) => missionStart(a) - missionStart(b));
+  if (upcoming.length) {
+    const n = upcoming[0];
+    $('#statNextMission').textContent = n.client.length > 22 ? n.client.slice(0,22)+'…' : n.client;
+    $('#statNextSub').textContent = `${fmtDayMonth(new Date(n.date))} · ${n.start} · ${SERVICES[n.service].short}`;
+  } else {
+    $('#statNextMission').textContent = '—';
+    $('#statNextSub').textContent = 'nothing scheduled';
+  }
+
+  // Utilisation — crew hours this week / (active pilots × 40)
+  const available = CREW.filter(c => c.status === 'active').length;
+  const totalCapacity = available * 40;
+  let totalHours = 0;
+  wk.forEach(m => { totalHours += missionHours(m) * m.crew.length; });
+  const util = totalCapacity > 0 ? Math.round((totalHours / totalCapacity) * 100) : 0;
+  $('#statUtil').textContent = util + '%';
+
+  // Conflicts
+  let conflicts = 0;
+  for (let i = 0; i < missions.length; i++) {
+    const m1 = missions[i];
+    if (new Date(m1.date) < ws || new Date(m1.date) >= we) continue;
+    for (let j = i+1; j < missions.length; j++) {
+      const m2 = missions[j];
+      if (m1.date !== m2.date) continue;
+      const s1 = missionStart(m1), e1 = missionEnd(m1);
+      const s2 = missionStart(m2), e2 = missionEnd(m2);
+      if (s1 < e2 && e1 > s2) {
+        const overlap = m1.crew.some(c => m2.crew.includes(c));
+        if (overlap) conflicts++;
+      }
+    }
+  }
+  $('#statConflicts').textContent = conflicts;
+  $('#statConflicts').style.color = conflicts === 0 ? 'var(--text)' : 'var(--red)';
+  $('#statConflictsSub').textContent = conflicts === 0 ? 'all clear' : 'needs attention';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CALENDAR — WEEK VIEW
+// ═══════════════════════════════════════════════════════════════════
+function renderCalendar() {
+  const body = $('#calBody');
+
+  if (calMode === 'week') {
+    const ws = startOfWeek(calAnchor);
+    const we = new Date(ws); we.setDate(we.getDate()+6);
+    $('#calTitle').textContent = `${fmtDayMonth(ws)} – ${fmtDayMonth(we)}`;
+
+    // Build grid
+    let html = '<div class="cal-week-grid">';
+    html += '<div class="cal-week-header" style="background:var(--surface2);"></div>';
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(ws); d.setDate(d.getDate()+i);
+      const isToday = sameDay(d, today);
+      html += `<div class="cal-week-header ${isToday?'today':''}">
+        <div class="dow">${d.toLocaleDateString('en-GB', { weekday: 'short' })}</div>
+        <div class="dnum">${d.getDate()}</div>
+      </div>`;
+    }
+
+    // Time col + day cols — hours 06–20
+    const startHour = 6, endHour = 20;
+    // time col
+    html += '<div class="cal-time-col">';
+    for (let h = startHour; h < endHour; h++) {
+      html += `<div class="cal-time">${String(h).padStart(2,'0')}:00</div>`;
+    }
+    html += '</div>';
+
+    // 7 day cols
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(ws); d.setDate(d.getDate()+i);
+      const dIso = d.toISOString().slice(0,10);
+      html += `<div class="cal-day-col" data-date="${dIso}">`;
+      for (let h = startHour; h < endHour; h++) {
+        html += `<div class="cal-hour-slot" data-date="${dIso}" data-hour="${h}"></div>`;
+      }
+      // Events for this day
+      const dayMissions = missions.filter(m => m.date === dIso);
+      dayMissions.forEach(m => {
+        const [sh, sm] = m.start.split(':').map(Number);
+        const [eh, em] = m.end.split(':').map(Number);
+        const top = ((sh - startHour) + sm/60) * 64;
+        const height = ((eh - sh) + (em - sm)/60) * 64 - 2;
+        const crewStr = m.crew.map(id => crewById(id).initials).join(', ');
+        html += `<div class="cal-event svc-${m.service} ${m.status==='tentative'?'status-tentative':''}" style="top:${top}px;height:${height}px;" data-id="${m.id}">
+          <div class="e-title">${m.client}</div>
+          <div class="e-meta">${m.start}–${m.end} · ${crewStr}</div>
+        </div>`;
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+    body.innerHTML = html;
+
+    // Click handlers
+    body.querySelectorAll('.cal-event').forEach(el => {
+      el.addEventListener('click', e => { e.stopPropagation(); openMissionModal(el.dataset.id); });
+    });
+    body.querySelectorAll('.cal-hour-slot').forEach(el => {
+      el.addEventListener('click', () => {
+        const date = el.dataset.date;
+        const h = parseInt(el.dataset.hour);
+        openMissionModal(null, { date, start: `${String(h).padStart(2,'0')}:00`, end: `${String(h+2).padStart(2,'0')}:00` });
+      });
+    });
+  } else {
+    // MONTH view
+    $('#calTitle').textContent = fmtMonthYear(calAnchor);
+    const first = new Date(calAnchor.getFullYear(), calAnchor.getMonth(), 1);
+    const last = new Date(calAnchor.getFullYear(), calAnchor.getMonth()+1, 0);
+    const gridStart = startOfWeek(first);
+    const gridEnd = new Date(gridStart); gridEnd.setDate(gridEnd.getDate() + 41); // 6 weeks
+
+    let html = '<div class="cal-month-grid">';
+    ['MON','TUE','WED','THU','FRI','SAT','SUN'].forEach(d => html += `<div class="cal-month-dow">${d}</div>`);
+
+    const cur = new Date(gridStart);
+    while (cur <= gridEnd) {
+      const isOther = cur.getMonth() !== calAnchor.getMonth();
+      const isToday = sameDay(cur, today);
+      const iso = cur.toISOString().slice(0,10);
+      const dayMissions = missions.filter(m => m.date === iso).sort((a,b) => a.start.localeCompare(b.start));
+      html += `<div class="cal-month-cell ${isOther?'other-month':''} ${isToday?'today':''}" data-date="${iso}">
+        <div class="cm-date">${cur.getDate()}</div>`;
+      dayMissions.slice(0, 3).forEach(m => {
+        const svc = SERVICES[m.service];
+        html += `<div class="cm-event" data-id="${m.id}" style="background:var(--surface2);border-left-color:${eventBorderColor(m.service)};color:${eventTextColor(m.service)};">${m.start} ${m.client.slice(0,16)}</div>`;
+      });
+      if (dayMissions.length > 3) html += `<div style="font-size:10px;color:var(--text-muted);padding:2px 6px;">+${dayMissions.length-3} more</div>`;
+      html += '</div>';
+      cur.setDate(cur.getDate()+1);
+    }
+    html += '</div>';
+    body.innerHTML = html;
+
+    body.querySelectorAll('.cm-event').forEach(el => {
+      el.addEventListener('click', e => { e.stopPropagation(); openMissionModal(el.dataset.id); });
+    });
+    body.querySelectorAll('.cal-month-cell').forEach(el => {
+      el.addEventListener('click', () => openMissionModal(null, { date: el.dataset.date, start: '09:00', end: '13:00' }));
+    });
+  }
+}
+
+function eventBorderColor(svc) {
+  const map = { c10:'#E87722', pv:'#60A5FA', thermal:'#B89EFF', agri:'#3DD68C', mapping:'#FFD166', training:'#FF5C5C', maint:'#888' };
+  return map[svc];
+}
+function eventTextColor(svc) {
+  const map = { c10:'#FFD2A8', pv:'#C7DFFF', thermal:'#E1D3FF', agri:'#B3F0D0', mapping:'#FFE8A8', training:'#FFBBBB', maint:'#CCC' };
+  return map[svc];
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MISSIONS LIST VIEW
+// ═══════════════════════════════════════════════════════════════════
+function renderMissions() {
+  const body = $('#missionListBody');
+  const now = new Date();
+  let list = [...missions].sort((a,b) => missionStart(a) - missionStart(b));
+
+  if (currentFilter === 'upcoming') list = list.filter(m => missionStart(m) >= now);
+  else if (currentFilter === 'past') list = list.filter(m => missionStart(m) < now);
+  else if (['c10','pv','thermal','agri','mapping'].includes(currentFilter)) list = list.filter(m => m.service === currentFilter);
+
+  if (!list.length) {
+    body.innerHTML = `<div class="empty">
+      <div class="empty-ico"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+      No missions match this filter.
+    </div>`;
+    return;
+  }
+
+  let html = '<div class="mission-list">';
+  list.forEach(m => {
+    const d = new Date(m.date);
+    const crewChips = m.crew.map(id => crewById(id).initials).join(' · ');
+    html += `<div class="mission-card" data-id="${m.id}" style="border-left-color:${eventBorderColor(m.service)};">
+      <div class="mission-date">
+        <div class="d">${d.getDate()}</div>
+        <div class="m">${d.toLocaleDateString('en-GB',{month:'short'}).toUpperCase()}</div>
+        <div class="t">${m.start}–${m.end}</div>
+      </div>
+      <div class="mission-body">
+        <div class="m-title">${m.client}${m.status==='tentative'?' <span style="color:var(--text-dim);font-size:11px;font-weight:400;">· tentative</span>':''}</div>
+        <div class="m-client">${m.site}</div>
+        <div class="m-crew">${m.ref} · ${crewChips}</div>
+      </div>
+      <div class="mission-svc svc-${m.service}-t">${SERVICES[m.service].short}</div>
+    </div>`;
+  });
+  html += '</div>';
+  body.innerHTML = html;
+
+  body.querySelectorAll('.mission-card').forEach(el => {
+    el.addEventListener('click', () => openMissionModal(el.dataset.id));
+  });
+}
+
+// Filter pills
+$$('#missionFilters .filter-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    $$('#missionFilters .filter-pill').forEach(x => x.classList.toggle('active', x === p));
+    currentFilter = p.dataset.filter;
+    renderMissions();
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// CREW VIEW
+// ═══════════════════════════════════════════════════════════════════
+let crewFilter = 'all';
+
+const CREW_PALETTE = [
+  '#E87722', // orange (brand)
+  '#60A5FA', // blue
+  '#3DD68C', // green
+  '#FFD166', // yellow
+  '#B89EFF', // purple
+  '#FF5C5C', // red
+  '#4ECDC4', // teal
+  '#FF9AA2', // pink
+  '#F5A623', // amber
+  '#A0C4FF', // soft blue
+  '#95D5B2', // mint
+  '#C77DFF'  // violet
+];
+
+const STATUS_LABEL = {
+  active:    'Active',
+  training:  'In training',
+  part_time: 'Part-time',
+  inactive:  'Inactive'
+};
+
+function renderCrew() {
+  const body = $('#crewGrid');
+  const ws = startOfWeek(today);
+  const we = new Date(ws); we.setDate(we.getDate()+7);
+  const todayIso = today.toISOString().slice(0,10);
+
+  const filtered = crewFilter === 'all' ? CREW : CREW.filter(c => c.status === crewFilter);
+
+  if (!filtered.length) {
+    body.innerHTML = `<div class="crew-grid-empty">
+      No crew members match this filter.<br>
+      <button class="btn btn-primary" style="margin-top:14px;" onclick="openCrewModal(null)">
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:15px;height:15px;"><path d="M12 5v14M5 12h14"/></svg>
+        Add first crew member
+      </button>
+    </div>`;
+    return;
+  }
+
+  let html = '';
+  filtered.forEach(c => {
+    const crewMissions = missions.filter(m => m.crew.includes(c.id) && new Date(m.date) >= ws && new Date(m.date) < we);
+    const hours = crewMissions.reduce((s, m) => s + missionHours(m), 0);
+    const totalMissions = missions.filter(m => m.crew.includes(c.id)).length;
+    const todayMissions = missions.filter(m => m.crew.includes(c.id) && m.date === todayIso);
+    const joinedStr = c.joined ? new Date(c.joined).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : '—';
+    const isInactive = c.status === 'inactive';
+
+    html += `<div class="crew-card ${isInactive?'inactive':''}" style="--card-accent:${c.color};" data-id="${c.id}">
+      <div class="crew-card-head">
+        <div class="avatar-lg" style="background:${c.color}22;color:${c.color};">${c.initials}</div>
+        <div class="cc-info">
+          <div class="cc-name">${escapeHtml(c.name)}</div>
+          <div class="cc-role">${escapeHtml(c.role)}</div>
+        </div>
+        <div class="crew-card-actions">
+          <button class="icon-btn" title="Edit" data-action="edit" data-id="${c.id}">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="icon-btn danger" title="Remove" data-action="remove" data-id="${c.id}">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <span class="cc-status s-${c.status}">${STATUS_LABEL[c.status] || c.status}${todayMissions.length && c.status==='active' ? ' · on mission' : ''}</span>
+
+      <div class="cc-meta">
+        <div class="cc-meta-row ${c.licence?'':'muted'}">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 16l-5.5 3.5 1-6.3L3 8.9 9 8z"/></svg>
+          <span class="cc-val">${escapeHtml(c.licence) || 'No licence on record'}</span>
+        </div>
+        <div class="cc-meta-row ${c.phone?'':'muted'}">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+          <span class="cc-val">${escapeHtml(c.phone) || 'No phone on record'}</span>
+        </div>
+        <div class="cc-meta-row ${c.email?'':'muted'}">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span class="cc-val">${escapeHtml(c.email) || 'No email on record'}</span>
+        </div>
+        <div class="cc-meta-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span class="cc-val">Joined ${joinedStr}</span>
+        </div>
+      </div>
+
+      <div class="cc-stats">
+        <div class="cc-stat">
+          <div class="cs-label">This week</div>
+          <div class="cs-value" style="color:${hours>0?'var(--text)':'var(--text-muted)'};">${hours.toFixed(1)}h</div>
+        </div>
+        <div class="cc-stat">
+          <div class="cs-label">All missions</div>
+          <div class="cs-value" style="color:${totalMissions>0?'var(--text)':'var(--text-muted)'};">${totalMissions}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+  body.innerHTML = html;
+
+  // Wire up action buttons
+  body.querySelectorAll('.icon-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      if (btn.dataset.action === 'edit') openCrewModal(id);
+      else if (btn.dataset.action === 'remove') confirmRemoveCrew(id);
+    });
+  });
+  // Click card body (not action buttons) to edit
+  body.querySelectorAll('.crew-card').forEach(card => {
+    card.addEventListener('click', () => openCrewModal(card.dataset.id));
+  });
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+// ─── CREW FILTERS ───────────────────────────────
+$$('#crewFilters .filter-pill').forEach(p => {
+  p.addEventListener('click', () => {
+    $$('#crewFilters .filter-pill').forEach(x => x.classList.toggle('active', x === p));
+    crewFilter = p.dataset.crewfilter;
+    renderCrew();
+  });
+});
+
+// ─── CREW MODAL ───────────────────────────────
+function deriveInitials(name) {
+  if (!name) return '';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0,2).toUpperCase();
+  return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
+}
+
+function updateCrewPreview() {
+  const name = $('#cfName').value.trim();
+  const initialsInput = $('#cfInitials').value.trim().toUpperCase();
+  const initials = initialsInput || deriveInitials(name) || '??';
+  const color = $('#colorPicker').dataset.selected || '#E87722';
+  const av = $('#crewPreviewAvatar');
+  av.textContent = initials;
+  av.style.background = color + '22';
+  av.style.color = color;
+}
+
+function renderColorPicker(selected) {
+  const picker = $('#colorPicker');
+  picker.dataset.selected = selected;
+  picker.innerHTML = '';
+  CREW_PALETTE.forEach(col => {
+    const sw = document.createElement('div');
+    sw.className = 'color-swatch' + (col === selected ? ' selected' : '');
+    sw.style.background = col;
+    sw.addEventListener('click', () => {
+      picker.querySelectorAll('.color-swatch').forEach(x => x.classList.remove('selected'));
+      sw.classList.add('selected');
+      picker.dataset.selected = col;
+      updateCrewPreview();
+    });
+    picker.appendChild(sw);
+  });
+}
+
+function openCrewModal(id) {
+  editingCrewId = id;
+  $('#crewDeleteWarn').innerHTML = '';
+
+  if (id) {
+    const c = CREW.find(x => x.id === id);
+    $('#crewModalTitle').textContent = 'Edit crew member';
+    $('#cfName').value = c.name;
+    $('#cfInitials').value = c.initials;
+    $('#cfRole').value = c.role;
+    $('#cfStatus').value = c.status;
+    $('#cfJoined').value = c.joined || '';
+    $('#cfPhone').value = c.phone || '';
+    $('#cfEmail').value = c.email || '';
+    $('#cfLicence').value = c.licence || '';
+    renderColorPicker(c.color);
+    $('#btnCrewDelete').classList.remove('hidden');
+  } else {
+    $('#crewModalTitle').textContent = 'New crew member';
+    $('#cfName').value = '';
+    $('#cfInitials').value = '';
+    $('#cfRole').value = '';
+    $('#cfStatus').value = 'active';
+    $('#cfJoined').value = today.toISOString().slice(0,10);
+    $('#cfPhone').value = '';
+    $('#cfEmail').value = '';
+    $('#cfLicence').value = '';
+    // Auto-pick a colour that isn't in use if possible
+    const used = CREW.map(c => c.color);
+    const firstFree = CREW_PALETTE.find(c => !used.includes(c)) || CREW_PALETTE[0];
+    renderColorPicker(firstFree);
+    $('#btnCrewDelete').classList.add('hidden');
+  }
+  updateCrewPreview();
+  $('#crewModal').classList.add('open');
+}
+
+function closeCrewModal() { $('#crewModal').classList.remove('open'); }
+
+$('#crewModalClose').addEventListener('click', closeCrewModal);
+$('#btnCrewCancel').addEventListener('click', closeCrewModal);
+$('#btnAddCrew').addEventListener('click', () => openCrewModal(null));
+
+// Live preview updates
+['cfName','cfInitials'].forEach(id => {
+  $('#'+id).addEventListener('input', updateCrewPreview);
+});
+
+// Auto-derive initials from name if initials field is blank
+$('#cfName').addEventListener('blur', () => {
+  if (!$('#cfInitials').value.trim()) {
+    $('#cfInitials').value = deriveInitials($('#cfName').value);
+    updateCrewPreview();
+  }
+});
+
+$('#btnCrewSave').addEventListener('click', () => {
+  const name = $('#cfName').value.trim();
+  const initials = $('#cfInitials').value.trim().toUpperCase() || deriveInitials(name);
+  const role = $('#cfRole').value.trim();
+
+  if (!name) { alert('Name is required.'); $('#cfName').focus(); return; }
+  if (!role) { alert('Role is required.'); $('#cfRole').focus(); return; }
+  if (!initials || initials.length < 1 || initials.length > 3) {
+    alert('Initials must be 1–3 characters.');
+    $('#cfInitials').focus();
+    return;
+  }
+
+  // Check initials uniqueness
+  const dup = CREW.find(c => c.initials.toUpperCase() === initials && c.id !== editingCrewId);
+  if (dup) {
+    if (!confirm(`Initials "${initials}" are already used by ${dup.name}. Save anyway?`)) return;
+  }
+
+  const data = {
+    name,
+    initials,
+    role,
+    status: $('#cfStatus').value,
+    color: $('#colorPicker').dataset.selected || '#E87722',
+    joined: $('#cfJoined').value,
+    phone: $('#cfPhone').value.trim(),
+    email: $('#cfEmail').value.trim(),
+    licence: $('#cfLicence').value.trim()
+  };
+
+  if (editingCrewId) {
+    const idx = CREW.findIndex(c => c.id === editingCrewId);
+    CREW[idx] = { ...CREW[idx], ...data };
+  } else {
+    // Find next free cr## id
+    let next = crewCounter;
+    while (CREW.some(c => c.id === 'cr' + String(next).padStart(2, '0'))) next++;
+    data.id = 'cr' + String(next).padStart(2, '0');
+    CREW.push(data);
+    crewCounter = next + 1;
+  }
+  closeCrewModal();
+  render();
+});
+
+function confirmRemoveCrew(id) {
+  editingCrewId = id;
+  openCrewModal(id);
+  // Show the warning inside the modal
+  showRemoveWarning(id);
+}
+
+function showRemoveWarning(id) {
+  const c = CREW.find(x => x.id === id);
+  if (!c) return;
+  const now = new Date();
+  const assignments = missions.filter(m => m.crew.includes(id));
+  const future = assignments.filter(m => missionStart(m) >= now);
+  const past = assignments.length - future.length;
+
+  let warn = `<div class="delete-warn-box">
+    <strong>Removing ${escapeHtml(c.name)}</strong><br>
+    This will remove the crew member from the roster and unassign them from all missions.`;
+
+  if (assignments.length) {
+    warn += `<ul>`;
+    if (future.length) warn += `<li><strong>${future.length}</strong> upcoming mission${future.length>1?'s':''} will lose this crew member — review and reassign after removal.</li>`;
+    if (past) warn += `<li>${past} past mission record${past>1?'s':''} will be preserved for audit but will show the crew member as removed.</li>`;
+    warn += `</ul>`;
+  } else {
+    warn += `<br><br>This crew member has no mission history.`;
+  }
+  warn += `<br style="clear:both;"><em style="color:var(--text-dim);font-size:11.5px;">Tip: if they're just temporarily off, set status to "Inactive" instead of removing.</em>
+  </div>`;
+  $('#crewDeleteWarn').innerHTML = warn;
+}
+
+$('#btnCrewDelete').addEventListener('click', () => {
+  if (!editingCrewId) return;
+  const c = CREW.find(x => x.id === editingCrewId);
+  if (!c) return;
+
+  // If warning not already showing, show it and ask for a second click to confirm
+  if (!$('#crewDeleteWarn').innerHTML) {
+    showRemoveWarning(editingCrewId);
+    $('#btnCrewDelete').textContent = 'Click again to confirm removal';
+    setTimeout(() => { $('#btnCrewDelete').textContent = 'Remove crew'; }, 5000);
+    return;
+  }
+
+  // Remove from all missions
+  missions.forEach(m => {
+    m.crew = m.crew.filter(cId => cId !== editingCrewId);
+  });
+  // Remove from CREW
+  CREW = CREW.filter(x => x.id !== editingCrewId);
+  editingCrewId = null;
+  $('#btnCrewDelete').textContent = 'Remove crew';
+  closeCrewModal();
+  render();
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// WORKLOAD VIEW
+// ═══════════════════════════════════════════════════════════════════
+function renderWorkload() {
+  const body = $('#workloadBody');
+  const ws = startOfWeek(today);
+  let html = '<div style="display:flex;flex-direction:column;gap:14px;">';
+
+  CREW.forEach(c => {
+    if (c.status === 'inactive' || c.status === 'part_time') return; // skip non-operational crew
+
+    // 7-day breakdown
+    const days = [];
+    let totalHours = 0;
+    let consecutive = 0, maxConsecutive = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(ws); d.setDate(d.getDate()+i);
+      const iso = d.toISOString().slice(0,10);
+      const dayMissions = missions.filter(m => m.crew.includes(c.id) && m.date === iso);
+      const h = dayMissions.reduce((s,m) => s + missionHours(m), 0);
+      totalHours += h;
+      if (h > 0) { consecutive++; maxConsecutive = Math.max(maxConsecutive, consecutive); }
+      else consecutive = 0;
+      days.push({ d, h, missions: dayMissions });
+    }
+
+    const weekOk = totalHours <= 50; // cap
+    const consecOk = maxConsecutive <= 5;
+
+    html += `<div style="background:var(--surface2);border-radius:10px;padding:14px 18px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar" style="background:${c.color}22;color:${c.color};">${c.initials}</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;">${c.name}</div>
+            <div style="font-size:11.5px;color:var(--text-dim);">${c.role}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;font-family:'DM Mono',monospace;font-size:12px;">
+          <div><span style="color:var(--text-dim);">Week total:</span> <span style="color:${weekOk?'var(--green)':'var(--red)'};font-weight:600;">${totalHours.toFixed(1)}h</span></div>
+          <div><span style="color:var(--text-dim);">Max consec:</span> <span style="color:${consecOk?'var(--green)':'var(--red)'};font-weight:600;">${maxConsecutive} days</span></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;">`;
+    days.forEach(dd => {
+      const cap = 10;
+      const pct = Math.min(100, (dd.h/cap)*100);
+      const bar = dd.h === 0 ? 'background:var(--surface3);' :
+                  dd.h <= 6 ? `background:linear-gradient(to top, var(--green) ${pct}%, var(--surface3) ${pct}%);` :
+                  dd.h <= 10 ? `background:linear-gradient(to top, var(--yellow) ${pct}%, var(--surface3) ${pct}%);` :
+                  `background:linear-gradient(to top, var(--red) ${pct}%, var(--surface3) ${pct}%);`;
+      const isToday = sameDay(dd.d, today);
+      html += `<div style="text-align:center;">
+        <div style="font-size:10px;color:var(--text-dim);font-family:'DM Mono',monospace;margin-bottom:4px;${isToday?'color:var(--orange);font-weight:600;':''}">${dd.d.toLocaleDateString('en-GB',{weekday:'short'}).toUpperCase()}</div>
+        <div style="height:40px;${bar}border-radius:4px;"></div>
+        <div style="font-size:10.5px;margin-top:4px;color:${dd.h>0?'var(--text)':'var(--text-muted)'};">${dd.h>0?dd.h.toFixed(1)+'h':'—'}</div>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+
+  html += `<div style="margin-top:18px;padding:12px 16px;background:var(--surface2);border-radius:8px;font-size:12px;color:var(--text-dim);">
+    <strong style="color:var(--text);">Rest compliance targets (CTQ-SLA-002 §5.3):</strong>
+    Max 10h duty/day · max 5 consecutive duty days · min 12h rest between duty days · weekly soft cap 50h.
+  </div>`;
+
+  body.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MISSION MODAL
+// ═══════════════════════════════════════════════════════════════════
+function buildCrewSelector(selected = []) {
+  const host = $('#crewSelector');
+  host.innerHTML = '';
+  // Show active, training, part-time, plus any inactive that's already assigned (so editing keeps working)
+  const visible = CREW.filter(c => c.status !== 'inactive' || selected.includes(c.id));
+  if (!visible.length) {
+    host.innerHTML = `<div style="grid-column:1/-1;padding:14px;text-align:center;color:var(--text-dim);font-size:12.5px;background:var(--surface2);border-radius:8px;">
+      No assignable crew. Add crew members in the Crew view.
+    </div>`;
+    return;
+  }
+  visible.forEach(c => {
+    const chip = document.createElement('div');
+    chip.className = 'crew-chip' + (selected.includes(c.id) ? ' selected' : '');
+    chip.dataset.id = c.id;
+    const statusFlag = c.status === 'inactive' ? ' <span style="color:var(--red);font-size:9px;letter-spacing:1px;margin-left:4px;">(INACTIVE)</span>' :
+                       c.status === 'training'  ? ' <span style="color:var(--purple);font-size:9px;letter-spacing:1px;margin-left:4px;">(TRAINING)</span>' :
+                       c.status === 'part_time' ? ' <span style="color:var(--blue);font-size:9px;letter-spacing:1px;margin-left:4px;">(PT)</span>' : '';
+    const parts = c.name.split(' ');
+    const displayName = parts.length > 1 ? `${parts[0]} ${parts[parts.length-1][0]}.` : parts[0];
+    chip.innerHTML = `<div class="mini-av" style="background:${c.color}22;color:${c.color};">${c.initials}</div><span>${escapeHtml(displayName)}${statusFlag}</span>`;
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('selected');
+      checkConflicts();
+    });
+    host.appendChild(chip);
+  });
+}
+
+function getSelectedCrew() {
+  return [...$$('.crew-chip.selected')].map(el => el.dataset.id);
+}
+
+function checkConflicts() {
+  const date = $('#fDate').value;
+  const start = $('#fStart').value;
+  const end = $('#fEnd').value;
+  const crew = getSelectedCrew();
+  if (!date || !start || !end || !crew.length) { $('#conflictBox').innerHTML = ''; return; }
+  const draft = { date, start, end, crew };
+  const conflicts = findConflicts(draft, editingMissionId);
+  if (!conflicts.length) { $('#conflictBox').innerHTML = ''; return; }
+  let html = `<div class="conflict-warn">
+    <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <div><strong>Scheduling conflict:</strong><br>`;
+  conflicts.forEach(c => {
+    const crewNames = c.crew.map(id => crewById(id).initials).join(', ');
+    html += `${crewNames} already assigned to <strong>${c.mission.client}</strong> (${c.mission.start}–${c.mission.end}).<br>`;
+  });
+  html += '</div></div>';
+  $('#conflictBox').innerHTML = html;
+}
+
+function openMissionModal(id, seed = {}) {
+  editingMissionId = id;
+  $('#conflictBox').innerHTML = '';
+  if (id) {
+    const m = missions.find(x => x.id === id);
+    $('#modalTitle').textContent = 'Edit mission';
+    $('#fClient').value = m.client;
+    $('#fService').value = m.service;
+    $('#fSite').value = m.site;
+    $('#fDate').value = m.date;
+    $('#fStart').value = m.start;
+    $('#fEnd').value = m.end;
+    $('#fStatus').value = m.status;
+    $('#fRef').value = m.ref;
+    $('#fNotes').value = m.notes || '';
+    buildCrewSelector(m.crew);
+    $('#btnDelete').classList.remove('hidden');
+  } else {
+    $('#modalTitle').textContent = 'New mission';
+    $('#fClient').value = '';
+    $('#fService').value = 'c10';
+    $('#fSite').value = '';
+    $('#fDate').value = seed.date || today.toISOString().slice(0,10);
+    $('#fStart').value = seed.start || '09:00';
+    $('#fEnd').value = seed.end || '13:00';
+    $('#fStatus').value = 'confirmed';
+    $('#fRef').value = 'CTQ-M-' + String(missionCounter).padStart(4, '0');
+    $('#fNotes').value = '';
+    buildCrewSelector([]);
+    $('#btnDelete').classList.add('hidden');
+  }
+  $('#missionModal').classList.add('open');
+}
+
+function closeMissionModal() { $('#missionModal').classList.remove('open'); }
+
+$('#modalClose').addEventListener('click', closeMissionModal);
+$('#btnCancel').addEventListener('click', closeMissionModal);
+
+// Track changes to re-run conflict check
+['fDate','fStart','fEnd'].forEach(id => $('#'+id).addEventListener('change', checkConflicts));
+
+$('#btnSave').addEventListener('click', () => {
+  const client = $('#fClient').value.trim();
+  const site   = $('#fSite').value.trim();
+  const date   = $('#fDate').value;
+  const start  = $('#fStart').value;
+  const end    = $('#fEnd').value;
+  const crew   = getSelectedCrew();
+  if (!client || !date || !start || !end || !crew.length) {
+    alert('Please fill Client, Date, Time, and assign at least one crew member.');
+    return;
+  }
+  if (start >= end) {
+    alert('End time must be after start time.');
+    return;
+  }
+
+  const data = {
+    client, site, date, start, end, crew,
+    service: $('#fService').value,
+    status:  $('#fStatus').value,
+    ref:     $('#fRef').value || 'CTQ-M-' + String(missionCounter).padStart(4, '0'),
+    notes:   $('#fNotes').value
+  };
+
+  if (editingMissionId) {
+    const idx = missions.findIndex(m => m.id === editingMissionId);
+    missions[idx] = { ...missions[idx], ...data };
+  } else {
+    data.id = 'm' + Date.now();
+    missions.push(data);
+    missionCounter++;
+  }
+  closeMissionModal();
+  render();
+});
+
+$('#btnDelete').addEventListener('click', () => {
+  if (!editingMissionId) return;
+  if (!confirm('Delete this mission? This cannot be undone.')) return;
+  missions = missions.filter(m => m.id !== editingMissionId);
+  closeMissionModal();
+  render();
+});
+
+$('#btnNewMission').addEventListener('click', () => openMissionModal(null));
+
+// ═══════════════════════════════════════════════════════════════════
+// CALENDAR CONTROLS
+// ═══════════════════════════════════════════════════════════════════
+$('#calPrev').addEventListener('click', () => {
+  if (calMode === 'week') calAnchor.setDate(calAnchor.getDate() - 7);
+  else calAnchor.setMonth(calAnchor.getMonth() - 1);
+  render();
+});
+$('#calNext').addEventListener('click', () => {
+  if (calMode === 'week') calAnchor.setDate(calAnchor.getDate() + 7);
+  else calAnchor.setMonth(calAnchor.getMonth() + 1);
+  render();
+});
+$('#btnToday').addEventListener('click', () => { calAnchor = new Date(); calAnchor.setHours(0,0,0,0); render(); });
+
+$$('.cal-view-toggle button').forEach(b => {
+  b.addEventListener('click', () => {
+    $$('.cal-view-toggle button').forEach(x => x.classList.toggle('active', x === b));
+    calMode = b.dataset.viewmode;
+    render();
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// RENDER DRIVER
+// ═══════════════════════════════════════════════════════════════════
+function render() {
+  if (currentView === 'documents') {
+    // Documents view is static HTML — just trigger fade-in animations
+    document.querySelectorAll('#view-documents .dp-fade-in').forEach((el, i) => {
+      el.style.animationDelay = (i * 0.05) + 's';
+    });
+    return;
+  }
+  renderStats();
+  if (currentView === 'calendar') renderCalendar();
+  else if (currentView === 'missions') renderMissions();
+  else if (currentView === 'crew') renderCrew();
+  else if (currentView === 'workload') renderWorkload();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DOCUMENT PORTAL — trackOpen (minimal — no email notifications)
+// ═══════════════════════════════════════════════════════════════════
+function trackOpen(docName, docRef) {
+  // Lightweight tracker — logs to console and shows a brief toast.
+  // Email notifications were removed from the combined app. To re-enable,
+  // see the original Centiqus_Document_Portal.html EmailJS setup.
+  console.log('[Portal] Opened:', docName, '(' + docRef + ')');
+  showSyncToast('<strong>Opening ' + docRef + '</strong><br>' + docName);
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>
