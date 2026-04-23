@@ -225,6 +225,10 @@
   .role-compliance { background: rgba(184,158,255,0.15); color: #B89EFF; }
   .role-readonly   { background: rgba(150,150,150,0.15); color: var(--text-muted); }
 
+  .state-pending   { background: rgba(255,209,102,0.18); color: #FFD166; }
+  .state-active    { background: rgba(61,214,140,0.18); color: var(--green); }
+  .state-disabled  { background: rgba(255,92,92,0.18); color: #FF5C5C; }
+
   /* Hide UI for readonly / locked-view roles */
   .perm-hidden { display: none !important; }
   .perm-readonly input, .perm-readonly select, .perm-readonly textarea {
@@ -2055,26 +2059,26 @@
       </div>
     </div>
 
-    <!-- First-run admin setup -->
-    <div id="setupForm" style="display:none;">
-      <h2 class="login-title">Welcome — set up admin</h2>
-      <p class="login-subtitle">No users exist yet. Create the first admin account. This user can create all other users.</p>
+    <!-- First-login password setup (for pending users) -->
+    <div id="firstLoginForm" style="display:none;">
+      <h2 class="login-title">Set your password</h2>
+      <p class="login-subtitle">Welcome! You've logged in with the temporary password provided by the admin. Now please set your permanent password.</p>
       <div class="login-field">
-        <label class="login-label">Admin email</label>
-        <input type="email" class="login-input" id="setupEmail" autocomplete="username" placeholder="you@centiqus.com.cy">
+        <label class="login-label">Account</label>
+        <input type="email" class="login-input" id="firstLoginEmail" disabled>
       </div>
       <div class="login-field">
-        <label class="login-label">Password (min 8 characters)</label>
-        <input type="password" class="login-input" id="setupPassword" autocomplete="new-password" placeholder="••••••••">
+        <label class="login-label">New password (min 8 characters)</label>
+        <input type="password" class="login-input" id="firstLoginPassword" autocomplete="new-password" placeholder="••••••••">
       </div>
       <div class="login-field">
-        <label class="login-label">Confirm password</label>
-        <input type="password" class="login-input" id="setupPasswordConfirm" autocomplete="new-password" placeholder="••••••••">
+        <label class="login-label">Confirm new password</label>
+        <input type="password" class="login-input" id="firstLoginPasswordConfirm" autocomplete="new-password" placeholder="••••••••">
       </div>
-      <div id="setupError" class="login-error" style="display:none;"></div>
-      <button class="login-btn" id="setupBtn">Create admin →</button>
+      <div id="firstLoginError" class="login-error" style="display:none;"></div>
+      <button class="login-btn" id="firstLoginBtn">Set password →</button>
       <div class="login-footnote">
-        <span style="color:#E87722;">⚠ Important:</span> once created, this account is the only way in. Back up your password.
+        <span style="color:#E87722;">⚠</span> Choose a strong password. Only you will know it — not even the admin can see it after you set it.
       </div>
     </div>
   </div>
@@ -3534,9 +3538,10 @@
                 <th>Email</th>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Created</th>
+                <th>State</th>
+                <th>Password</th>
                 <th>Last login</th>
-                <th></th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody id="usersTableBody"></tbody>
@@ -6982,38 +6987,57 @@ function applyPermissionsToUI() {
   }
 }
 
+// ─── Hardcoded admin account ────────────────────────────────────
+// This admin is guaranteed present in USERS on every load. Strangers
+// who visit cannot create an admin. Only the pre-shared password
+// unlocks it, which only Demetris knows.
+const HARDCODED_ADMIN = {
+  id: 'u_hardcoded_admin',
+  email: 'demetris@centiqus.com.cy',
+  name: 'Demetris Papachrisostomou',
+  role: 'admin',
+  state: 'active',
+  // SHA-256(salt + '261081Depapa!!')
+  passwordHash: 'e988704e2f80961d6b33810d8817f52f3b1f8aab59e63ccb1793cba51b1a1a53',
+  salt: '13a2ce6cfe9edb730aee9275f4ba064e',
+  createdAt: '2026-04-23T00:00:00Z',
+  lastLogin: null,
+  tempPassword: null  // not used for hardcoded admin
+};
+
+// Ensure hardcoded admin is in USERS every time
+function ensureHardcodedAdmin() {
+  const existing = USERS.find(u => u.id === HARDCODED_ADMIN.id || u.email.toLowerCase() === HARDCODED_ADMIN.email.toLowerCase());
+  if (!existing) {
+    USERS.push({ ...HARDCODED_ADMIN });
+    saveUsersToStorage();
+  }
+}
+
 // ─── Auth init (called on page load) ────────────────────────────
 async function authInit() {
   loadUsersFromStorage();
-
-  // If no users, show admin setup form
-  if (USERS.length === 0) {
-    document.body.classList.add('auth-screen');
-    $('#loginShell').style.display = 'flex';
-    $('#appShell').style.display = 'none';
-    $('#loginForm').style.display = 'none';
-    $('#setupForm').style.display = 'block';
-    wireAuthForms();
-    return;
-  }
+  ensureHardcodedAdmin();
 
   // Check for existing session
   const sess = readSession();
   if (sess) {
     const user = USERS.find(u => u.id === sess.userId);
-    if (user) {
+    if (user && user.state !== 'disabled') {
       CURRENT_USER = user;
       showApp();
       return;
     }
+    // Stale or disabled — clear session
+    clearSession();
   }
 
-  // Show login
+  // Show login form
   document.body.classList.add('auth-screen');
   $('#loginShell').style.display = 'flex';
   $('#appShell').style.display = 'none';
   $('#loginForm').style.display = 'block';
-  $('#setupForm').style.display = 'none';
+  $('#firstLoginForm').style.display = 'none';
   wireAuthForms();
 }
 
@@ -7036,20 +7060,22 @@ function showAuthError(formId, msg) {
 }
 
 function wireAuthForms() {
-  const loginBtn = $('#loginBtn');
-  const setupBtn = $('#setupBtn');
-  // Remove any existing listeners by cloning (safe idempotent)
-  const newLogin = loginBtn.cloneNode(true);
-  loginBtn.parentNode.replaceChild(newLogin, loginBtn);
-  const newSetup = setupBtn.cloneNode(true);
-  setupBtn.parentNode.replaceChild(newSetup, setupBtn);
+  // Idempotent: rewire every call by cloning to drop old listeners
+  ['loginBtn','firstLoginBtn'].forEach(id => {
+    const el = $('#' + id);
+    if (!el) return;
+    const clone = el.cloneNode(true);
+    el.parentNode.replaceChild(clone, el);
+  });
 
   $('#loginBtn').addEventListener('click', doLogin);
-  $('#setupBtn').addEventListener('click', doSetupAdmin);
+  $('#firstLoginBtn').addEventListener('click', doFirstLoginSetPassword);
 
   $('#loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-  $('#setupPasswordConfirm').addEventListener('keydown', e => { if (e.key === 'Enter') doSetupAdmin(); });
+  $('#firstLoginPasswordConfirm').addEventListener('keydown', e => { if (e.key === 'Enter') doFirstLoginSetPassword(); });
 }
+
+let pendingUserForFirstLogin = null; // set when a pending user types their temp password correctly
 
 async function doLogin() {
   const email = $('#loginEmail').value.trim().toLowerCase();
@@ -7063,6 +7089,29 @@ async function doLogin() {
     showAuthError('loginError', 'Invalid email or password.');
     return;
   }
+  if (user.state === 'disabled') {
+    showAuthError('loginError', 'This account has been disabled. Contact the admin.');
+    return;
+  }
+
+  // For pending users, validate against tempPassword (plaintext comparison)
+  if (user.state === 'pending') {
+    if (password !== user.tempPassword) {
+      showAuthError('loginError', 'Invalid email or password.');
+      return;
+    }
+    // Temp password matched — send them to the first-login password setting screen
+    pendingUserForFirstLogin = user;
+    $('#loginForm').style.display = 'none';
+    $('#firstLoginForm').style.display = 'block';
+    $('#firstLoginEmail').value = user.email;
+    $('#firstLoginPassword').value = '';
+    $('#firstLoginPasswordConfirm').value = '';
+    $('#firstLoginPassword').focus();
+    return;
+  }
+
+  // Active user — hash-compare their password
   const { hash } = await hashPassword(password, user.salt);
   if (hash !== user.passwordHash) {
     showAuthError('loginError', 'Invalid email or password.');
@@ -7073,34 +7122,35 @@ async function doLogin() {
   showApp();
 }
 
-async function doSetupAdmin() {
-  const email = $('#setupEmail').value.trim().toLowerCase();
-  const password = $('#setupPassword').value;
-  const confirm = $('#setupPasswordConfirm').value;
-  if (!email || !email.includes('@')) {
-    showAuthError('setupError', 'Enter a valid email.');
+async function doFirstLoginSetPassword() {
+  const user = pendingUserForFirstLogin;
+  if (!user) {
+    showAuthError('firstLoginError', 'Session expired. Please sign in again.');
+    $('#firstLoginForm').style.display = 'none';
+    $('#loginForm').style.display = 'block';
     return;
   }
+  const password = $('#firstLoginPassword').value;
+  const confirm = $('#firstLoginPasswordConfirm').value;
   if (password.length < 8) {
-    showAuthError('setupError', 'Password must be at least 8 characters.');
+    showAuthError('firstLoginError', 'Password must be at least 8 characters.');
     return;
   }
   if (password !== confirm) {
-    showAuthError('setupError', 'Passwords do not match.');
+    showAuthError('firstLoginError', 'Passwords do not match.');
     return;
   }
+  // Hash and save — user transitions from pending to active
   const { hash, salt } = await hashPassword(password);
-  const user = {
-    id: 'u_' + Date.now().toString(36),
-    email, name: 'Admin', role: 'admin',
-    passwordHash: hash, salt,
-    createdAt: new Date().toISOString(),
-    lastLogin: null
-  };
-  USERS.push(user);
+  const i = USERS.findIndex(u => u.id === user.id);
+  USERS[i].passwordHash = hash;
+  USERS[i].salt = salt;
+  USERS[i].state = 'active';
+  USERS[i].tempPassword = null; // destroy temp password — admin no longer sees it
   saveUsersToStorage();
-  CURRENT_USER = user;
-  saveSession(user.id);
+  CURRENT_USER = USERS[i];
+  pendingUserForFirstLogin = null;
+  saveSession(CURRENT_USER.id);
   showApp();
 }
 
@@ -7112,13 +7162,19 @@ function doLogout() {
 }
 
 // ─── User management (admin-only Settings view) ────────────────
+const STATE_LABEL = {
+  pending: 'Pending first login',
+  active: 'Active',
+  disabled: 'Disabled'
+};
+
 function renderUsers() {
   const tbody = $('#usersTableBody');
   if (USERS.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:30px;">No users yet.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:30px;">No users yet.</td></tr>';
     return;
   }
-  // Sort: admins first, then alpha
+  // Sort: admins first, then alpha by email
   const sorted = [...USERS].sort((a, b) => {
     const ra = a.role === 'admin' ? 0 : 1;
     const rb = b.role === 'admin' ? 0 : 1;
@@ -7130,14 +7186,48 @@ function renderUsers() {
     const lastLogin = u.lastLogin ? new Date(u.lastLogin).toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' }) : 'never';
     const created = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-GB') : '—';
     const isMe = CURRENT_USER && u.id === CURRENT_USER.id;
+    const state = u.state || 'active';
+    const isHardcodedAdmin = u.id === HARDCODED_ADMIN.id;
+
+    // Password column: show temp for pending users, "Set by user" for active, — for disabled
+    let passwordCell;
+    if (state === 'pending' && u.tempPassword) {
+      passwordCell = `<code style="background:rgba(255,209,102,0.15);color:#FFD166;padding:3px 8px;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;">${escapeHtml(u.tempPassword)}</code>
+                      <div style="font-size:10px;color:var(--text-dim);margin-top:2px;">temp · share with user</div>`;
+    } else if (state === 'active') {
+      passwordCell = `<span style="color:var(--text-dim);font-size:11px;font-style:italic;">Set by user</span>`;
+    } else if (state === 'disabled') {
+      passwordCell = `<span style="color:var(--text-dim);font-size:11px;">—</span>`;
+    } else {
+      passwordCell = '—';
+    }
+
+    // State pill
+    const statePill = `<span class="role-pill state-${state}">${STATE_LABEL[state] || state}</span>`;
+
+    // Actions — hardcoded admin can only be "Change password" by admin-self, not deleted/disabled
+    let actions = `<button class="btn btn-sm" onclick="userOpenDrawer('${u.id}')">Edit</button>`;
+    if (!isHardcodedAdmin && !isMe) {
+      actions += ` <button class="btn btn-sm" onclick="userResetPassword('${u.id}')">Reset pwd</button>`;
+      if (state === 'disabled') {
+        actions += ` <button class="btn btn-sm" onclick="userEnable('${u.id}')">Enable</button>`;
+      } else {
+        actions += ` <button class="btn btn-sm" onclick="userDisable('${u.id}')">Disable</button>`;
+      }
+    }
+    if (isMe) {
+      actions += ` <button class="btn btn-sm" onclick="userChangeMyPassword()">Change my password</button>`;
+    }
+
     return `
       <tr data-id="${u.id}">
-        <td><strong>${escapeHtml(u.email)}</strong>${isMe ? ' <span style="color:var(--orange);font-size:10px;">(you)</span>' : ''}</td>
+        <td><strong>${escapeHtml(u.email)}</strong>${isMe ? ' <span style="color:var(--orange);font-size:10px;">(you)</span>' : ''}${isHardcodedAdmin ? ' <span style="color:var(--text-dim);font-size:10px;">(built-in admin)</span>' : ''}</td>
         <td>${escapeHtml(u.name || '—')}</td>
         <td><span class="role-pill role-${u.role}">${role ? role.label : u.role}</span></td>
-        <td style="color:var(--text-muted);font-size:12px;">${created}</td>
+        <td>${statePill}</td>
+        <td>${passwordCell}</td>
         <td style="color:var(--text-muted);font-size:12px;">${lastLogin}</td>
-        <td><button class="btn btn-sm" onclick="userOpenDrawer('${u.id}')">Edit</button></td>
+        <td style="white-space:nowrap;">${actions}</td>
       </tr>`;
   }).join('');
 }
@@ -7151,19 +7241,31 @@ function userOpenDrawer(id) {
   editingUserId = id || null;
   const u = id ? USERS.find(x => x.id === id) : null;
   const isMe = u && CURRENT_USER && u.id === CURRENT_USER.id;
+  const isHardcodedAdmin = u && u.id === HARDCODED_ADMIN.id;
 
   $('#userDrawerTitle').textContent = isNew ? 'New user' : 'Edit ' + u.email;
   $('#userfEmail').value = u?.email || '';
-  $('#userfEmail').disabled = !isNew; // can't change an existing email
+  $('#userfEmail').disabled = !isNew;
   $('#userfName').value = u?.name || '';
   $('#userfRole').value = u?.role || 'readonly';
-  $('#userfRole').disabled = isMe; // can't demote yourself
+  $('#userfRole').disabled = isMe || isHardcodedAdmin;
   $('#userfPassword').value = '';
-  $('#userfPasswordHint').textContent = isNew ? '*' : '(leave blank to keep existing)';
-  $('#userfPasswordNote').textContent = isNew
-    ? 'You\'ll share this password with the user. Minimum 8 characters.'
-    : 'Leave blank to keep their existing password, or enter a new one to reset.';
-  $('#userBtnDelete').style.display = (isNew || isMe) ? 'none' : 'inline-flex';
+
+  // Adjust the password label/note based on context
+  const pwLabel = $('#userfPasswordHint');
+  const pwNote = $('#userfPasswordNote');
+  if (isNew) {
+    pwLabel.textContent = '(temporary) *';
+    pwNote.textContent = 'Set a temporary password the user will use on first login. After that, they set their own permanent password. Minimum 8 characters.';
+  } else {
+    pwLabel.textContent = '(leave blank to keep existing)';
+    pwNote.textContent = isMe
+      ? 'Enter a new password to change your own. Leave blank to keep the current one.'
+      : 'To reset, use the Reset pwd button on the users list. You cannot view or set another user\'s permanent password here — only they can set it.';
+    $('#userfPassword').disabled = !isMe && !isNew;
+    $('#userfPassword').placeholder = (!isMe && !isNew) ? 'Use "Reset pwd" instead' : '';
+  }
+  $('#userBtnDelete').style.display = (isNew || isMe || isHardcodedAdmin) ? 'none' : 'inline-flex';
   $('#userDrawer').classList.add('open');
   $('#userDrawerBackdrop').classList.add('open');
 }
@@ -7171,6 +7273,8 @@ function userOpenDrawer(id) {
 function userCloseDrawer() {
   $('#userDrawer').classList.remove('open');
   $('#userDrawerBackdrop').classList.remove('open');
+  $('#userfPassword').disabled = false;
+  $('#userfPassword').placeholder = '';
   editingUserId = null;
 }
 
@@ -7179,40 +7283,51 @@ async function userSave() {
   const name = $('#userfName').value.trim();
   const role = $('#userfRole').value;
   const password = $('#userfPassword').value;
+  const isMe = editingUserId && CURRENT_USER && editingUserId === CURRENT_USER.id;
 
   if (!email || !email.includes('@')) {
     alert('Valid email required.'); return;
   }
-  if (!editingUserId && password.length < 8) {
-    alert('Password must be at least 8 characters.'); return;
-  }
-  if (editingUserId && password && password.length < 8) {
-    alert('New password must be at least 8 characters.'); return;
-  }
 
-  if (editingUserId) {
-    const u = USERS.find(x => x.id === editingUserId);
-    u.name = name;
-    if (CURRENT_USER.id !== u.id) u.role = role; // can't demote self
-    if (password) {
-      const { hash, salt } = await hashPassword(password);
-      u.passwordHash = hash;
-      u.salt = salt;
+  // Creating a new user
+  if (!editingUserId) {
+    if (password.length < 8) {
+      alert('Temporary password must be at least 8 characters.'); return;
     }
-  } else {
-    // Prevent duplicates
     if (USERS.find(x => x.email.toLowerCase() === email)) {
       alert('A user with this email already exists.');
       return;
     }
-    const { hash, salt } = await hashPassword(password);
     USERS.push({
       id: 'u_' + Date.now().toString(36),
       email, name, role,
-      passwordHash: hash, salt,
+      state: 'pending',
+      tempPassword: password,  // plaintext for admin to share with user
+      passwordHash: null,
+      salt: null,
       createdAt: new Date().toISOString(),
       lastLogin: null
     });
+    saveUsersToStorage();
+    userCloseDrawer();
+    renderUsers();
+    showSyncToast(`<strong>User created</strong><br>${email} · share temp password with them`);
+    return;
+  }
+
+  // Editing an existing user
+  const u = USERS.find(x => x.id === editingUserId);
+  if (!u) return;
+  u.name = name;
+  if (!isMe && u.id !== HARDCODED_ADMIN.id) u.role = role;
+
+  // Password change — only admin editing their own account (or hardcoded admin)
+  if (password && password.length >= 8 && (isMe || u.id === HARDCODED_ADMIN.id)) {
+    const { hash, salt } = await hashPassword(password);
+    u.passwordHash = hash;
+    u.salt = salt;
+    u.state = 'active';
+    u.tempPassword = null;
   }
   saveUsersToStorage();
   userCloseDrawer();
@@ -7228,10 +7343,8 @@ function userDelete() {
     alert('You cannot delete yourself.');
     return;
   }
-  // Don't allow deleting the last admin
-  const adminCount = USERS.filter(x => x.role === 'admin').length;
-  if (u.role === 'admin' && adminCount <= 1) {
-    alert('Cannot delete the last admin. Create another admin first, or change this user\'s role.');
+  if (u.id === HARDCODED_ADMIN.id) {
+    alert('The built-in admin cannot be deleted.');
     return;
   }
   if (!confirm(`Delete user ${u.email}?\n\nThey will lose access immediately. Their historical records are kept.`)) return;
@@ -7240,6 +7353,67 @@ function userDelete() {
   userCloseDrawer();
   renderUsers();
   showSyncToast(`<strong>User deleted</strong>`);
+}
+
+// Admin resets a user's password → new temp, state returns to pending
+function userResetPassword(id) {
+  const u = USERS.find(x => x.id === id);
+  if (!u) return;
+  if (u.id === HARDCODED_ADMIN.id) {
+    alert('The built-in admin password can only be changed via the Edit screen (by the admin themselves).');
+    return;
+  }
+  const newTemp = prompt(`Reset password for ${u.email}?\n\nEnter a new temporary password (min 8 chars). The user will be forced to set a new permanent password on next login.`);
+  if (!newTemp) return;
+  if (newTemp.length < 8) {
+    alert('Password must be at least 8 characters.'); return;
+  }
+  u.state = 'pending';
+  u.tempPassword = newTemp;
+  u.passwordHash = null;
+  u.salt = null;
+  saveUsersToStorage();
+  renderUsers();
+  showSyncToast(`<strong>Password reset</strong><br>${u.email} · share new temp with them`);
+}
+
+function userDisable(id) {
+  const u = USERS.find(x => x.id === id);
+  if (!u) return;
+  if (u.id === HARDCODED_ADMIN.id) { alert('Cannot disable the built-in admin.'); return; }
+  if (CURRENT_USER && u.id === CURRENT_USER.id) { alert('Cannot disable yourself.'); return; }
+  if (!confirm(`Disable ${u.email}?\n\nThey will be logged out immediately and cannot log back in until re-enabled. Their records are preserved.`)) return;
+  u.state = 'disabled';
+  saveUsersToStorage();
+  renderUsers();
+  showSyncToast(`<strong>User disabled</strong><br>${u.email}`);
+}
+
+function userEnable(id) {
+  const u = USERS.find(x => x.id === id);
+  if (!u) return;
+  // If they had a password before, return to active; if they were newly created, return to pending
+  u.state = u.passwordHash ? 'active' : 'pending';
+  saveUsersToStorage();
+  renderUsers();
+  showSyncToast(`<strong>User enabled</strong><br>${u.email}`);
+}
+
+// Admin changes their own password quickly
+async function userChangeMyPassword() {
+  const newPw = prompt('Enter a new password (min 8 characters):');
+  if (!newPw) return;
+  if (newPw.length < 8) { alert('Password must be at least 8 characters.'); return; }
+  const confirm2 = prompt('Confirm new password:');
+  if (confirm2 !== newPw) { alert('Passwords do not match.'); return; }
+  const { hash, salt } = await hashPassword(newPw);
+  CURRENT_USER.passwordHash = hash;
+  CURRENT_USER.salt = salt;
+  CURRENT_USER.state = 'active';
+  CURRENT_USER.tempPassword = null;
+  saveUsersToStorage();
+  renderUsers();
+  showSyncToast(`<strong>Your password has been changed</strong>`);
 }
 
 // ─── Wire up auth UI event handlers ─────────────────────────────
