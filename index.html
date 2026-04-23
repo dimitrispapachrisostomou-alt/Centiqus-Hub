@@ -39,6 +39,197 @@
     display: flex;
     overflow: hidden;
   }
+  body.auth-screen { display: block; overflow-y: auto; }
+
+  /* ═════════════════════════════════════════════════════════════
+     LOGIN SCREEN
+     ═════════════════════════════════════════════════════════════ */
+  .login-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(232,119,34,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 100%, rgba(232,119,34,0.08) 0%, transparent 50%),
+      var(--charcoal);
+  }
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 40px 36px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .login-brand {
+    text-align: center;
+    padding-bottom: 28px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .login-logo-mark {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--orange);
+    letter-spacing: -0.5px;
+  }
+  .login-logo-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+  .login-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .login-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .login-field { margin-bottom: 16px; }
+  .login-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .login-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  .login-input:focus {
+    outline: none;
+    border-color: var(--orange);
+  }
+  .login-btn {
+    width: 100%;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.15s;
+    font-family: inherit;
+  }
+  .login-btn:hover { background: var(--orange-dark); }
+  .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .login-error {
+    background: rgba(255,92,92,0.1);
+    border: 1px solid rgba(255,92,92,0.3);
+    color: #FF8080;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .login-footnote {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .login-legal {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
+
+  /* ═════════════════════════════════════════════════════════════
+     USER / ROLE indicator in topbar
+     ═════════════════════════════════════════════════════════════ */
+  .user-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    font-size: 12px;
+  }
+  .user-indicator-email {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .user-indicator-role {
+    color: var(--orange);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 2px 8px;
+    background: rgba(232,119,34,0.12);
+    border-radius: 10px;
+  }
+  .user-indicator-logout {
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 11px;
+    padding: 0 4px;
+  }
+  .user-indicator-logout:hover { color: var(--red); }
+
+  /* Settings view scoped styles */
+  #view-settings { padding: 20px 24px 40px; }
+  #view-settings .settings-users-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  #view-settings .settings-users-table th {
+    text-align: left; padding: 10px 14px; background: var(--surface2);
+    color: var(--text-dim); font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--border);
+  }
+  #view-settings .settings-users-table td {
+    padding: 12px 14px; border-bottom: 1px solid var(--border);
+    color: var(--text); vertical-align: middle;
+  }
+  #view-settings .settings-users-table tbody tr:hover { background: var(--surface2); }
+  #view-settings .role-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .role-admin      { background: rgba(232,119,34,0.18); color: var(--orange); }
+  .role-coo        { background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .role-tech       { background: rgba(61,214,140,0.15); color: var(--green); }
+  .role-pilot      { background: rgba(255,209,102,0.15); color: #FFD166; }
+  .role-compliance { background: rgba(184,158,255,0.15); color: #B89EFF; }
+  .role-readonly   { background: rgba(150,150,150,0.15); color: var(--text-muted); }
+
+  /* Hide UI for readonly / locked-view roles */
+  .perm-hidden { display: none !important; }
+  .perm-readonly input, .perm-readonly select, .perm-readonly textarea {
+    pointer-events: none; opacity: 0.7;
+  }
 
   /* ─── SIDEBAR ──────────────────────────────── */
   .sidebar {
@@ -1038,6 +1229,445 @@
   .btn-danger:hover { background: rgba(255,92,92,0.1); border-color: #FF5C5C; }
 
   /* ═════════════════════════════════════════════════════════════
+     CUSTOMERS VIEW (CRM) — scoped to #view-customers
+     ═════════════════════════════════════════════════════════════ */
+  #view-customers { padding: 20px 24px 40px; height: 100%; display: flex; flex-direction: column; }
+  #view-customers .cst-kpi-row {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  }
+  @media (max-width: 1100px) { #view-customers .cst-kpi-row { grid-template-columns: repeat(2, 1fr); } }
+  #view-customers .cst-kpi {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; position: relative; overflow: hidden;
+  }
+  #view-customers .cst-kpi::before {
+    content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+    background: var(--orange); opacity: 0.6;
+  }
+  #view-customers .cst-kpi-active::before   { background: var(--green); opacity: 1; }
+  #view-customers .cst-kpi-prospect::before { background: #FFD166; opacity: 1; }
+  #view-customers .cst-kpi-amc::before      { background: #60A5FA; opacity: 1; }
+  #view-customers .cst-kpi-value::before    { background: var(--orange); opacity: 1; }
+  #view-customers .cst-kpi-label {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 6px; font-weight: 600;
+  }
+  #view-customers .cst-kpi-value {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700;
+    color: var(--text); line-height: 1;
+  }
+  #view-customers .cst-kpi-sub {
+    font-size: 11px; color: var(--text-muted); margin-top: 4px;
+  }
+
+  /* Master-detail split */
+  #view-customers .cst-split {
+    display: grid; grid-template-columns: 320px 1fr; gap: 16px;
+    flex: 1; min-height: 560px;
+  }
+  @media (max-width: 900px) { #view-customers .cst-split { grid-template-columns: 1fr; } }
+
+  /* LEFT: list pane */
+  #view-customers .cst-list-pane { min-width: 0; }
+  #view-customers .cst-list-wrap {
+    flex: 1; overflow-y: auto; padding: 0 8px 8px;
+  }
+
+  /* Filter chips */
+  #view-customers .cst-chip {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-muted); padding: 4px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+  #view-customers .cst-chip:hover { background: var(--surface2); color: var(--text); }
+  #view-customers .cst-chip.cst-chip-active {
+    background: var(--orange); border-color: var(--orange); color: #fff;
+  }
+
+  /* Customer list rows */
+  #view-customers .cst-list-item {
+    padding: 10px 12px; border-radius: 6px; cursor: pointer;
+    transition: background 0.12s; margin-bottom: 2px;
+    border-left: 3px solid transparent;
+  }
+  #view-customers .cst-list-item:hover { background: var(--surface2); }
+  #view-customers .cst-list-item.cst-list-selected {
+    background: var(--surface2); border-left-color: var(--orange);
+  }
+  #view-customers .cst-list-name {
+    font-weight: 600; font-size: 13px; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  #view-customers .cst-list-meta {
+    font-size: 11px; color: var(--text-muted); margin-top: 2px;
+    display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  }
+  #view-customers .cst-list-amc-dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    vertical-align: middle;
+  }
+  #view-customers .cst-list-empty {
+    padding: 30px 12px; text-align: center; color: var(--text-muted); font-size: 12px;
+  }
+
+  /* RIGHT: detail pane */
+  #view-customers .cst-detail-pane { min-width: 0; }
+  #view-customers .cst-detail-empty {
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    height: 100%; color: var(--text-muted); font-size: 14px; padding: 40px;
+  }
+  #view-customers .cst-detail-header {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 18px 22px; border-bottom: 1px solid var(--border);
+  }
+
+  /* Status pills */
+  #view-customers .cst-status-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .cst-status-active   { background: rgba(61,214,140,0.15); color: var(--green); }
+  .cst-status-prospect { background: rgba(255,209,102,0.15); color: #FFD166; }
+  .cst-status-inactive { background: rgba(150,150,150,0.15); color: var(--text-muted); }
+  .cst-status-lost     { background: rgba(255,92,92,0.15); color: #FF5C5C; }
+
+  #view-customers .cst-amc-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .cst-amc-none    { background: rgba(150,150,150,0.12); color: var(--text-dim); }
+  .cst-amc-basic   { background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .cst-amc-premium { background: rgba(232,119,34,0.18); color: var(--orange); }
+
+  /* Tabs */
+  #view-customers .cst-tabs {
+    display: flex; gap: 0; padding: 0 22px; border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  #view-customers .cst-tab {
+    background: transparent; border: none; border-bottom: 2px solid transparent;
+    color: var(--text-muted); padding: 12px 14px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s; white-space: nowrap;
+  }
+  #view-customers .cst-tab:hover { color: var(--text); }
+  #view-customers .cst-tab.cst-tab-active {
+    color: var(--orange); border-bottom-color: var(--orange);
+  }
+  #view-customers .cst-tab-count {
+    display: inline-block; background: var(--surface2); color: var(--text-muted);
+    padding: 1px 7px; border-radius: 10px; font-size: 11px; margin-left: 4px;
+    font-weight: 700;
+  }
+  #view-customers .cst-tab-active .cst-tab-count { background: var(--orange); color: #fff; }
+  #view-customers .cst-tab-pane { display: none; padding: 18px 22px; }
+  #view-customers .cst-tab-pane.cst-tab-pane-active { display: block; }
+
+  /* Overview fields (read-only) */
+  #view-customers .cst-field-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 24px;
+    margin-bottom: 20px;
+  }
+  #view-customers .cst-field-label {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 600; margin-bottom: 3px;
+  }
+  #view-customers .cst-field-value {
+    font-size: 13px; color: var(--text);
+  }
+  #view-customers .cst-field-value.cst-dim { color: var(--text-muted); font-style: italic; }
+
+  /* Tab pane lists (deals, drones, interactions) */
+  #view-customers .cst-subtitle {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 600; margin: 18px 0 8px;
+  }
+  #view-customers .cst-list-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer;
+    transition: background 0.12s;
+  }
+  #view-customers .cst-list-row:hover { background: var(--surface2); margin: 0 -8px; padding: 12px 8px; border-radius: 4px; }
+  #view-customers .cst-list-row:last-child { border-bottom: none; }
+  #view-customers .cst-list-icon {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--surface2);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    font-size: 16px;
+  }
+  #view-customers .cst-list-body { flex: 1; min-width: 0; }
+  #view-customers .cst-list-title { font-size: 13px; color: var(--text); font-weight: 600; }
+  #view-customers .cst-list-subtitle { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  #view-customers .cst-list-meta-right { font-size: 11px; color: var(--text-muted); text-align: right; white-space: nowrap; }
+
+  /* Empty tab state */
+  #view-customers .cst-empty {
+    padding: 32px; text-align: center; color: var(--text-muted); font-size: 13px;
+    background: var(--surface2); border-radius: 8px; border: 1px dashed var(--border);
+  }
+
+  /* Notes tab */
+  #view-customers .cst-notes-area {
+    width: 100%; min-height: 220px; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px; color: var(--text); font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    resize: vertical;
+  }
+  #view-customers .cst-notes-area:focus { outline: none; border-color: var(--orange); }
+
+  /* Tab action bar */
+  #view-customers .cst-tab-actions {
+    display: flex; justify-content: flex-end; margin-bottom: 12px;
+  }
+
+  /* Deal stage pill (reused visual on customer cards) */
+  #view-customers .cst-deal-stage {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .cst-deal-meeting     { background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .cst-deal-proposal    { background: rgba(255,209,102,0.15); color: #FFD166; }
+  .cst-deal-negotiation { background: rgba(232,119,34,0.18); color: var(--orange); }
+  .cst-deal-won         { background: rgba(61,214,140,0.18); color: var(--green); }
+  .cst-deal-lost        { background: rgba(255,92,92,0.15); color: #FF5C5C; }
+
+  /* ═════════════════════════════════════════════════════════════
+     AFTER SALES VIEW — scoped to #view-aftersales
+     ═════════════════════════════════════════════════════════════ */
+  #view-aftersales { padding: 20px 24px 40px; }
+
+  /* Sub-tabs at top */
+  #view-aftersales .as-tabs {
+    display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 16px;
+  }
+  #view-aftersales .as-tab {
+    background: transparent; border: none; border-bottom: 2px solid transparent;
+    color: var(--text-muted); padding: 10px 18px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+  }
+  #view-aftersales .as-tab:hover { color: var(--text); }
+  #view-aftersales .as-tab.as-tab-active {
+    color: var(--orange); border-bottom-color: var(--orange);
+  }
+
+  /* KPIs */
+  #view-aftersales .as-kpi-row {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  }
+  @media (max-width: 1200px) { #view-aftersales .as-kpi-row { grid-template-columns: repeat(2, 1fr); } }
+  #view-aftersales .as-kpi {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; position: relative; overflow: hidden;
+  }
+  #view-aftersales .as-kpi::before {
+    content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+    background: var(--orange); opacity: 0.6;
+  }
+  #view-aftersales .as-kpi-warn::before   { background: #FFD166; opacity: 1; }
+  #view-aftersales .as-kpi-active::before { background: var(--green); opacity: 1; }
+  #view-aftersales .as-kpi-info::before   { background: #60A5FA; opacity: 1; }
+  #view-aftersales .as-kpi-crit::before   { background: #FF5C5C; opacity: 1; }
+  #view-aftersales .as-kpi-label {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 6px; font-weight: 600;
+  }
+  #view-aftersales .as-kpi-value {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700;
+    color: var(--text); line-height: 1;
+  }
+  #view-aftersales .as-kpi-sub {
+    font-size: 11px; color: var(--text-muted); margin-top: 4px;
+  }
+
+  /* Funnel */
+  #view-aftersales .as-funnel {
+    display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px;
+  }
+  @media (max-width: 1100px) { #view-aftersales .as-funnel { grid-template-columns: repeat(5, 1fr); } }
+  #view-aftersales .as-funnel-cell {
+    background: var(--surface2); border-radius: 6px; padding: 10px 8px;
+    text-align: center; cursor: pointer; transition: all 0.15s;
+    border: 1px solid transparent;
+  }
+  #view-aftersales .as-funnel-cell:hover { background: var(--surface3); border-color: var(--orange); }
+  #view-aftersales .as-funnel-label {
+    font-size: 9.5px; letter-spacing: 0.06em; color: var(--text-muted);
+    text-transform: uppercase; font-weight: 600;
+  }
+  #view-aftersales .as-funnel-count {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700;
+    color: var(--text); line-height: 1; margin-top: 4px;
+  }
+
+  /* Two-column layout */
+  #view-aftersales .as-two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  @media (max-width: 1000px) { #view-aftersales .as-two-col { grid-template-columns: 1fr; } }
+
+  #view-aftersales .as-mini-row {
+    display: flex; align-items: flex-start; gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid var(--border); cursor: pointer;
+  }
+  #view-aftersales .as-mini-row:last-child { border-bottom: none; }
+  #view-aftersales .as-mini-row:hover { background: var(--surface2); margin: 0 -12px; padding: 10px 12px; border-radius: 4px; }
+  #view-aftersales .as-mini-ref { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--orange); font-weight: 600; white-space: nowrap; }
+  #view-aftersales .as-mini-body { flex: 1; min-width: 0; }
+  #view-aftersales .as-mini-title { font-size: 13px; color: var(--text); font-weight: 600; }
+  #view-aftersales .as-mini-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* Job-type pills */
+  .as-type-pill {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .as-type-scheduled  { background: rgba(61,214,140,0.15); color: var(--green); }
+  .as-type-damage     { background: rgba(255,209,102,0.15); color: #FFD166; }
+  .as-type-crash      { background: rgba(255,92,92,0.15); color: #FF5C5C; }
+  .as-type-warranty   { background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .as-type-inspection { background: rgba(184,158,255,0.15); color: #B89EFF; }
+
+  /* Status pills */
+  .as-status-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .as-status-intake            { background: rgba(150,150,150,0.15); color: var(--text-muted); }
+  .as-status-visual            { background: rgba(184,158,255,0.15); color: #B89EFF; }
+  .as-status-technical         { background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .as-status-awaiting_approval { background: rgba(255,209,102,0.2); color: #FFD166; }
+  .as-status-approved          { background: rgba(61,214,140,0.15); color: var(--green); }
+  .as-status-in_repair         { background: rgba(232,119,34,0.2); color: var(--orange); }
+  .as-status-test_flight       { background: rgba(96,165,250,0.2); color: #60A5FA; }
+  .as-status-delivered         { background: rgba(61,214,140,0.2); color: var(--green); }
+  .as-status-closed            { background: rgba(100,100,100,0.2); color: var(--text-dim); }
+  .as-status-on_hold           { background: rgba(255,92,92,0.15); color: #FF5C5C; }
+
+  /* Warranty-status pill */
+  .as-wrstatus-none         { background: rgba(100,100,100,0.15); color: var(--text-dim); }
+  .as-wrstatus-pending_pack { background: rgba(150,150,150,0.15); color: var(--text-muted); }
+  .as-wrstatus-submitted    { background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .as-wrstatus-approved     { background: rgba(61,214,140,0.18); color: var(--green); }
+  .as-wrstatus-rejected     { background: rgba(255,92,92,0.18); color: #FF5C5C; }
+
+  /* Wide drawer for jobs (more content) */
+  .pl-drawer-wide { width: min(560px, 96vw); }
+
+  /* As-section header inside drawer */
+  .as-section-header {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--orange); font-weight: 700;
+    margin: 20px 0 10px; padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+  }
+  .as-section-header:first-of-type { margin-top: 0; }
+
+  /* Timeline */
+  #view-aftersales .as-timeline, #jobDrawer .as-timeline {
+    max-height: 200px; overflow-y: auto; margin-top: 6px;
+    border-left: 2px solid var(--border); padding-left: 12px;
+  }
+  .as-timeline-event {
+    padding: 6px 0; font-size: 12px; color: var(--text);
+    border-bottom: 1px dashed var(--border);
+  }
+  .as-timeline-event:last-child { border-bottom: none; }
+  .as-timeline-date {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--text-dim); margin-bottom: 2px;
+  }
+  .as-timeline-empty {
+    padding: 10px; text-align: center; color: var(--text-dim);
+    font-size: 11px; font-style: italic;
+  }
+
+  /* ═════════════════════════════════════════════════════════════
+     FLEET VIEW — all styles scoped to #view-fleet
+     ═════════════════════════════════════════════════════════════ */
+  #view-fleet { padding: 20px 24px 40px; }
+  #view-fleet .fl-kpi-row {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+  }
+  @media (max-width: 1100px) { #view-fleet .fl-kpi-row { grid-template-columns: repeat(2, 1fr); } }
+  #view-fleet .fl-kpi {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; position: relative; overflow: hidden;
+  }
+  #view-fleet .fl-kpi::before {
+    content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+    background: var(--orange); opacity: 0.6;
+  }
+  #view-fleet .fl-kpi-warn::before  { background: #FFD166; opacity: 1; }
+  #view-fleet .fl-kpi-crit::before  { background: #FF5C5C; opacity: 1; }
+  #view-fleet .fl-kpi-stale::before { background: #B89EFF; opacity: 1; }
+  #view-fleet .fl-kpi-label {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 8px; font-weight: 600;
+  }
+  #view-fleet .fl-kpi-value {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 32px; font-weight: 700;
+    color: var(--text); line-height: 1;
+  }
+  #view-fleet .fl-kpi-sub {
+    font-size: 11px; color: var(--text-muted); margin-top: 6px;
+  }
+
+  #view-fleet .fl-filter { min-width: 160px; height: 34px; font-size: 13px; }
+  #view-fleet .fl-table-wrap { overflow-x: auto; }
+  #view-fleet .fl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  #view-fleet .fl-table th {
+    text-align: left; padding: 10px 14px; background: var(--surface2);
+    color: var(--text-dim); font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--border); position: sticky; top: 0;
+  }
+  #view-fleet .fl-table td {
+    padding: 12px 14px; border-bottom: 1px solid var(--border);
+    color: var(--text); vertical-align: middle;
+  }
+  #view-fleet .fl-table tbody tr { cursor: pointer; transition: background 0.15s; }
+  #view-fleet .fl-table tbody tr:hover { background: var(--surface2); }
+
+  #view-fleet .fl-client-name { font-weight: 600; color: var(--text); }
+  #view-fleet .fl-serial { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
+  #view-fleet .fl-model-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+  }
+  .fl-model-C10 { background: rgba(96,165,250,0.15); color: #60A5FA; }
+  .fl-model-L10 { background: rgba(61,214,140,0.15); color: var(--green); }
+  .fl-model-L30 { background: rgba(232,119,34,0.15); color: var(--orange); }
+
+  #view-fleet .fl-hours-cell { font-family: 'DM Mono', monospace; text-align: right; font-weight: 600; color: var(--text); }
+  #view-fleet .fl-hours-sub  { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
+
+  #view-fleet .fl-status-pill {
+    display: inline-flex; align-items: center; padding: 4px 11px;
+    border-radius: 12px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.04em; white-space: nowrap;
+  }
+  .fl-status-ok          { background: rgba(61,214,140,0.15); color: var(--green); }
+  .fl-status-approaching { background: rgba(255,209,102,0.15); color: #FFD166; }
+  .fl-status-due         { background: rgba(232,119,34,0.2);  color: var(--orange); }
+  .fl-status-critical    { background: rgba(255,92,92,0.2);   color: #FF5C5C; }
+  .fl-status-overdue     { background: #FF5C5C;               color: #FFF; }
+  .fl-status-stale       { background: rgba(184,158,255,0.18);color: #B89EFF; }
+
+  #view-fleet .fl-dataage {
+    font-family: 'DM Mono', monospace; font-size: 12px;
+    padding: 2px 8px; border-radius: 4px; display: inline-block;
+  }
+  #view-fleet .fl-dataage-fresh { color: var(--text-dim); background: var(--surface2); }
+  #view-fleet .fl-dataage-old   { color: #FFD166; background: rgba(255,209,102,0.12); }
+  #view-fleet .fl-dataage-stale { color: #B89EFF; background: rgba(184,158,255,0.15); }
+
+  #view-fleet .fl-check-text { font-size: 12px; color: var(--text); margin-top: 3px; }
+  #view-fleet .fl-row-open { color: var(--orange); font-size: 18px; text-align: right; }
+  #view-fleet .fl-empty { padding: 40px; text-align: center; color: var(--text-muted); font-size: 13px; }
+
+  /* ═════════════════════════════════════════════════════════════
      DOCUMENTS VIEW (Portal) — all styles scoped to #view-documents
      ═════════════════════════════════════════════════════════════ */
   #view-documents {
@@ -1102,6 +1732,7 @@
   #view-documents .dp-type-pdf{background:rgba(232,119,34,0.12);color:var(--dp-orange);border:1px solid var(--dp-border-orange)}
   #view-documents .dp-type-xlsx{background:rgba(34,178,104,0.12);color:var(--dp-green);border:1px solid rgba(46,204,113,0.3)}
   #view-documents .dp-type-docx{background:rgba(64,128,232,0.12);color:#60A5FA;border:1px solid rgba(96,165,250,0.3)}
+  #view-documents .dp-type-pptx{background:rgba(212,100,43,0.14);color:#FFA366;border:1px solid rgba(255,163,102,0.3)}
   #view-documents .dp-doc-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:8px;letter-spacing:-0.01em}
   #view-documents .dp-doc-desc{font-size:12.5px;line-height:1.55;color:var(--dp-text-muted);font-weight:300}
   #view-documents .dp-doc-footer{margin-top:12px;padding-top:10px;border-top:1px solid var(--dp-border);display:flex;align-items:center;justify-content:space-between}
@@ -1397,6 +2028,67 @@
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     LOGIN SCREEN (shown when not authenticated)
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="loginShell" class="login-shell">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="login-logo-mark">CENTIQUS</div>
+      <div class="login-logo-sub">Operations Hub</div>
+    </div>
+    <div id="loginForm">
+      <h2 class="login-title" id="loginHeader">Sign in</h2>
+      <p class="login-subtitle" id="loginSubtitle">Use your Centiqus email and password.</p>
+      <div class="login-field">
+        <label class="login-label">Email</label>
+        <input type="email" class="login-input" id="loginEmail" autocomplete="username" placeholder="you@centiqus.com.cy">
+      </div>
+      <div class="login-field">
+        <label class="login-label">Password</label>
+        <input type="password" class="login-input" id="loginPassword" autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <div id="loginError" class="login-error" style="display:none;"></div>
+      <button class="login-btn" id="loginBtn">Sign in →</button>
+      <div class="login-footnote">
+        <span id="loginFootnoteText">Need access? Contact the COO.</span>
+      </div>
+    </div>
+
+    <!-- First-run admin setup -->
+    <div id="setupForm" style="display:none;">
+      <h2 class="login-title">Welcome — set up admin</h2>
+      <p class="login-subtitle">No users exist yet. Create the first admin account. This user can create all other users.</p>
+      <div class="login-field">
+        <label class="login-label">Admin email</label>
+        <input type="email" class="login-input" id="setupEmail" autocomplete="username" placeholder="you@centiqus.com.cy">
+      </div>
+      <div class="login-field">
+        <label class="login-label">Password (min 8 characters)</label>
+        <input type="password" class="login-input" id="setupPassword" autocomplete="new-password" placeholder="••••••••">
+      </div>
+      <div class="login-field">
+        <label class="login-label">Confirm password</label>
+        <input type="password" class="login-input" id="setupPasswordConfirm" autocomplete="new-password" placeholder="••••••••">
+      </div>
+      <div id="setupError" class="login-error" style="display:none;"></div>
+      <button class="login-btn" id="setupBtn">Create admin →</button>
+      <div class="login-footnote">
+        <span style="color:#E87722;">⚠ Important:</span> once created, this account is the only way in. Back up your password.
+      </div>
+    </div>
+  </div>
+  <div class="login-legal">
+    <div>Centiqus Holdings Ltd · Company HE477077 · DCA Auth No. CYPm6mwtn852ewzr</div>
+    <div style="margin-top:4px;">This portal is for authorised personnel only. All activity is logged.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     APP SHELL (hidden until authenticated)
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="appShell" style="display:none;">
+
 <!-- ─── SIDEBAR ──────────────────────────────── -->
 <nav class="sidebar">
   <div class="sidebar-logo" style="display:flex;align-items:center;gap:12px;">
@@ -1428,9 +2120,17 @@
     </div>
 
     <div class="nav-section-label">Commercial</div>
-    <div class="nav-item" data-view="pipeline">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/><circle cx="7" cy="14" r="1.5" fill="currentColor" stroke="none"/><circle cx="11" cy="10" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1.5" fill="currentColor" stroke="none"/><circle cx="20" cy="9" r="1.5" fill="currentColor" stroke="none"/></svg>
-      <span>Pipeline</span>
+    <div class="nav-item" data-view="customers">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M17 11a3 3 0 100-6"/><path d="M3 20c0-3 3-6 6-6s6 3 6 6"/><path d="M17 14c2.5 0 5 2 5 5"/></svg>
+      <span>Customers</span>
+    </div>
+    <div class="nav-item" data-view="fleet">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l7 4v6c0 4-3 7-7 10-4-3-7-6-7-10V6l7-4z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span>Client Fleet</span>
+    </div>
+    <div class="nav-item" data-view="aftersales">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <span>After Sales</span>
     </div>
     <a class="nav-item nav-item-external" href="https://drive.google.com/drive/folders/1p6JI65kAxqquVAUDqEH-s6AJvEGMaZvT?usp=drive_link" target="_blank" rel="noopener" style="text-decoration:none;">
       <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg>
@@ -1461,6 +2161,12 @@
       <span>Import backup</span>
     </div>
     <input type="file" id="importFileInput" accept="application/json,.json" style="display:none;">
+
+    <div class="nav-section-label" data-nav-admin-only="true">Admin</div>
+    <div class="nav-item" data-view="settings" data-nav-admin-only="true">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      <span>Users &amp; Access</span>
+    </div>
   </div>
   <div class="sidebar-foot">
     v2.0 · Apr 2026<br>
@@ -1472,6 +2178,12 @@
 <main class="main">
   <div class="topbar">
     <h1 id="pageTitle">Documents</h1>
+    <div style="flex:1;"></div>
+    <div class="user-indicator" id="userIndicator" style="display:none;margin-right:12px;">
+      <span class="user-indicator-email" id="userIndicatorEmail">—</span>
+      <span class="user-indicator-role" id="userIndicatorRole">—</span>
+      <span class="user-indicator-logout" id="userIndicatorLogout" title="Sign out">Logout</span>
+    </div>
     <div class="topbar-actions" id="schedulerTopActions" style="display:none;">
       <button class="btn btn-ghost" id="btnToday">Today</button>
       <button class="btn btn-primary" id="btnNewMission">
@@ -1500,7 +2212,7 @@
         <h1 class="dp-hero-title">Document<br><em>Portal</em></h1>
         <p class="dp-hero-sub">Official operational documentation for Centiqus Holdings Ltd. All documents are controlled under the Operations Manual document control procedure. Click any document to open it directly.</p>
         <div class="dp-stats-bar">
-          <div class="dp-stat"><div class="dp-stat-num">27</div><div class="dp-stat-label">Documents</div></div>
+          <div class="dp-stat"><div class="dp-stat-num">37</div><div class="dp-stat-label">Documents</div></div>
           <div class="dp-stat"><div class="dp-stat-num">8</div><div class="dp-stat-label">Categories</div></div>
           <div class="dp-stat"><div class="dp-stat-num">2026</div><div class="dp-stat-label">Current Issue</div></div>
           <div class="dp-stat"><div class="dp-stat-num">SAIL II</div><div class="dp-stat-label">Auth Level</div></div>
@@ -1689,12 +2401,18 @@
       </div>
 
       <!-- 08 CLIENT COMMITMENTS -->
-      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">08</span><span class="dp-section-title">Client Commitments &amp; Service Standards</span><span class="dp-section-count">3 documents</span></div>
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">08</span><span class="dp-section-title">Client Commitments &amp; Service Standards</span><span class="dp-section-count">4 documents</span></div>
       <div class="dp-doc-grid">
         <a class="dp-doc-card" href="https://drive.google.com/file/d/1xErqRQ71tAJ81MrUNsXTKnxVmZGlFUOf/view?usp=drive_link" target="_blank" onclick="trackOpen('Master Service Agreement','CTQ-MSA-001')">
           <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-MSA-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
           <div class="dp-doc-title">Master Service Agreement — Client Edition</div>
           <div class="dp-doc-desc">The main commercial contract signed with each client. 17 clauses plus Annexes A (Statement of Work), B (SLA reference) and C (Fees). Covers scope, fees and payment, changes and cancellations, IP and data, GDPR, insurance, confidentiality, liability cap, term and termination, force majeure, and Cyprus-law dispute resolution.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 23.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1TiyH2E_cYUtZfD3JKpK6X85gsiP8oevm/view?usp=drive_link" target="_blank" onclick="trackOpen('Warranty Rules and Procedures','CTQ-WR-001')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">CTQ-WR-001</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Warranty Rules &amp; Procedures</div>
+          <div class="dp-doc-desc">How Centiqus manages warranty on every ABZ Innovation drone sold in Cyprus. 16 sections covering the two-tier warranty chain (ABZ → Centiqus → Client), warranty periods (12/24-month), what is and isn't covered, exclusions (including the 300-hour service rule), the six-stage claim procedure, timelines, costs, and the four mandatory clauses every client contract must include.</div>
           <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 23.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
         </a>
         <a class="dp-doc-card" href="https://drive.google.com/file/d/1geiRQroBTAuR648840dQ0i3YREeVFrw3/view?usp=drive_link" target="_blank" onclick="trackOpen('Client SLA','CTQ-SLA-001')">
@@ -1708,6 +2426,70 @@
           <div class="dp-doc-title">SLA — Internal Standard</div>
           <div class="dp-doc-desc">Internal operational standard paired with CTQ-SLA-001. Pairs every client-facing target with a tighter internal target. Per-service operational discipline, record discipline, crew fitness, duty and rest limits, escalation triggers, monthly ops meeting, and formal deviation process.</div>
           <div class="dp-doc-footer"><span class="dp-doc-rev">Rev: 1.0 &nbsp;|&nbsp; 20.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- SECTION 09: SALES PROPOSALS -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">09</span><span class="dp-section-title">Sales Proposals &amp; Offers</span><span class="dp-section-count">5 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://docs.google.com/presentation/d/1MEMn6hY45V1txO5BKNx6tm98rqCb8NbJ/edit?usp=drive_link&ouid=112820434671121643451&rtpof=true&sd=true" target="_blank" onclick="trackOpen('Maintenance Offer','CTQ-SALES-AMC')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">AMC OFFER</span><div class="dp-badges"><span class="dp-file-type dp-type-pptx">PPTX</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Maintenance Contract Offer — Standard Deck</div>
+          <div class="dp-doc-desc">Annual Maintenance Contract proposal deck covering Basic and Premium tiers across L10, L30 and C10. Includes two visits per year, pricing by platform, preferential labour and parts rates, and the comparison table for client-facing presentations.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Updated 23.04.2026</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1o5eFpZa55aaNPSxgsJbSGTq2kxM3ii-L/view?usp=drive_link" target="_blank" onclick="trackOpen('PwC Proposal','CTQ-SALES-PWC')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">PwC CYPRUS</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">PwC Cyprus — Facade &amp; PV Cleaning Proposal</div>
+          <div class="dp-doc-desc">Proposal to PwC Cyprus for drone-based facade cleaning and rooftop PV maintenance at their Nicosia headquarters. Scope, pricing, indicative schedule, and SLA terms.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Meeting scheduled — Popi Tziapoura</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1A-C6p9ymIjY02E4cDYcnVaB-Jld4EzuE/view?usp=drive_link" target="_blank" onclick="trackOpen('360 Nicosia Tower Proposal','CTQ-SALES-360')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">360 TOWER</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">360 Nicosia Tower — Facade Cleaning Proposal</div>
+          <div class="dp-doc-desc">Proposal to 360 Nicosia Tower (Cyfield / Tasos Pingas) for exterior facade cleaning. Annual contract at €35,000 for two visits, or per-visit at €18,500. Covers the full tower facade.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Proposal stage · 50% probability</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1Qr9aVnDXF_SUYAgkVqxxLrkey1rLemiA/view?usp=drive_link" target="_blank" onclick="trackOpen('Landmark Proposal','CTQ-SALES-LDM')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">LANDMARK</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">The Landmark Nicosia — Facade Cleaning Proposal</div>
+          <div class="dp-doc-desc">Proposal to The Landmark Nicosia (Kyriacos Danos) for ongoing facade cleaning services. Scope and pricing for the Nicosia landmark property.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Won — annual contract in place</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1GUsSLLw1yHNa4iP1BAglvrHya2PBKCiX/view?usp=drive_link" target="_blank" onclick="trackOpen('Photiades Proposal','CTQ-SALES-PHD')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">PHOTIADES</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Photos Photiades Breweries — Annual Contract Proposal</div>
+          <div class="dp-doc-desc">Proposal to Photos Photiades Breweries for annual facade cleaning plus rooftop PV zone service. Settled at €9,900/year: €8,900 core facade contract + €500/visit for rooftop PV. 15% loyalty discount on additional services.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Negotiation · 75% probability</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+      </div>
+
+      <!-- SECTION 10: TRAINING MATERIALS -->
+      <div class="dp-section-header dp-fade-in"><span class="dp-section-num">10</span><span class="dp-section-title">Training Materials</span><span class="dp-section-count">4 documents</span></div>
+      <div class="dp-doc-grid">
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1rFJuUyjx1U7mKqTak0BXdd-CdQHqvach/view?usp=drive_link" target="_blank" onclick="trackOpen('Drone Training','CTQ-TRN-ABZ')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">ABZ TRAINING</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">ABZ Drone Operations Training — Full Deck</div>
+          <div class="dp-doc-desc">Comprehensive 44-slide training deck for ABZ Innovation drone operations. Covers platform familiarisation, operating procedures, flight planning, emergency handling and maintenance fundamentals. Used for the train-the-trainer onboarding.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Used in CTQ-TF-003 training</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://docs.google.com/presentation/d/15GvGJLJMPG4TIct_qE0KR66MVjpzV-L1/edit?usp=drive_link&ouid=112820434671121643451&rtpof=true&sd=true" target="_blank" onclick="trackOpen('Drone Comparison','CTQ-TRN-CMP')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">DRONE COMP</span><div class="dp-badges"><span class="dp-file-type dp-type-pptx">PPTX</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">Drone Comparison — C10 vs L10 vs L30</div>
+          <div class="dp-doc-desc">Side-by-side comparison deck for the three ABZ platforms in the Centiqus fleet. Payloads, use cases, performance envelopes, and platform-selection guide for matching drones to client requirements.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Reference deck — internal</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1n3Kb9EWNWO-kiq7ADdqHHqR1CppofKA8/view?usp=drive_link" target="_blank" onclick="trackOpen('C10 Training Guide','CTQ-TRN-C10')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">C10 GUIDE</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">C10 Training Guide — Operations &amp; Handling</div>
+          <div class="dp-doc-desc">Dedicated training guide for the C10 platform. Covers facade and PV cleaning missions, pre-flight checks specific to the C10, payload handling, water system operation, and mission-specific safety procedures.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">C10-specific reference</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
+        </a>
+        <a class="dp-doc-card" href="https://drive.google.com/file/d/1K0r4rq4OtPgnOIg7OSqORZUcTOOF_SOe/view?usp=drive_link" target="_blank" onclick="trackOpen('C10 Nozzle','CTQ-TRN-NOZ')">
+          <div class="dp-doc-card-top"><span class="dp-doc-ref">C10 NOZZLE</span><div class="dp-badges"><span class="dp-file-type dp-type-pdf">PDF</span><span class="dp-doc-badge dp-badge-new">New</span></div></div>
+          <div class="dp-doc-title">C10 Nozzle Reference</div>
+          <div class="dp-doc-desc">Technical reference for C10 spray-nozzle configurations. Nozzle types, flow rates, application patterns, and when to swap between configurations for different facade materials and PV panel conditions.</div>
+          <div class="dp-doc-footer"><span class="dp-doc-rev">Technical reference</span><span class="dp-doc-open-btn">Open <svg viewBox="0 0 12 12" fill="none"><path d="M6.5 1H11V5.5M11 1L5 7M2 3H1V11H9V10" stroke="#E87722" stroke-width="1.3" stroke-linecap="round"/></svg></span></div>
         </a>
       </div>
 
@@ -2021,6 +2803,827 @@
       </div>
     </aside>
 
+    <!-- ─── VIEW: CUSTOMERS (CRM) ────────────────────── -->
+    <div class="view hidden" id="view-customers">
+      <!-- KPI row -->
+      <div class="cst-kpi-row">
+        <div class="cst-kpi">
+          <div class="cst-kpi-label">Total customers</div>
+          <div class="cst-kpi-value" id="cstKpiTotal">—</div>
+          <div class="cst-kpi-sub">across all statuses</div>
+        </div>
+        <div class="cst-kpi cst-kpi-active">
+          <div class="cst-kpi-label">Active</div>
+          <div class="cst-kpi-value" id="cstKpiActive">—</div>
+          <div class="cst-kpi-sub">paying or under AMC</div>
+        </div>
+        <div class="cst-kpi cst-kpi-prospect">
+          <div class="cst-kpi-label">Prospects</div>
+          <div class="cst-kpi-value" id="cstKpiProspect">—</div>
+          <div class="cst-kpi-sub">in active pursuit</div>
+        </div>
+        <div class="cst-kpi cst-kpi-amc">
+          <div class="cst-kpi-label">AMC holders</div>
+          <div class="cst-kpi-value" id="cstKpiAmc">—</div>
+          <div class="cst-kpi-sub" id="cstKpiAmcSub">Basic + Premium</div>
+        </div>
+        <div class="cst-kpi cst-kpi-value">
+          <div class="cst-kpi-label">Pipeline value</div>
+          <div class="cst-kpi-value" id="cstKpiValue">—</div>
+          <div class="cst-kpi-sub">open deals, unweighted</div>
+        </div>
+      </div>
+
+      <!-- Master-detail layout -->
+      <div class="cst-split" style="margin-top:16px;">
+        <!-- LEFT: customer list -->
+        <div class="cst-list-pane">
+          <div class="panel" style="height:100%;display:flex;flex-direction:column;">
+            <div class="panel-head">
+              <h3>Customers</h3>
+              <button class="btn btn-primary btn-sm" id="cstBtnNew">+ New</button>
+            </div>
+            <div style="padding:12px 16px 8px;display:flex;gap:8px;flex-direction:column;">
+              <input type="text" class="form-input" id="cstSearch" placeholder="Search name or contact...">
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button class="cst-chip cst-chip-active" data-filter="all">All</button>
+                <button class="cst-chip" data-filter="active">Active</button>
+                <button class="cst-chip" data-filter="prospect">Prospects</button>
+                <button class="cst-chip" data-filter="inactive">Inactive</button>
+                <button class="cst-chip" data-filter="lost">Lost</button>
+              </div>
+            </div>
+            <div class="cst-list-wrap" id="cstList"></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: customer detail -->
+        <div class="cst-detail-pane">
+          <div class="panel" id="cstDetailPanel" style="height:100%;">
+            <!-- Empty state -->
+            <div id="cstDetailEmpty" class="cst-detail-empty">
+              <svg width="64" height="64" fill="none" stroke="#555" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M3 20c0-3 3-6 6-6s6 3 6 6"/></svg>
+              <div style="margin-top:16px;">Select a customer to view details</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">or click <strong style="color:var(--orange);">+ New</strong> to create one</div>
+            </div>
+
+            <!-- Detail content (shown when a customer is selected) -->
+            <div id="cstDetailContent" style="display:none;height:100%;overflow-y:auto;">
+              <!-- Header -->
+              <div class="cst-detail-header">
+                <div style="flex:1;min-width:0;">
+                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <h2 id="cstDetailName" style="margin:0;font-size:22px;"></h2>
+                    <span class="cst-status-pill" id="cstDetailStatus"></span>
+                    <span class="cst-amc-pill" id="cstDetailAmc"></span>
+                  </div>
+                  <div id="cstDetailSubtitle" style="color:var(--text-muted);font-size:13px;margin-top:4px;"></div>
+                </div>
+                <div style="display:flex;gap:6px;">
+                  <button class="btn btn-sm" id="cstBtnEdit">Edit</button>
+                  <button class="btn btn-sm btn-danger" id="cstBtnDelete">Delete</button>
+                </div>
+              </div>
+
+              <!-- Tabs -->
+              <div class="cst-tabs">
+                <button class="cst-tab cst-tab-active" data-tab="overview">Overview</button>
+                <button class="cst-tab" data-tab="deals">Deals <span class="cst-tab-count" id="cstTabCountDeals">0</span></button>
+                <button class="cst-tab" data-tab="drones">Drones <span class="cst-tab-count" id="cstTabCountDrones">0</span></button>
+                <button class="cst-tab" data-tab="interactions">Interactions <span class="cst-tab-count" id="cstTabCountInteractions">0</span></button>
+                <button class="cst-tab" data-tab="aftersales">After-sales <span class="cst-tab-count" id="cstTabCountJobs">0</span></button>
+                <button class="cst-tab" data-tab="notes">Notes</button>
+              </div>
+
+              <!-- Tab panes -->
+              <div class="cst-tab-pane cst-tab-pane-active" id="cstTabOverview"></div>
+              <div class="cst-tab-pane" id="cstTabDeals"></div>
+              <div class="cst-tab-pane" id="cstTabDrones"></div>
+              <div class="cst-tab-pane" id="cstTabInteractions"></div>
+              <div class="cst-tab-pane" id="cstTabAftersales"></div>
+              <div class="cst-tab-pane" id="cstTabNotes"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── CUSTOMERS: customer drawer (create/edit) ─── -->
+    <div class="pl-drawer-backdrop" id="cstDrawerBackdrop"></div>
+    <aside class="pl-drawer" id="cstDrawer">
+      <div class="pl-drawer-head">
+        <h3 id="cstDrawerTitle">New customer</h3>
+        <button class="btn btn-icon btn-ghost" id="cstDrawerClose">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="pl-drawer-body">
+        <div class="form-row"><label class="form-label">Customer name *</label>
+          <input class="form-input" id="cstfName" placeholder="e.g. Photos Photiades Breweries"></div>
+        <div class="form-row-2">
+          <div><label class="form-label">Status</label>
+            <select class="form-select" id="cstfStatus">
+              <option value="prospect">Prospect</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="lost">Lost</option>
+            </select></div>
+          <div><label class="form-label">Industry</label>
+            <input class="form-input" id="cstfIndustry" placeholder="e.g. Beverage, Construction, Solar..."></div>
+        </div>
+        <div class="form-row"><label class="form-label">Company size</label>
+          <select class="form-select" id="cstfSize">
+            <option value="">—</option>
+            <option value="sme">SME (&lt;50 employees)</option>
+            <option value="mid">Mid-market (50-500)</option>
+            <option value="enterprise">Enterprise (500+)</option>
+            <option value="gov">Government / public</option>
+          </select></div>
+
+        <div style="margin:18px 0 8px;padding:10px 12px;background:var(--surface2);border-radius:6px;border-left:3px solid var(--orange);">
+          <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-family:'DM Mono',monospace;">Primary contact</div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Name</label>
+            <input class="form-input" id="cstfContact" placeholder="Person's name"></div>
+          <div><label class="form-label">Role</label>
+            <input class="form-input" id="cstfRole" placeholder="e.g. Facilities Manager"></div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Email</label>
+            <input class="form-input" id="cstfEmail" type="email" placeholder="name@company.com"></div>
+          <div><label class="form-label">Phone</label>
+            <input class="form-input" id="cstfPhone" placeholder="+357 ..."></div>
+        </div>
+        <div class="form-row"><label class="form-label">Address</label>
+          <textarea class="form-input" id="cstfAddress" rows="2" placeholder="Street, city, country"></textarea></div>
+
+        <div style="margin:18px 0 8px;padding:10px 12px;background:var(--surface2);border-radius:6px;border-left:3px solid var(--orange);">
+          <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-family:'DM Mono',monospace;">AMC</div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">AMC tier</label>
+            <select class="form-select" id="cstfAmcTier">
+              <option value="none">None</option>
+              <option value="basic">Basic</option>
+              <option value="premium">Premium</option>
+            </select></div>
+          <div><label class="form-label">AMC renewal</label>
+            <input class="form-input" id="cstfAmcRenewal" type="date"></div>
+        </div>
+
+        <div class="form-row"><label class="form-label">Tags (comma-separated)</label>
+          <input class="form-input" id="cstfTags" placeholder="e.g. agri, priority, facade"></div>
+      </div>
+      <div class="pl-drawer-foot">
+        <button class="btn btn-danger" id="cstBtnDrawerDelete" style="display:none;">Delete</button>
+        <div style="flex:1;"></div>
+        <button class="btn" id="cstBtnDrawerCancel">Cancel</button>
+        <button class="btn btn-primary" id="cstBtnDrawerSave">Save</button>
+      </div>
+    </aside>
+
+    <!-- ─── DEAL drawer (create/edit a deal on a customer) ─── -->
+    <div class="pl-drawer-backdrop" id="dealDrawerBackdrop"></div>
+    <aside class="pl-drawer" id="dealDrawer">
+      <div class="pl-drawer-head">
+        <h3 id="dealDrawerTitle">New deal</h3>
+        <button class="btn btn-icon btn-ghost" id="dealDrawerClose">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="pl-drawer-body">
+        <div class="form-row"><label class="form-label">Deal title *</label>
+          <input class="form-input" id="dealfTitle" placeholder="e.g. Annual facade cleaning contract"></div>
+        <div class="form-row-2">
+          <div><label class="form-label">Service line</label>
+            <select class="form-select" id="dealfService">
+              <option value="facade">Facade / window cleaning (C10)</option>
+              <option value="pv">PV panel cleaning (C10)</option>
+              <option value="thermal">Thermal PV inspection</option>
+              <option value="agri">Agricultural spraying (L10/L30)</option>
+              <option value="mapping">Terrain mapping</option>
+              <option value="amc">AMC / maintenance contract</option>
+              <option value="other">Other</option>
+            </select></div>
+          <div><label class="form-label">Stage</label>
+            <select class="form-select" id="dealfStage">
+              <option value="meeting">Meeting / Discovery</option>
+              <option value="proposal">Proposal sent</option>
+              <option value="negotiation">Negotiation</option>
+              <option value="won">Won</option>
+              <option value="lost">Lost</option>
+            </select></div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Value (€)</label>
+            <input class="form-input" id="dealfValue" type="number" min="0" step="100"></div>
+          <div><label class="form-label">Probability (%)</label>
+            <input class="form-input" id="dealfProb" type="number" min="0" max="100" step="5"></div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Next action</label>
+            <input class="form-input" id="dealfNextAction" placeholder="e.g. Follow up after pilot demo"></div>
+          <div><label class="form-label">Next action date</label>
+            <input class="form-input" id="dealfNextDate" type="date"></div>
+        </div>
+        <div class="form-row" id="dealLostReasonRow" style="display:none;">
+          <label class="form-label">Why lost?</label>
+          <input class="form-input" id="dealfLostReason" placeholder="e.g. Price, timing, competitor"></div>
+        <div class="form-row"><label class="form-label">Notes</label>
+          <textarea class="form-input" id="dealfNotes" rows="3"></textarea></div>
+      </div>
+      <div class="pl-drawer-foot">
+        <button class="btn btn-danger" id="dealBtnDrawerDelete" style="display:none;">Delete</button>
+        <div style="flex:1;"></div>
+        <button class="btn" id="dealBtnDrawerCancel">Cancel</button>
+        <button class="btn btn-primary" id="dealBtnDrawerSave">Save</button>
+      </div>
+    </aside>
+
+    <!-- ─── INTERACTION drawer (log email/call/meeting) ─── -->
+    <div class="pl-drawer-backdrop" id="intDrawerBackdrop"></div>
+    <aside class="pl-drawer" id="intDrawer">
+      <div class="pl-drawer-head">
+        <h3 id="intDrawerTitle">Log interaction</h3>
+        <button class="btn btn-icon btn-ghost" id="intDrawerClose">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="pl-drawer-body">
+        <div class="form-row-2">
+          <div><label class="form-label">Type</label>
+            <select class="form-select" id="intfType">
+              <option value="email">Email</option>
+              <option value="call">Phone call</option>
+              <option value="meeting">Meeting</option>
+              <option value="site">Site visit</option>
+              <option value="note">Internal note</option>
+            </select></div>
+          <div><label class="form-label">Date *</label>
+            <input class="form-input" id="intfDate" type="date"></div>
+        </div>
+        <div class="form-row"><label class="form-label">Who</label>
+          <input class="form-input" id="intfWho" placeholder="Centiqus person + client person, e.g. Demetris + Tasos Pingas"></div>
+        <div class="form-row"><label class="form-label">Summary *</label>
+          <textarea class="form-input" id="intfSummary" rows="5" placeholder="What was discussed? Decisions? Next step?"></textarea></div>
+      </div>
+      <div class="pl-drawer-foot">
+        <button class="btn btn-danger" id="intBtnDrawerDelete" style="display:none;">Delete</button>
+        <div style="flex:1;"></div>
+        <button class="btn" id="intBtnDrawerCancel">Cancel</button>
+        <button class="btn btn-primary" id="intBtnDrawerSave">Save</button>
+      </div>
+    </aside>
+
+    <!-- ─── VIEW: FLEET ──────────────────────────────── -->
+    <div class="view hidden" id="view-fleet">
+      <!-- KPI row -->
+      <div class="fl-kpi-row">
+        <div class="fl-kpi">
+          <div class="fl-kpi-label">Drones tracked</div>
+          <div class="fl-kpi-value" id="flKpiTotal">—</div>
+          <div class="fl-kpi-sub" id="flKpiTotalSub">client-owned</div>
+        </div>
+        <div class="fl-kpi fl-kpi-warn">
+          <div class="fl-kpi-label">Due for 300h service</div>
+          <div class="fl-kpi-value" id="flKpiDue">—</div>
+          <div class="fl-kpi-sub" id="flKpiDueSub">≥ 250 hours since last service</div>
+        </div>
+        <div class="fl-kpi fl-kpi-crit">
+          <div class="fl-kpi-label">Critical / overdue</div>
+          <div class="fl-kpi-value" id="flKpiCrit">—</div>
+          <div class="fl-kpi-sub" id="flKpiCritSub">≥ 280 hours — warranty at risk</div>
+        </div>
+        <div class="fl-kpi fl-kpi-stale">
+          <div class="fl-kpi-label">Stale data</div>
+          <div class="fl-kpi-value" id="flKpiStale">—</div>
+          <div class="fl-kpi-sub" id="flKpiStaleSub">last update &gt; 45 days ago</div>
+        </div>
+        <div class="fl-kpi">
+          <div class="fl-kpi-label">Avg hrs / month</div>
+          <div class="fl-kpi-value" id="flKpiAvg">—</div>
+          <div class="fl-kpi-sub" id="flKpiAvgSub">across tracked fleet</div>
+        </div>
+      </div>
+
+      <!-- Main panel -->
+      <div class="panel" style="margin-top:16px;">
+        <div class="panel-head">
+          <h3>Client fleet — 300-hour service tracker</h3>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <select class="form-select fl-filter" id="flFilterStatus">
+              <option value="all">All drones</option>
+              <option value="ok">OK</option>
+              <option value="approaching">Approaching (200-249h)</option>
+              <option value="due">Due (250-269h)</option>
+              <option value="critical">Critical (270-299h)</option>
+              <option value="overdue">Overdue (≥ 300h)</option>
+              <option value="stale">Stale data</option>
+            </select>
+            <button class="btn btn-primary" id="flBtnNew">+ New drone</button>
+          </div>
+        </div>
+        <div class="panel-body" style="padding:0;">
+          <div class="fl-table-wrap">
+            <table class="fl-table" id="flTable">
+              <thead>
+                <tr>
+                  <th>Client / Serial</th>
+                  <th>Model</th>
+                  <th style="text-align:right;">Current hrs</th>
+                  <th style="text-align:right;">Since last svc</th>
+                  <th>Status</th>
+                  <th>Data age</th>
+                  <th>Next check</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="flTableBody"></tbody>
+            </table>
+            <div id="flEmpty" class="fl-empty" style="display:none;">No drones match this filter.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FLEET: DRAWER (edit/new drone) ──────────── -->
+    <div class="pl-drawer-backdrop" id="flDrawerBackdrop"></div>
+    <aside class="pl-drawer" id="flDrawer">
+      <div class="pl-drawer-head">
+        <h3 id="flDrawerTitle">New drone</h3>
+        <button class="btn btn-icon btn-ghost" id="flDrawerClose">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="pl-drawer-body">
+        <!-- Ownership / identification -->
+        <div class="form-row"><label class="form-label">Client *</label>
+          <input class="form-input" id="flfClient" placeholder="e.g. Photos Photiades Breweries"></div>
+        <div class="form-row-2">
+          <div><label class="form-label">Serial number *</label>
+            <input class="form-input" id="flfSerial" placeholder="e.g. C10-2026-0042"></div>
+          <div><label class="form-label">Model *</label>
+            <select class="form-select" id="flfModel">
+              <option value="C10">C10 — Facade & PV cleaning</option>
+              <option value="L10">L10 — Precision spraying</option>
+              <option value="L30">L30 — Heavy agricultural</option>
+            </select></div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Delivery from ABZ</label>
+            <input class="form-input" id="flfDeliveryDate" type="date"></div>
+          <div><label class="form-label">Sale to client</label>
+            <input class="form-input" id="flfSaleDate" type="date"></div>
+        </div>
+
+        <!-- Flight hours section -->
+        <div style="margin:20px 0 10px;padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--orange);">
+          <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);font-family:'DM Mono',monospace;margin-bottom:8px;">Flight hours</div>
+          <div class="form-row-2">
+            <div><label class="form-label">Current flight hours *</label>
+              <input class="form-input" id="flfCurrentHours" type="number" min="0" step="0.1" placeholder="e.g. 245"></div>
+            <div><label class="form-label">Hours at last 300h service</label>
+              <input class="form-input" id="flfLastServiceHours" type="number" min="0" step="0.1" placeholder="e.g. 0 (never)"></div>
+          </div>
+          <div class="form-row-2">
+            <div><label class="form-label">Last service date</label>
+              <input class="form-input" id="flfLastServiceDate" type="date"></div>
+            <div><label class="form-label">Data updated on *</label>
+              <input class="form-input" id="flfLastUpdated" type="date"></div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Data source</label>
+            <select class="form-select" id="flfSource">
+              <option value="abz_portal">ABZ portal (preferred)</option>
+              <option value="client_email">Client self-report (email)</option>
+              <option value="onsite">On-site inspection</option>
+              <option value="estimate">Estimate (unreliable)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row"><label class="form-label">Client contact (for monthly check)</label>
+          <input class="form-input" id="flfContact" placeholder="e.g. andreas@photiades.com.cy"></div>
+        <div class="form-row"><label class="form-label">Notes</label>
+          <textarea class="form-input" id="flfNotes" rows="3" placeholder="Usage pattern, known issues, last conversation..."></textarea></div>
+
+        <!-- Action buttons -->
+        <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn" id="flBtnLogService" style="display:none;">✓ Log 300h service done</button>
+          <button class="btn" id="flBtnCopyEmail" style="display:none;">📧 Copy reminder email</button>
+        </div>
+      </div>
+      <div class="pl-drawer-foot">
+        <button class="btn btn-danger" id="flBtnDelete" style="display:none;">Delete</button>
+        <div style="flex:1;"></div>
+        <button class="btn" id="flBtnCancel">Cancel</button>
+        <button class="btn btn-primary" id="flBtnSave">Save</button>
+      </div>
+    </aside>
+
+    <!-- ─── VIEW: AFTER SALES ─────────────────────────── -->
+    <div class="view hidden" id="view-aftersales">
+      <!-- Sub-tabs -->
+      <div class="as-tabs">
+        <button class="as-tab as-tab-active" data-astab="dashboard">Dashboard</button>
+        <button class="as-tab" data-astab="jobs">Jobs</button>
+        <button class="as-tab" data-astab="planned">Planned Service</button>
+        <button class="as-tab" data-astab="warranty">Warranty Claims</button>
+      </div>
+
+      <!-- DASHBOARD sub-view -->
+      <div class="as-subview" id="as-sub-dashboard">
+        <div class="as-kpi-row">
+          <div class="as-kpi"><div class="as-kpi-label">Open jobs</div><div class="as-kpi-value" id="asKpiOpen">—</div><div class="as-kpi-sub">across all stages</div></div>
+          <div class="as-kpi as-kpi-warn"><div class="as-kpi-label">Awaiting approval</div><div class="as-kpi-value" id="asKpiApproval">—</div><div class="as-kpi-sub">client quote pending</div></div>
+          <div class="as-kpi as-kpi-active"><div class="as-kpi-label">In repair</div><div class="as-kpi-value" id="asKpiRepair">—</div><div class="as-kpi-sub">currently being worked</div></div>
+          <div class="as-kpi as-kpi-info"><div class="as-kpi-label">Avg turnaround</div><div class="as-kpi-value" id="asKpiAvg">—</div><div class="as-kpi-sub">days, last 90d</div></div>
+          <div class="as-kpi as-kpi-crit"><div class="as-kpi-label">Warranty hit rate</div><div class="as-kpi-value" id="asKpiWarrantyRate">—</div><div class="as-kpi-sub">approved / submitted</div></div>
+        </div>
+
+        <!-- Funnel -->
+        <div class="panel" style="margin-top:16px;">
+          <div class="panel-head">
+            <h3>Jobs by status</h3>
+            <div style="font-size:11px;color:var(--text-dim);">Click a status to filter the Jobs tab</div>
+          </div>
+          <div class="panel-body">
+            <div class="as-funnel" id="asFunnel"></div>
+          </div>
+        </div>
+
+        <!-- Two-column: due this week + oldest open -->
+        <div class="as-two-col" style="margin-top:16px;">
+          <div class="panel">
+            <div class="panel-head"><h3>Due this week</h3></div>
+            <div class="panel-body" id="asDueThisWeek"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>Oldest open jobs</h3></div>
+            <div class="panel-body" id="asOldestOpen"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOBS sub-view -->
+      <div class="as-subview" id="as-sub-jobs" style="display:none;">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>All jobs</h3>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <input type="text" class="form-input" id="asJobSearch" placeholder="Search ref, customer, serial..." style="min-width:220px;height:34px;">
+              <select class="form-select" id="asJobFilterStatus" style="min-width:140px;height:34px;">
+                <option value="all">All statuses</option>
+                <option value="open">Open (any)</option>
+                <option value="intake">Intake</option>
+                <option value="visual">Visual assessment</option>
+                <option value="technical">Technical assessment</option>
+                <option value="awaiting_approval">Awaiting approval</option>
+                <option value="approved">Approved</option>
+                <option value="in_repair">In repair</option>
+                <option value="test_flight">Test flights</option>
+                <option value="delivered">Delivered</option>
+                <option value="closed">Closed</option>
+                <option value="on_hold">On hold</option>
+              </select>
+              <select class="form-select" id="asJobFilterType" style="min-width:140px;height:34px;">
+                <option value="all">All types</option>
+                <option value="scheduled">Scheduled service</option>
+                <option value="damage">Damage repair</option>
+                <option value="crash">Crash / incident</option>
+                <option value="warranty">Warranty claim</option>
+                <option value="inspection">Inspection</option>
+              </select>
+              <button class="btn btn-primary" id="asBtnNewJob">+ New job</button>
+            </div>
+          </div>
+          <div class="panel-body" style="padding:0;">
+            <div class="fl-table-wrap">
+              <table class="fl-table" id="asJobsTable">
+                <thead>
+                  <tr>
+                    <th>Job ref</th>
+                    <th>Customer / Drone</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Technician</th>
+                    <th style="text-align:right;">Days open</th>
+                    <th>Opened</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="asJobsTableBody"></tbody>
+              </table>
+              <div id="asJobsEmpty" class="fl-empty" style="display:none;">No jobs match this filter.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLANNED SERVICE sub-view -->
+      <div class="as-subview" id="as-sub-planned" style="display:none;">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Scheduled & approaching 300h service</h3>
+            <div style="font-size:11px;color:var(--text-dim);">Pulled live from the Fleet tracker — any drone at 250h+ since last service appears here</div>
+          </div>
+          <div class="panel-body" id="asPlannedService"></div>
+        </div>
+      </div>
+
+      <!-- WARRANTY sub-view -->
+      <div class="as-subview" id="as-sub-warranty" style="display:none;">
+        <div class="as-kpi-row" style="grid-template-columns:repeat(4,1fr);">
+          <div class="as-kpi"><div class="as-kpi-label">Total claims</div><div class="as-kpi-value" id="asWrTotal">—</div><div class="as-kpi-sub">all-time</div></div>
+          <div class="as-kpi as-kpi-info"><div class="as-kpi-label">Submitted to ABZ</div><div class="as-kpi-value" id="asWrSubmitted">—</div><div class="as-kpi-sub">awaiting decision</div></div>
+          <div class="as-kpi as-kpi-active"><div class="as-kpi-label">Approved</div><div class="as-kpi-value" id="asWrApproved">—</div><div class="as-kpi-sub">part supplied free</div></div>
+          <div class="as-kpi as-kpi-crit"><div class="as-kpi-label">Rejected</div><div class="as-kpi-value" id="asWrRejected">—</div><div class="as-kpi-sub">converted to paid</div></div>
+        </div>
+        <div class="panel" style="margin-top:16px;">
+          <div class="panel-head"><h3>Warranty claims log</h3></div>
+          <div class="panel-body" style="padding:0;">
+            <div class="fl-table-wrap">
+              <table class="fl-table" id="asWrTable">
+                <thead>
+                  <tr>
+                    <th>Claim</th>
+                    <th>Customer / Drone</th>
+                    <th>Submitted</th>
+                    <th>Evidence pack</th>
+                    <th>ABZ status</th>
+                    <th>Outcome</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="asWrTableBody"></tbody>
+              </table>
+              <div id="asWrEmpty" class="fl-empty" style="display:none;">No warranty claims logged yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── JOB DRAWER ────────────────────────────────── -->
+    <div class="pl-drawer-backdrop" id="jobDrawerBackdrop"></div>
+    <aside class="pl-drawer pl-drawer-wide" id="jobDrawer">
+      <div class="pl-drawer-head">
+        <div style="flex:1;min-width:0;">
+          <h3 id="jobDrawerTitle" style="margin:0;">New job</h3>
+          <div id="jobDrawerRef" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);margin-top:2px;"></div>
+        </div>
+        <button class="btn btn-icon btn-ghost" id="jobDrawerClose">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="pl-drawer-body">
+        <!-- Section 1: Identification -->
+        <div class="as-section-header">Identification</div>
+        <div class="form-row-2">
+          <div><label class="form-label">Customer *</label>
+            <select class="form-select" id="jobfCustomer"></select></div>
+          <div><label class="form-label">Drone (optional)</label>
+            <select class="form-select" id="jobfDrone"></select></div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Type *</label>
+            <select class="form-select" id="jobfType">
+              <option value="scheduled">Scheduled service (300h)</option>
+              <option value="damage">Damage repair</option>
+              <option value="crash">Crash / incident</option>
+              <option value="warranty">Warranty claim</option>
+              <option value="inspection">Inspection</option>
+            </select></div>
+          <div><label class="form-label">Status *</label>
+            <select class="form-select" id="jobfStatus">
+              <option value="intake">Intake</option>
+              <option value="visual">Visual assessment</option>
+              <option value="technical">Technical assessment</option>
+              <option value="awaiting_approval">Awaiting approval</option>
+              <option value="approved">Approved</option>
+              <option value="in_repair">In repair</option>
+              <option value="test_flight">Test flights</option>
+              <option value="delivered">Delivered</option>
+              <option value="closed">Closed</option>
+              <option value="on_hold">On hold</option>
+            </select></div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Technician</label>
+            <input class="form-input" id="jobfTechnician" placeholder="e.g. Loizos Ioannou"></div>
+          <div><label class="form-label">Opened</label>
+            <input class="form-input" id="jobfOpenedDate" type="date"></div>
+        </div>
+        <div class="form-row"><label class="form-label">Reported issue / reason</label>
+          <textarea class="form-input" id="jobfReportedIssue" rows="2" placeholder="What the customer told us when the drone came in..."></textarea></div>
+
+        <!-- Section 2: Visual assessment (CTQ-SP-001 Step 1) -->
+        <div class="as-section-header">Visual assessment (CTQ-SP-001 Step 1)</div>
+        <div class="form-row"><label class="form-label">External inspection findings</label>
+          <textarea class="form-input" id="jobfVisualFindings" rows="3" placeholder="Airframe condition, visible damage, external components..."></textarea></div>
+        <div class="form-row"><label class="form-label">Photos / intake evidence (Drive link)</label>
+          <input class="form-input" id="jobfVisualPhotos" type="url" placeholder="https://drive.google.com/..."></div>
+
+        <!-- Section 3: Technical assessment (CTQ-SP-001 Step 2) -->
+        <div class="as-section-header">Technical assessment (CTQ-SP-001 Step 2)</div>
+        <div class="form-row"><label class="form-label">Diagnostic findings</label>
+          <textarea class="form-input" id="jobfTechFindings" rows="3" placeholder="Log file analysis, component testing, diagnosed root cause..."></textarea></div>
+        <div class="form-row"><label class="form-label">Flight log file (Drive link)</label>
+          <input class="form-input" id="jobfLogLink" type="url" placeholder="https://drive.google.com/..."></div>
+        <div class="form-row-2">
+          <div><label class="form-label">Warranty eligibility</label>
+            <select class="form-select" id="jobfWarrantyEligible">
+              <option value="not_assessed">Not assessed</option>
+              <option value="yes">Yes — covered</option>
+              <option value="no">No — excluded</option>
+              <option value="goodwill">Goodwill (borderline)</option>
+            </select></div>
+          <div><label class="form-label">Warranty status</label>
+            <select class="form-select" id="jobfWarrantyStatus">
+              <option value="none">N/A</option>
+              <option value="pending_pack">Building evidence pack</option>
+              <option value="submitted">Submitted to ABZ</option>
+              <option value="approved">Approved by ABZ</option>
+              <option value="rejected">Rejected by ABZ</option>
+            </select></div>
+        </div>
+
+        <!-- Section 4: Cost & approval -->
+        <div class="as-section-header">Cost &amp; approval</div>
+        <div class="form-row-2">
+          <div><label class="form-label">Cost estimate (€)</label>
+            <input class="form-input" id="jobfCostEstimate" type="number" min="0" step="10"></div>
+          <div><label class="form-label">Client approval</label>
+            <select class="form-select" id="jobfApproval">
+              <option value="not_sent">Quote not sent</option>
+              <option value="sent">Quote sent — awaiting</option>
+              <option value="approved">Approved</option>
+              <option value="declined">Declined</option>
+              <option value="na">N/A (warranty / no cost)</option>
+            </select></div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Cost actual (€)</label>
+            <input class="form-input" id="jobfCostActual" type="number" min="0" step="10"></div>
+          <div><label class="form-label">Cost source</label>
+            <select class="form-select" id="jobfCostSource">
+              <option value="client">Client pays</option>
+              <option value="warranty">Warranty — ABZ parts free</option>
+              <option value="goodwill">Goodwill — Centiqus absorbs</option>
+              <option value="mixed">Mixed (split)</option>
+            </select></div>
+        </div>
+        <div class="form-row"><label class="form-label">Parts used (one per line: part · serial · source)</label>
+          <textarea class="form-input" id="jobfParts" rows="3" placeholder="e.g. C10 motor assembly · MOT-2026-112 · warranty stock"></textarea></div>
+
+        <!-- Section 5: Test flights & delivery -->
+        <div class="as-section-header">Test flights &amp; delivery (CTQ-SP-001 Step 3)</div>
+        <div class="form-row-2">
+          <div><label class="form-label">Functional test flight</label>
+            <select class="form-select" id="jobfTestFunctional">
+              <option value="pending">Pending</option>
+              <option value="pass">Pass</option>
+              <option value="fail">Fail — re-work</option>
+            </select></div>
+          <div><label class="form-label">Operational test flight</label>
+            <select class="form-select" id="jobfTestOperational">
+              <option value="pending">Pending</option>
+              <option value="pass">Pass</option>
+              <option value="fail">Fail — re-work</option>
+            </select></div>
+        </div>
+        <div class="form-row-2">
+          <div><label class="form-label">Target completion</label>
+            <input class="form-input" id="jobfTargetDate" type="date"></div>
+          <div><label class="form-label">Actual completion</label>
+            <input class="form-input" id="jobfCompletedDate" type="date"></div>
+        </div>
+
+        <!-- Section 6: Timeline / notes -->
+        <div class="as-section-header">Timeline &amp; notes</div>
+        <div class="form-row"><label class="form-label">Append a timeline event</label>
+          <div style="display:flex;gap:8px;">
+            <input class="form-input" id="jobfNewEvent" placeholder="What just happened? (e.g. 'Called client to confirm quote — approved')" style="flex:1;">
+            <button class="btn btn-sm" id="jobfBtnAddEvent" type="button">+ Add</button>
+          </div>
+        </div>
+        <div id="jobTimelineWrap" style="margin-top:8px;"></div>
+        <div class="form-row" style="margin-top:14px;"><label class="form-label">Internal notes</label>
+          <textarea class="form-input" id="jobfInternalNotes" rows="3" placeholder="Anything else the team needs to know..."></textarea></div>
+      </div>
+      <div class="pl-drawer-foot">
+        <button class="btn btn-danger" id="jobBtnDelete" style="display:none;">Delete</button>
+        <div style="flex:1;"></div>
+        <button class="btn" id="jobBtnCancel">Cancel</button>
+        <button class="btn btn-primary" id="jobBtnSave">Save</button>
+      </div>
+    </aside>
+
+    <!-- ─── VIEW: SETTINGS (admin only) ────────────────── -->
+    <div class="view hidden" id="view-settings">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Users &amp; Access</h3>
+          <button class="btn btn-primary" id="userBtnNew">+ New user</button>
+        </div>
+        <div class="panel-body" style="padding:0;">
+          <table class="settings-users-table" id="usersTable">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Created</th>
+                <th>Last login</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:20px;">
+        <div class="panel-head"><h3>Role permissions reference</h3></div>
+        <div class="panel-body">
+          <table class="settings-users-table">
+            <thead>
+              <tr>
+                <th>Role</th>
+                <th>What they can do</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="role-pill role-admin">Admin</span></td>
+                <td style="font-size:12px;">Full access to everything including user management. Can export all data and see financials. Use sparingly.</td>
+              </tr>
+              <tr>
+                <td><span class="role-pill role-coo">COO</span></td>
+                <td style="font-size:12px;">Full operational access across Customers, Fleet, After-Sales, and Scheduler. Sees financials and deal values. Cannot create users.</td>
+              </tr>
+              <tr>
+                <td><span class="role-pill role-tech">Tech Manager</span></td>
+                <td style="font-size:12px;">Full access to Fleet and After-Sales (job execution). Read-only on Customers (needs contact info). Cannot see goodwill / margin data. Cannot see deal values.</td>
+              </tr>
+              <tr>
+                <td><span class="role-pill role-pilot">Pilot</span></td>
+                <td style="font-size:12px;">Read-only on Customers and Fleet. Can log interactions on customer records and create intake/visual-assessment entries on After-Sales jobs. No access to financial data.</td>
+              </tr>
+              <tr>
+                <td><span class="role-pill role-compliance">Compliance</span></td>
+                <td style="font-size:12px;">Read-only on everything for audit purposes. Can see all records including financials and evidence packs. Cannot modify anything.</td>
+              </tr>
+              <tr>
+                <td><span class="role-pill role-readonly">Read-only</span></td>
+                <td style="font-size:12px;">View-only on Customers, Fleet, After-Sales. No financials. For temporary / visiting accounts.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- User create/edit drawer -->
+    <div class="pl-drawer-backdrop" id="userDrawerBackdrop"></div>
+    <aside class="pl-drawer" id="userDrawer">
+      <div class="pl-drawer-head">
+        <h3 id="userDrawerTitle">New user</h3>
+        <button class="btn btn-icon btn-ghost" id="userDrawerClose">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="pl-drawer-body">
+        <div class="form-row"><label class="form-label">Email *</label>
+          <input class="form-input" id="userfEmail" type="email" placeholder="person@centiqus.com.cy"></div>
+        <div class="form-row"><label class="form-label">Display name</label>
+          <input class="form-input" id="userfName" placeholder="e.g. Loizos Ioannou"></div>
+        <div class="form-row"><label class="form-label">Role *</label>
+          <select class="form-select" id="userfRole">
+            <option value="admin">Admin — full access + user management</option>
+            <option value="coo">COO — full operational access</option>
+            <option value="tech">Tech Manager — Fleet + After-Sales focus</option>
+            <option value="pilot">Pilot — field + customer contact</option>
+            <option value="compliance">Compliance — read-only audit access</option>
+            <option value="readonly">Read-only — minimal view access</option>
+          </select></div>
+        <div class="form-row" id="userfPasswordRow">
+          <label class="form-label">Password <span id="userfPasswordHint">*</span></label>
+          <input class="form-input" id="userfPassword" type="password" placeholder="Minimum 8 characters">
+          <div style="font-size:11px;color:var(--text-muted);margin-top:6px;" id="userfPasswordNote">
+            You'll share this password with the user. They cannot change it themselves in Path A — ask the admin to reset.
+          </div>
+        </div>
+      </div>
+      <div class="pl-drawer-foot">
+        <button class="btn btn-danger" id="userBtnDelete" style="display:none;">Delete</button>
+        <div style="flex:1;"></div>
+        <button class="btn" id="userBtnCancel">Cancel</button>
+        <button class="btn btn-primary" id="userBtnSave">Save</button>
+      </div>
+    </aside>
+
     </div><!-- /schedulerShell -->
 
   </div>
@@ -2274,6 +3877,306 @@ let editingProspectId = null;
 let plStageFilter = 'all';
 
 // ═══════════════════════════════════════════════════════════════════
+// FLEET STATE (client-owned drones — 300h service tracking)
+// ═══════════════════════════════════════════════════════════════════
+const FL_MODELS = {
+  C10: { label: 'C10', full: 'C10 — Facade & PV cleaning' },
+  L10: { label: 'L10', full: 'L10 — Precision spraying' },
+  L30: { label: 'L30', full: 'L30 — Heavy agricultural' }
+};
+
+// Status thresholds (hours since last 300h service)
+// < 200 ok  |  200-249 approaching  |  250-269 due  |  270-299 critical  |  >=300 overdue
+function flStatus(hoursSinceService) {
+  if (hoursSinceService >= 300) return 'overdue';
+  if (hoursSinceService >= 270) return 'critical';
+  if (hoursSinceService >= 250) return 'due';
+  if (hoursSinceService >= 200) return 'approaching';
+  return 'ok';
+}
+const FL_STATUS_LABEL = {
+  ok: 'OK', approaching: 'Approaching', due: 'DUE 300h SVC',
+  critical: 'CRITICAL', overdue: 'OVERDUE', stale: 'STALE DATA'
+};
+
+let FLEET = [
+  { id: 'd01', client: 'The Landmark Nicosia', contact: '',
+    serial: 'C10-2025-0019', model: 'C10',
+    deliveryDate: '2025-11-10', saleDate: '2026-02-14',
+    currentHours: 182, lastServiceHours: 0, lastServiceDate: '',
+    lastUpdated: dAdd(-12), source: 'abz_portal',
+    notes: 'Annual contract. First service due around June 2026.' },
+  { id: 'd02', client: 'Photos Photiades Breweries', contact: '',
+    serial: 'C10-2026-0034', model: 'C10',
+    deliveryDate: '2026-01-22', saleDate: '',
+    currentHours: 54, lastServiceHours: 0, lastServiceDate: '',
+    lastUpdated: dAdd(-8), source: 'abz_portal',
+    notes: 'Contract not yet signed; on Centiqus fleet until handover.' },
+  { id: 'd03', client: 'G. Petrou — Olive groves', contact: '',
+    serial: 'L10-2025-0007', model: 'L10',
+    deliveryDate: '2025-09-01', saleDate: '2025-10-15',
+    currentHours: 258, lastServiceHours: 0, lastServiceDate: '',
+    lastUpdated: dAdd(-4), source: 'client_email',
+    notes: 'Spray season in full swing. Needs 300h service before June.' },
+  { id: 'd04', client: 'Abios Solar Park', contact: '',
+    serial: 'C10-2025-0011', model: 'C10',
+    deliveryDate: '2025-07-20', saleDate: '2025-08-30',
+    currentHours: 289, lastServiceHours: 0, lastServiceDate: '',
+    lastUpdated: dAdd(-18), source: 'client_email',
+    notes: 'CRITICAL — approaching warranty cut-off. Book the service now.' },
+  { id: 'd05', client: 'Wargaming Global HQ', contact: '',
+    serial: 'C10-2026-0041', model: 'C10',
+    deliveryDate: '2026-03-02', saleDate: '',
+    currentHours: 8, lastServiceHours: 0, lastServiceDate: '',
+    lastUpdated: dAdd(-3), source: 'abz_portal',
+    notes: 'Demo / pre-sale. Stored at Nicosia.' },
+  { id: 'd06', client: 'K. Papanicolaou Farms', contact: '',
+    serial: 'L30-2025-0003', model: 'L30',
+    deliveryDate: '2025-04-15', saleDate: '2025-05-10',
+    currentHours: 295, lastServiceHours: 0, lastServiceDate: '',
+    lastUpdated: dAdd(-52), source: 'client_email',
+    notes: 'STALE DATA — last heard from them 7 weeks ago. Call.' }
+];
+let editingFleetId = null;
+let flStatusFilter = 'all';
+
+// ═══════════════════════════════════════════════════════════════════
+// CUSTOMERS STATE (full CRM — replaces Pipeline as primary UI)
+// ═══════════════════════════════════════════════════════════════════
+// A customer is the master record. Deals (old Pipeline rows) and drones
+// (FLEET rows) hang off it. Interactions are an append-only timeline.
+//
+// Shape:
+// {
+//   id, name, status, industry, size,
+//   contact, role, email, phone, address,
+//   amcTier, amcRenewal,
+//   tags[], notes,
+//   deals[]: [{ id, title, service, stage, value, prob, nextAction, nextDate, notes, lostReason, createdAt }],
+//   droneIds[]: [fleetDroneId, ...]  // references FLEET
+//   interactions[]: [{ id, type, date, who, summary }]
+// }
+
+const CST_STATUS_LABEL = {
+  prospect: 'Prospect', active: 'Active', inactive: 'Inactive', lost: 'Lost'
+};
+const CST_AMC_LABEL = { none: 'No AMC', basic: 'Basic AMC', premium: 'Premium AMC' };
+const CST_DEAL_STAGE_LABEL = {
+  meeting: 'Meeting', proposal: 'Proposal', negotiation: 'Negotiation', won: 'Won', lost: 'Lost'
+};
+const CST_DEAL_DEFAULT_PROB = {
+  meeting: 25, proposal: 50, negotiation: 75, won: 100, lost: 0
+};
+const CST_INT_ICON = { email: '✉', call: '☎', meeting: '👥', site: '🚩', note: '📝' };
+const CST_INT_LABEL = { email: 'Email', call: 'Call', meeting: 'Meeting', site: 'Site visit', note: 'Note' };
+
+// Migrate existing PIPELINE + FLEET data into CUSTOMERS records.
+// Runs once on first load (if CUSTOMERS is empty).
+function migratePipelineToCustomers() {
+  if (typeof PIPELINE === 'undefined' || !Array.isArray(PIPELINE)) return [];
+  const migrated = PIPELINE.map(p => {
+    // Map old pipeline fields to customer master
+    return {
+      id: 'c_' + p.id,
+      name: p.name,
+      status: p.stage === 'won' ? 'active' : (p.stage === 'lost' ? 'lost' : 'prospect'),
+      industry: '',
+      size: '',
+      contact: p.contact || '',
+      role: p.role || '',
+      email: p.email || '',
+      phone: p.phone || '',
+      address: '',
+      amcTier: 'none',
+      amcRenewal: '',
+      tags: [],
+      notes: p.notes || '',
+      deals: [{
+        id: 'dl_' + p.id,
+        title: (p.service === 'facade' || p.service === 'pv' ? 'C10 service contract' :
+               p.service === 'thermal' ? 'Thermal PV inspection' :
+               p.service === 'agri' ? 'Agricultural spraying' :
+               p.service === 'mapping' ? 'Terrain mapping' :
+               p.service === 'amc' ? 'AMC contract' :
+               'Deal — migrated'),
+        service: p.service || 'other',
+        stage: p.stage,
+        value: p.value || 0,
+        prob: p.probability ?? CST_DEAL_DEFAULT_PROB[p.stage] ?? 50,
+        nextAction: p.nextAction || '',
+        nextDate: p.nextDate || '',
+        notes: '',
+        lostReason: p.lostReason || '',
+        createdAt: new Date().toISOString().slice(0, 10)
+      }],
+      droneIds: [],
+      interactions: []
+    };
+  });
+  // Try to link existing FLEET drones to customers by name match
+  if (typeof FLEET !== 'undefined' && Array.isArray(FLEET)) {
+    FLEET.forEach(drone => {
+      const match = migrated.find(c =>
+        c.name.toLowerCase().includes(drone.client.toLowerCase().split(/[-—,]/)[0].trim()) ||
+        drone.client.toLowerCase().includes(c.name.toLowerCase().split(/[-—,]/)[0].trim())
+      );
+      if (match) match.droneIds.push(drone.id);
+    });
+  }
+  return migrated;
+}
+
+let CUSTOMERS = migratePipelineToCustomers();
+let selectedCustomerId = CUSTOMERS[0]?.id || null;
+let cstStatusFilter = 'all';
+let cstSearchQuery = '';
+let cstActiveTab = 'overview';
+let editingCustomerId = null;
+let editingDealId = null;
+let editingInteractionId = null;
+
+// ═══════════════════════════════════════════════════════════════════
+// AFTER-SALES JOBS STATE
+// ═══════════════════════════════════════════════════════════════════
+// A Job is a ticket tracking after-sales work — scheduled service,
+// damage repair, crash investigation, warranty claim, or inspection.
+// References CUSTOMERS by id and FLEET by drone id.
+//
+// Shape:
+// {
+//   id, ref (CTQ-JOB-YYYY-NNNN), type, status,
+//   customerId, droneId,
+//   technician, openedDate, targetDate, completedDate,
+//   reportedIssue,
+//   visualFindings, visualPhotos,
+//   techFindings, logLink,
+//   warrantyEligible, warrantyStatus,
+//   costEstimate, costActual, costSource, approval, parts,
+//   testFunctional, testOperational,
+//   timeline[]: [{ date, text }],
+//   internalNotes
+// }
+
+const AS_STATUS_LABEL = {
+  intake: 'Intake',
+  visual: 'Visual assessment',
+  technical: 'Technical assessment',
+  awaiting_approval: 'Awaiting approval',
+  approved: 'Approved',
+  in_repair: 'In repair',
+  test_flight: 'Test flights',
+  delivered: 'Delivered',
+  closed: 'Closed',
+  on_hold: 'On hold'
+};
+const AS_TYPE_LABEL = {
+  scheduled: 'Scheduled service',
+  damage: 'Damage repair',
+  crash: 'Crash / incident',
+  warranty: 'Warranty claim',
+  inspection: 'Inspection'
+};
+const AS_OPEN_STATUSES = ['intake','visual','technical','awaiting_approval','approved','in_repair','test_flight'];
+const AS_CLOSED_STATUSES = ['delivered','closed'];
+const AS_WR_LABEL = {
+  none: 'N/A',
+  pending_pack: 'Building evidence pack',
+  submitted: 'Submitted to ABZ',
+  approved: 'Approved',
+  rejected: 'Rejected'
+};
+
+// Generate next job ref for the year
+function asNextJobRef() {
+  const year = new Date().getFullYear();
+  const thisYear = JOBS.filter(j => j.ref && j.ref.includes(`CTQ-JOB-${year}-`)).length;
+  const n = String(thisYear + 1).padStart(4, '0');
+  return `CTQ-JOB-${year}-${n}`;
+}
+
+// Seed a handful of jobs tied to existing customers/drones for demonstration
+let JOBS = [
+  {
+    id: 'j01', ref: 'CTQ-JOB-2026-0001',
+    type: 'damage', status: 'in_repair',
+    customerId: CUSTOMERS[0]?.id || null,
+    droneId: FLEET.find(d => d.client && d.client.toLowerCase().includes('photiades'))?.id || null,
+    technician: 'Loizos Ioannou',
+    openedDate: dAdd(-6), targetDate: dAdd(3), completedDate: '',
+    reportedIssue: 'Customer reports erratic yaw on the C10 during a facade run at Limassol Tower. Landed safely.',
+    visualFindings: 'Right rear motor mount shows hairline crack at the composite joint; no impact marks on airframe.',
+    visualPhotos: '',
+    techFindings: 'Log file confirms yaw oscillation starting at flight-minute 12:47. Motor assembly draws 18% higher current than sister motors over last 3 flights. Root cause: bearing wear from extended operation in humid conditions.',
+    logLink: '',
+    warrantyEligible: 'no', warrantyStatus: 'none',
+    costEstimate: 420, costActual: 0, costSource: 'client',
+    approval: 'approved',
+    parts: 'C10 motor assembly · MOT-2026-077 · stock',
+    testFunctional: 'pending', testOperational: 'pending',
+    timeline: [
+      { date: dAdd(-6), text: 'Drone received at ASC. Visual inspection booked.' },
+      { date: dAdd(-5), text: 'Visual assessment complete. Log file requested.' },
+      { date: dAdd(-3), text: 'Technical assessment complete. €420 quote emailed to client.' },
+      { date: dAdd(-1), text: 'Client approved quote. Motor assembly pulled from stock.' }
+    ],
+    internalNotes: 'Client has been patient. Offer a 10% discount on next facade contract as goodwill — this is their second motor failure in 14 months.'
+  },
+  {
+    id: 'j02', ref: 'CTQ-JOB-2026-0002',
+    type: 'warranty', status: 'technical',
+    customerId: CUSTOMERS.find(c => c.name.toLowerCase().includes('landmark'))?.id || null,
+    droneId: FLEET.find(d => d.client && d.client.toLowerCase().includes('landmark'))?.id || null,
+    technician: 'Loizos Ioannou',
+    openedDate: dAdd(-2), targetDate: dAdd(5), completedDate: '',
+    reportedIssue: 'Intermittent GPS lock drop-out during a routine inspection flight. No crash.',
+    visualFindings: 'No external damage. GPS module seated correctly. Antenna cable intact.',
+    visualPhotos: '',
+    techFindings: 'GPS unit returns firmware error 0x7F on cold boot, resolves on warm boot. Consistent across 3 test boots. Within warranty period — submitting to ABZ.',
+    logLink: '',
+    warrantyEligible: 'yes', warrantyStatus: 'pending_pack',
+    costEstimate: 0, costActual: 0, costSource: 'warranty',
+    approval: 'na',
+    parts: 'Pending — ABZ to supply replacement GPS module under warranty',
+    testFunctional: 'pending', testOperational: 'pending',
+    timeline: [
+      { date: dAdd(-2), text: 'Drone received. Visual inspection confirms no crash damage.' },
+      { date: dAdd(-1), text: 'Technical assessment complete. Building evidence pack for ABZ.' }
+    ],
+    internalNotes: 'First warranty claim on this unit. Pack quality must be airtight — include firmware error code screenshots.'
+  },
+  {
+    id: 'j03', ref: 'CTQ-JOB-2025-0008',
+    type: 'scheduled', status: 'closed',
+    customerId: CUSTOMERS[0]?.id || null,
+    droneId: FLEET.find(d => d.client && d.client.toLowerCase().includes('wargaming'))?.id || null,
+    technician: 'Loizos Ioannou',
+    openedDate: dAdd(-45), targetDate: dAdd(-42), completedDate: dAdd(-41),
+    reportedIssue: 'Scheduled 300h service.',
+    visualFindings: 'Airframe in excellent condition. No issues.',
+    visualPhotos: '',
+    techFindings: 'All systems within spec. Motor currents nominal. GPS lock times nominal. Battery health 93%.',
+    logLink: '',
+    warrantyEligible: 'not_assessed', warrantyStatus: 'none',
+    costEstimate: 280, costActual: 280, costSource: 'client',
+    approval: 'approved',
+    parts: 'Consumables: propeller set · 4 × PROP-C10',
+    testFunctional: 'pass', testOperational: 'pass',
+    timeline: [
+      { date: dAdd(-45), text: 'Drone dropped off for scheduled service.' },
+      { date: dAdd(-43), text: 'All diagnostics clean. Consumables replaced.' },
+      { date: dAdd(-42), text: 'Test flights both passed.' },
+      { date: dAdd(-41), text: 'Returned to client with signed service report.' }
+    ],
+    internalNotes: 'Reference template for clean scheduled-service jobs.'
+  }
+];
+let editingJobId = null;
+let asActiveSubtab = 'dashboard';
+let asJobStatusFilter = 'all';
+let asJobTypeFilter = 'all';
+let asJobSearchQuery = '';
+
+// ═══════════════════════════════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════════════════════════════
 const $ = sel => document.querySelector(sel);
@@ -2330,10 +4233,13 @@ $$('.nav-item').forEach(el => {
     // Toggle the scheduler shell (stats row + scheduler views) vs documents
     const isDocs = (v === 'documents');
     const isPipeline = (v === 'pipeline');
+    const isFleet = (v === 'fleet');
+    const isCustomers = (v === 'customers');
+    const isAftersales = (v === 'aftersales');
+    const isSettings = (v === 'settings');
     $('#schedulerShell').classList.toggle('hidden', isDocs);
     $('#schedulerTopActions').style.display = isDocs ? 'none' : 'flex';
-    // Pipeline has its own KPI row — hide the scheduler stats cards to keep it clean
-    $('#statsRow').style.display = (isDocs || isPipeline) ? 'none' : '';
+    $('#statsRow').style.display = (isDocs || isPipeline || isFleet || isCustomers || isAftersales || isSettings) ? 'none' : '';
     // Also hide the scroll on the outer container if we're in docs (portal has its own)
     document.querySelector('.main').scrollTop = 0;
 
@@ -2362,6 +4268,9 @@ $('#btnExportJson').addEventListener('click', () => {
     crew: CREW,
     missions: missions,
     pipeline: PIPELINE,
+    customers: CUSTOMERS,
+    fleet: FLEET,
+    jobs: JOBS,
     counters: { mission: missionCounter, crew: crewCounter }
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -2398,6 +4307,9 @@ $('#importFileInput').addEventListener('change', (e) => {
       CREW = payload.crew;
       missions = payload.missions;
       if (Array.isArray(payload.pipeline)) PIPELINE = payload.pipeline;
+      if (Array.isArray(payload.customers)) CUSTOMERS = payload.customers;
+      if (Array.isArray(payload.fleet)) FLEET = payload.fleet;
+      if (Array.isArray(payload.jobs)) JOBS = payload.jobs;
       if (payload.counters) {
         missionCounter = payload.counters.mission || missions.length + 1;
         crewCounter = payload.counters.crew || CREW.length + 1;
@@ -3219,6 +5131,22 @@ function render() {
     renderPipeline();
     return;
   }
+  if (currentView === 'customers') {
+    renderCustomers();
+    return;
+  }
+  if (currentView === 'fleet') {
+    renderFleet();
+    return;
+  }
+  if (currentView === 'aftersales') {
+    renderAftersales();
+    return;
+  }
+  if (currentView === 'settings') {
+    renderUsers();
+    return;
+  }
   renderStats();
   if (currentView === 'calendar') renderCalendar();
   else if (currentView === 'missions') renderMissions();
@@ -3503,8 +5431,1845 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && $('#plDrawer').classList.contains('open')) plCloseDrawer();
 });
 
-// Initial render
-render();
+// ═══════════════════════════════════════════════════════════════════
+// CUSTOMERS MODULE — full CRM
+// ═══════════════════════════════════════════════════════════════════
+
+function cstFmtMoney(n) {
+  if (!n || isNaN(n)) return '€0';
+  return '€' + Math.round(n).toLocaleString('en-US');
+}
+
+function renderCustomers() {
+  // KPIs
+  const total = CUSTOMERS.length;
+  const active = CUSTOMERS.filter(c => c.status === 'active').length;
+  const prospect = CUSTOMERS.filter(c => c.status === 'prospect').length;
+  const amc = CUSTOMERS.filter(c => c.amcTier && c.amcTier !== 'none').length;
+  let pipelineValue = 0;
+  CUSTOMERS.forEach(c => {
+    (c.deals || []).forEach(d => {
+      if (d.stage !== 'won' && d.stage !== 'lost') pipelineValue += (d.value || 0);
+    });
+  });
+  $('#cstKpiTotal').textContent = total;
+  $('#cstKpiActive').textContent = active;
+  $('#cstKpiProspect').textContent = prospect;
+  $('#cstKpiAmc').textContent = amc;
+  $('#cstKpiValue').textContent = cstFmtMoney(pipelineValue);
+
+  // Filter + search
+  const q = cstSearchQuery.toLowerCase().trim();
+  const filtered = CUSTOMERS.filter(c => {
+    if (cstStatusFilter !== 'all' && c.status !== cstStatusFilter) return false;
+    if (q && !(c.name.toLowerCase().includes(q) ||
+               (c.contact || '').toLowerCase().includes(q) ||
+               (c.email || '').toLowerCase().includes(q))) return false;
+    return true;
+  });
+  // Sort: active first, then prospect, inactive, lost; alphabetical within each
+  const ORDER = { active: 0, prospect: 1, inactive: 2, lost: 3 };
+  filtered.sort((a, b) => {
+    const so = ORDER[a.status] - ORDER[b.status];
+    if (so !== 0) return so;
+    return a.name.localeCompare(b.name);
+  });
+
+  // Render list
+  const list = $('#cstList');
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="cst-list-empty">No customers match this filter.</div>';
+  } else {
+    list.innerHTML = filtered.map(c => {
+      const isSelected = c.id === selectedCustomerId;
+      const amcDotColor = c.amcTier === 'premium' ? 'var(--orange)' : (c.amcTier === 'basic' ? '#60A5FA' : 'transparent');
+      const dealCount = (c.deals || []).length;
+      return `
+        <div class="cst-list-item ${isSelected ? 'cst-list-selected' : ''}" data-id="${c.id}">
+          <div class="cst-list-name">${escapeHtml(c.name)}</div>
+          <div class="cst-list-meta">
+            <span class="cst-status-pill cst-status-${c.status}" style="font-size:9px;padding:1px 6px;">${CST_STATUS_LABEL[c.status]}</span>
+            ${c.amcTier !== 'none' ? `<span class="cst-list-amc-dot" style="background:${amcDotColor};" title="${CST_AMC_LABEL[c.amcTier]}"></span>` : ''}
+            ${dealCount > 0 ? `<span style="color:var(--text-dim);">· ${dealCount} deal${dealCount>1?'s':''}</span>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+    list.querySelectorAll('.cst-list-item').forEach(el => {
+      el.addEventListener('click', () => {
+        selectedCustomerId = el.dataset.id;
+        renderCustomers();
+      });
+    });
+  }
+
+  // Render detail
+  renderCustomerDetail();
+}
+
+function renderCustomerDetail() {
+  const c = CUSTOMERS.find(x => x.id === selectedCustomerId);
+  const emptyEl = $('#cstDetailEmpty'), contentEl = $('#cstDetailContent');
+  if (!c) {
+    emptyEl.style.display = 'flex';
+    contentEl.style.display = 'none';
+    return;
+  }
+  emptyEl.style.display = 'none';
+  contentEl.style.display = 'block';
+
+  // Header
+  $('#cstDetailName').textContent = c.name;
+  $('#cstDetailStatus').textContent = CST_STATUS_LABEL[c.status];
+  $('#cstDetailStatus').className = 'cst-status-pill cst-status-' + c.status;
+  const amcEl = $('#cstDetailAmc');
+  amcEl.textContent = CST_AMC_LABEL[c.amcTier || 'none'];
+  amcEl.className = 'cst-amc-pill cst-amc-' + (c.amcTier || 'none');
+  amcEl.style.display = (c.amcTier && c.amcTier !== 'none') ? 'inline-block' : 'none';
+  const subtitleBits = [];
+  if (c.industry) subtitleBits.push(c.industry);
+  if (c.contact) subtitleBits.push(c.contact + (c.role ? ` (${c.role})` : ''));
+  if (c.email) subtitleBits.push(c.email);
+  $('#cstDetailSubtitle').textContent = subtitleBits.join(' · ') || '—';
+
+  // Tab counts
+  $('#cstTabCountDeals').textContent = (c.deals || []).length;
+  $('#cstTabCountDrones').textContent = (c.droneIds || []).length;
+  $('#cstTabCountInteractions').textContent = (c.interactions || []).length;
+  const jobCount = (typeof JOBS !== 'undefined') ? JOBS.filter(j => j.customerId === c.id).length : 0;
+  const jcEl = $('#cstTabCountJobs');
+  if (jcEl) jcEl.textContent = jobCount;
+
+  // Render active tab
+  renderActiveTab();
+}
+
+function renderActiveTab() {
+  const c = CUSTOMERS.find(x => x.id === selectedCustomerId);
+  if (!c) return;
+  // toggle tab active class
+  document.querySelectorAll('.cst-tab').forEach(t => {
+    t.classList.toggle('cst-tab-active', t.dataset.tab === cstActiveTab);
+  });
+  document.querySelectorAll('.cst-tab-pane').forEach(p => p.classList.remove('cst-tab-pane-active'));
+  const paneId = 'cstTab' + cstActiveTab.charAt(0).toUpperCase() + cstActiveTab.slice(1);
+  $('#' + paneId).classList.add('cst-tab-pane-active');
+
+  if (cstActiveTab === 'overview') renderTabOverview(c);
+  else if (cstActiveTab === 'deals') renderTabDeals(c);
+  else if (cstActiveTab === 'drones') renderTabDrones(c);
+  else if (cstActiveTab === 'interactions') renderTabInteractions(c);
+  else if (cstActiveTab === 'aftersales') renderTabAftersales(c);
+  else if (cstActiveTab === 'notes') renderTabNotes(c);
+}
+
+function renderTabAftersales(c) {
+  if (typeof JOBS === 'undefined') { $('#cstTabAftersales').innerHTML = ''; return; }
+  const jobs = JOBS.filter(j => j.customerId === c.id);
+  const open = jobs.filter(asIsOpen);
+  const closed = jobs.filter(j => !asIsOpen(j));
+  const totalSpent = jobs.filter(j => j.costSource === 'client' || j.costSource === 'mixed').reduce((s, j) => s + (j.costActual || 0), 0);
+  const warrantyValue = jobs.filter(j => j.costSource === 'warranty').reduce((s, j) => s + (j.costActual || j.costEstimate || 0), 0);
+
+  let html = `<div class="cst-tab-actions">
+    <button class="btn btn-primary btn-sm" onclick="jobOpenDrawerForCustomer('${c.id}')">+ New job</button>
+  </div>`;
+  html += `<div class="cst-field-grid">
+    <div><div class="cst-field-label">Total jobs</div><div class="cst-field-value">${jobs.length}</div></div>
+    <div><div class="cst-field-label">Open jobs</div><div class="cst-field-value" style="color:var(--orange);">${open.length}</div></div>
+    <div><div class="cst-field-label">Lifetime spend (paid)</div><div class="cst-field-value">${cstFmtMoney(totalSpent)}</div></div>
+    <div><div class="cst-field-label">Warranty value captured</div><div class="cst-field-value" style="color:var(--green);">${cstFmtMoney(warrantyValue)}</div></div>
+  </div>`;
+  if (jobs.length === 0) {
+    html += '<div class="cst-empty">No after-sales jobs for this customer yet.</div>';
+  } else {
+    const sorted = [...jobs].sort((a, b) => {
+      const aOpen = asIsOpen(a), bOpen = asIsOpen(b);
+      if (aOpen !== bOpen) return aOpen ? -1 : 1;
+      return (b.openedDate || '').localeCompare(a.openedDate || '');
+    });
+    html += '<div class="cst-subtitle">Job history</div>';
+    sorted.forEach(j => {
+      const drone = FLEET.find(d => d.id === j.droneId);
+      html += `
+        <div class="cst-list-row" onclick="jobOpenDrawer('${j.id}')">
+          <div class="cst-list-icon" style="background:rgba(232,119,34,0.15);color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;font-weight:700;">${j.ref.split('-').slice(-1)[0]}</div>
+          <div class="cst-list-body">
+            <div class="cst-list-title">${escapeHtml(j.ref)} — ${AS_TYPE_LABEL[j.type]}</div>
+            <div class="cst-list-subtitle">
+              <span class="as-status-pill as-status-${j.status}" style="font-size:9px;padding:2px 7px;">${AS_STATUS_LABEL[j.status]}</span>
+              ${drone ? ' · ' + escapeHtml(drone.model + ' · ' + drone.serial) : ''}
+              ${j.reportedIssue ? ' · ' + escapeHtml(j.reportedIssue.slice(0,70)) + (j.reportedIssue.length>70?'…':'') : ''}
+            </div>
+          </div>
+          <div class="cst-list-meta-right">
+            <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${j.openedDate}</div>
+            ${asIsOpen(j) ? `<div style="color:var(--orange);font-size:11px;">${asDaysOpen(j)}d open</div>` : (j.completedDate ? `<div style="color:var(--text-dim);font-size:11px;">closed ${j.completedDate}</div>` : '')}
+          </div>
+        </div>`;
+    });
+  }
+  $('#cstTabAftersales').innerHTML = html;
+}
+
+function jobOpenDrawerForCustomer(customerId) {
+  jobOpenDrawer(null);
+  setTimeout(() => {
+    $('#jobfCustomer').value = customerId;
+    $('#jobfCustomer').dispatchEvent(new Event('change'));
+  }, 50);
+}
+
+function renderTabOverview(c) {
+  const fields = [
+    { label: 'Company', value: c.name },
+    { label: 'Status', value: CST_STATUS_LABEL[c.status] },
+    { label: 'Industry', value: c.industry || '—' },
+    { label: 'Size', value: c.size ? ({ sme:'SME', mid:'Mid-market', enterprise:'Enterprise', gov:'Government' }[c.size]) : '—' },
+    { label: 'AMC tier', value: CST_AMC_LABEL[c.amcTier || 'none'] },
+    { label: 'AMC renewal', value: c.amcRenewal || '—' },
+    { label: 'Primary contact', value: c.contact || '—' },
+    { label: 'Role', value: c.role || '—' },
+    { label: 'Email', value: c.email ? `<a href="mailto:${escapeHtml(c.email)}" style="color:var(--orange);">${escapeHtml(c.email)}</a>` : '—' },
+    { label: 'Phone', value: c.phone || '—' },
+  ];
+  let html = '<div class="cst-field-grid">';
+  fields.forEach(f => {
+    const isDim = f.value === '—';
+    html += `<div>
+      <div class="cst-field-label">${f.label}</div>
+      <div class="cst-field-value ${isDim ? 'cst-dim' : ''}">${f.value}</div>
+    </div>`;
+  });
+  html += '</div>';
+  if (c.address) {
+    html += `<div class="cst-subtitle">Address</div>
+      <div class="cst-field-value">${escapeHtml(c.address).replace(/\n/g, '<br>')}</div>`;
+  }
+  if (c.tags && c.tags.length) {
+    html += '<div class="cst-subtitle">Tags</div><div style="display:flex;gap:6px;flex-wrap:wrap;">';
+    c.tags.forEach(t => {
+      html += `<span style="background:var(--surface2);color:var(--text-muted);padding:3px 10px;border-radius:12px;font-size:11px;">${escapeHtml(t)}</span>`;
+    });
+    html += '</div>';
+  }
+  // Quick stats
+  const totalDealsValue = (c.deals || []).reduce((s, d) => s + (d.stage !== 'lost' ? (d.value || 0) : 0), 0);
+  const wonValue = (c.deals || []).filter(d => d.stage === 'won').reduce((s, d) => s + (d.value || 0), 0);
+  html += `<div class="cst-subtitle">At a glance</div>
+    <div class="cst-field-grid">
+      <div><div class="cst-field-label">Total deal value</div><div class="cst-field-value">${cstFmtMoney(totalDealsValue)}</div></div>
+      <div><div class="cst-field-label">Value won</div><div class="cst-field-value" style="color:var(--green);">${cstFmtMoney(wonValue)}</div></div>
+      <div><div class="cst-field-label">Drones on record</div><div class="cst-field-value">${(c.droneIds || []).length}</div></div>
+      <div><div class="cst-field-label">Last interaction</div><div class="cst-field-value">${(c.interactions || [])[0]?.date || '—'}</div></div>
+    </div>`;
+  $('#cstTabOverview').innerHTML = html;
+}
+
+function renderTabDeals(c) {
+  let html = `<div class="cst-tab-actions">
+    <button class="btn btn-primary btn-sm" onclick="dealOpenDrawer('${c.id}', null)">+ New deal</button>
+  </div>`;
+  const deals = c.deals || [];
+  if (deals.length === 0) {
+    html += '<div class="cst-empty">No deals yet. Click <strong>+ New deal</strong> to add one.</div>';
+  } else {
+    // sort: open deals first (by stage order), then won, then lost
+    const STAGE_ORDER = { meeting: 0, proposal: 1, negotiation: 2, won: 3, lost: 4 };
+    const sorted = [...deals].sort((a, b) => STAGE_ORDER[a.stage] - STAGE_ORDER[b.stage]);
+    sorted.forEach(d => {
+      const weighted = Math.round(((d.value || 0) * (d.prob || 0)) / 100);
+      html += `
+        <div class="cst-list-row" onclick="dealOpenDrawer('${c.id}', '${d.id}')">
+          <div class="cst-list-icon" style="background:rgba(232,119,34,0.15);color:var(--orange);">€</div>
+          <div class="cst-list-body">
+            <div class="cst-list-title">${escapeHtml(d.title)}</div>
+            <div class="cst-list-subtitle">
+              <span class="cst-deal-stage cst-deal-${d.stage}">${CST_DEAL_STAGE_LABEL[d.stage]}</span>
+              · ${d.prob || 0}% prob
+              ${d.nextAction ? ' · ' + escapeHtml(d.nextAction) : ''}
+            </div>
+          </div>
+          <div class="cst-list-meta-right">
+            <div style="font-family:'DM Mono',monospace;font-weight:700;color:var(--text);font-size:14px;">${cstFmtMoney(d.value)}</div>
+            ${d.stage !== 'won' && d.stage !== 'lost' ? `<div style="color:var(--text-dim);">weighted ${cstFmtMoney(weighted)}</div>` : ''}
+            ${d.nextDate ? `<div>${d.nextDate}</div>` : ''}
+          </div>
+        </div>`;
+    });
+  }
+  $('#cstTabDeals').innerHTML = html;
+}
+
+function renderTabDrones(c) {
+  let html = '<div class="cst-tab-actions">';
+  html += `<button class="btn btn-sm" onclick="cstLinkDrone('${c.id}')">+ Link existing drone</button>`;
+  html += '</div>';
+  const droneIds = c.droneIds || [];
+  if (droneIds.length === 0) {
+    html += '<div class="cst-empty">No drones linked. Click <strong>+ Link existing drone</strong> to connect one from the Fleet tracker.</div>';
+  } else {
+    droneIds.forEach(did => {
+      const d = FLEET.find(x => x.id === did);
+      if (!d) {
+        html += `<div class="cst-list-row" style="color:var(--text-dim);">
+          <div class="cst-list-icon">?</div>
+          <div class="cst-list-body">
+            <div class="cst-list-title" style="color:var(--text-dim);">Drone ${escapeHtml(did)} (not found)</div>
+            <div class="cst-list-subtitle">May have been deleted from Fleet. <a href="#" onclick="cstUnlinkDrone('${c.id}','${did}');return false;" style="color:var(--orange);">Remove link</a></div>
+          </div></div>`;
+        return;
+      }
+      const hrsSinceService = Math.max(0, (d.currentHours || 0) - (d.lastServiceHours || 0));
+      const status = flStatus(hrsSinceService);
+      html += `
+        <div class="cst-list-row" onclick="switchToFleetAndOpen('${d.id}')">
+          <div class="cst-list-icon" style="background:rgba(96,165,250,0.15);color:#60A5FA;">✈</div>
+          <div class="cst-list-body">
+            <div class="cst-list-title">${escapeHtml(d.model)} — ${escapeHtml(d.serial)}</div>
+            <div class="cst-list-subtitle">
+              <span class="fl-status-pill fl-status-${status}" style="font-size:9px;padding:2px 7px;">${FL_STATUS_LABEL[status]}</span>
+              · ${d.currentHours}h total · ${hrsSinceService.toFixed(0)}h since last service
+            </div>
+          </div>
+          <div class="cst-list-meta-right">
+            <a href="#" onclick="event.stopPropagation();cstUnlinkDrone('${c.id}','${d.id}');return false;" style="color:var(--text-dim);font-size:11px;">unlink</a>
+          </div>
+        </div>`;
+    });
+  }
+  $('#cstTabDrones').innerHTML = html;
+}
+
+function renderTabInteractions(c) {
+  let html = `<div class="cst-tab-actions">
+    <button class="btn btn-primary btn-sm" onclick="intOpenDrawer('${c.id}', null)">+ Log interaction</button>
+  </div>`;
+  const ints = [...(c.interactions || [])].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  if (ints.length === 0) {
+    html += '<div class="cst-empty">No interactions logged. Every email, call, or meeting with this customer should be logged here.</div>';
+  } else {
+    ints.forEach(i => {
+      html += `
+        <div class="cst-list-row" onclick="intOpenDrawer('${c.id}', '${i.id}')">
+          <div class="cst-list-icon">${CST_INT_ICON[i.type] || '•'}</div>
+          <div class="cst-list-body">
+            <div class="cst-list-title">${CST_INT_LABEL[i.type] || i.type} — ${escapeHtml(i.who || '—')}</div>
+            <div class="cst-list-subtitle">${escapeHtml((i.summary || '').slice(0, 160))}${(i.summary || '').length > 160 ? '…' : ''}</div>
+          </div>
+          <div class="cst-list-meta-right">${i.date || '—'}</div>
+        </div>`;
+    });
+  }
+  $('#cstTabInteractions').innerHTML = html;
+}
+
+function renderTabNotes(c) {
+  const html = `
+    <div class="cst-subtitle">Free-text notes journal</div>
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">Type freely. Save by clicking outside the box or pressing Ctrl+S.</div>
+    <textarea class="cst-notes-area" id="cstNotesArea" placeholder="Any notes on this customer — history, preferences, politics, things to remember...">${escapeHtml(c.notes || '')}</textarea>
+    <div id="cstNotesStatus" style="font-size:11px;color:var(--text-dim);margin-top:8px;">Saved.</div>`;
+  $('#cstTabNotes').innerHTML = html;
+  const ta = $('#cstNotesArea');
+  const st = $('#cstNotesStatus');
+  let timer = null;
+  ta.addEventListener('input', () => {
+    st.textContent = 'Unsaved changes…';
+    st.style.color = '#FFD166';
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      c.notes = ta.value;
+      st.textContent = 'Saved.';
+      st.style.color = 'var(--text-dim)';
+    }, 800);
+  });
+  ta.addEventListener('blur', () => {
+    c.notes = ta.value;
+    st.textContent = 'Saved.';
+    st.style.color = 'var(--text-dim)';
+  });
+}
+
+// ─── Customer CRUD ──────────────────────────────────────────────
+
+function cstOpenDrawer(id) {
+  const isNew = !id;
+  editingCustomerId = id || null;
+  const c = id ? CUSTOMERS.find(x => x.id === id) : null;
+  $('#cstDrawerTitle').textContent = isNew ? 'New customer' : 'Edit ' + c.name;
+  $('#cstfName').value = c?.name || '';
+  $('#cstfStatus').value = c?.status || 'prospect';
+  $('#cstfIndustry').value = c?.industry || '';
+  $('#cstfSize').value = c?.size || '';
+  $('#cstfContact').value = c?.contact || '';
+  $('#cstfRole').value = c?.role || '';
+  $('#cstfEmail').value = c?.email || '';
+  $('#cstfPhone').value = c?.phone || '';
+  $('#cstfAddress').value = c?.address || '';
+  $('#cstfAmcTier').value = c?.amcTier || 'none';
+  $('#cstfAmcRenewal').value = c?.amcRenewal || '';
+  $('#cstfTags').value = (c?.tags || []).join(', ');
+  $('#cstBtnDrawerDelete').style.display = isNew ? 'none' : 'inline-flex';
+  $('#cstDrawer').classList.add('open');
+  $('#cstDrawerBackdrop').classList.add('open');
+}
+
+function cstCloseDrawer() {
+  $('#cstDrawer').classList.remove('open');
+  $('#cstDrawerBackdrop').classList.remove('open');
+  editingCustomerId = null;
+}
+
+function cstSave() {
+  const name = $('#cstfName').value.trim();
+  if (!name) { alert('Customer name is required.'); return; }
+  const payload = {
+    name,
+    status: $('#cstfStatus').value,
+    industry: $('#cstfIndustry').value.trim(),
+    size: $('#cstfSize').value,
+    contact: $('#cstfContact').value.trim(),
+    role: $('#cstfRole').value.trim(),
+    email: $('#cstfEmail').value.trim(),
+    phone: $('#cstfPhone').value.trim(),
+    address: $('#cstfAddress').value.trim(),
+    amcTier: $('#cstfAmcTier').value,
+    amcRenewal: $('#cstfAmcRenewal').value,
+    tags: $('#cstfTags').value.split(',').map(s => s.trim()).filter(Boolean)
+  };
+  if (editingCustomerId) {
+    const i = CUSTOMERS.findIndex(x => x.id === editingCustomerId);
+    CUSTOMERS[i] = { ...CUSTOMERS[i], ...payload };
+    selectedCustomerId = editingCustomerId;
+  } else {
+    const newId = 'c_' + Date.now().toString(36);
+    CUSTOMERS.push({
+      id: newId, ...payload,
+      notes: '', deals: [], droneIds: [], interactions: []
+    });
+    selectedCustomerId = newId;
+  }
+  cstCloseDrawer();
+  renderCustomers();
+  showSyncToast(`<strong>Customer saved</strong><br>${name}`);
+}
+
+function cstDelete() {
+  if (!editingCustomerId) return;
+  const c = CUSTOMERS.find(x => x.id === editingCustomerId);
+  if (!confirm(`Delete ${c.name}?\n\nThis removes the customer and all their deals (${(c.deals||[]).length}) and interactions (${(c.interactions||[]).length}). Drone records in Fleet are NOT affected.`)) return;
+  CUSTOMERS = CUSTOMERS.filter(x => x.id !== editingCustomerId);
+  selectedCustomerId = CUSTOMERS[0]?.id || null;
+  cstCloseDrawer();
+  renderCustomers();
+  showSyncToast(`<strong>Customer deleted</strong><br>${c.name}`);
+}
+
+function cstDeleteFromDetail() {
+  editingCustomerId = selectedCustomerId;
+  cstDelete();
+}
+
+// ─── Deal CRUD ────────────────────────────────────────────────
+
+function dealOpenDrawer(customerId, dealId) {
+  editingCustomerId = customerId;
+  editingDealId = dealId;
+  const c = CUSTOMERS.find(x => x.id === customerId);
+  const d = dealId ? (c.deals || []).find(x => x.id === dealId) : null;
+  $('#dealDrawerTitle').textContent = d ? 'Edit deal' : 'New deal for ' + c.name;
+  $('#dealfTitle').value = d?.title || '';
+  $('#dealfService').value = d?.service || 'facade';
+  $('#dealfStage').value = d?.stage || 'meeting';
+  $('#dealfValue').value = d?.value ?? '';
+  $('#dealfProb').value = d?.prob ?? CST_DEAL_DEFAULT_PROB[d?.stage || 'meeting'];
+  $('#dealfNextAction').value = d?.nextAction || '';
+  $('#dealfNextDate').value = d?.nextDate || '';
+  $('#dealfLostReason').value = d?.lostReason || '';
+  $('#dealfNotes').value = d?.notes || '';
+  $('#dealLostReasonRow').style.display = (d?.stage === 'lost') ? 'block' : 'none';
+  $('#dealBtnDrawerDelete').style.display = dealId ? 'inline-flex' : 'none';
+  $('#dealDrawer').classList.add('open');
+  $('#dealDrawerBackdrop').classList.add('open');
+}
+
+function dealCloseDrawer() {
+  $('#dealDrawer').classList.remove('open');
+  $('#dealDrawerBackdrop').classList.remove('open');
+  editingDealId = null;
+}
+
+function dealSave() {
+  const title = $('#dealfTitle').value.trim();
+  if (!title) { alert('Deal title is required.'); return; }
+  const c = CUSTOMERS.find(x => x.id === editingCustomerId);
+  if (!c) return;
+  const payload = {
+    title,
+    service: $('#dealfService').value,
+    stage: $('#dealfStage').value,
+    value: parseFloat($('#dealfValue').value) || 0,
+    prob: parseFloat($('#dealfProb').value) || 0,
+    nextAction: $('#dealfNextAction').value.trim(),
+    nextDate: $('#dealfNextDate').value,
+    lostReason: $('#dealfLostReason').value.trim(),
+    notes: $('#dealfNotes').value.trim()
+  };
+  if (!c.deals) c.deals = [];
+  if (editingDealId) {
+    const i = c.deals.findIndex(x => x.id === editingDealId);
+    c.deals[i] = { ...c.deals[i], ...payload };
+  } else {
+    c.deals.push({ id: 'dl_' + Date.now().toString(36), createdAt: new Date().toISOString().slice(0,10), ...payload });
+  }
+  // If a deal is won, auto-promote customer to active
+  if (payload.stage === 'won' && c.status === 'prospect') c.status = 'active';
+  dealCloseDrawer();
+  renderCustomers();
+  showSyncToast(`<strong>Deal saved</strong><br>${title}`);
+}
+
+function dealDelete() {
+  const c = CUSTOMERS.find(x => x.id === editingCustomerId);
+  if (!c || !editingDealId) return;
+  const d = c.deals.find(x => x.id === editingDealId);
+  if (!confirm(`Delete deal "${d.title}"?`)) return;
+  c.deals = c.deals.filter(x => x.id !== editingDealId);
+  dealCloseDrawer();
+  renderCustomers();
+}
+
+// ─── Interaction CRUD ─────────────────────────────────────────
+
+function intOpenDrawer(customerId, intId) {
+  editingCustomerId = customerId;
+  editingInteractionId = intId;
+  const c = CUSTOMERS.find(x => x.id === customerId);
+  const i = intId ? (c.interactions || []).find(x => x.id === intId) : null;
+  $('#intDrawerTitle').textContent = i ? 'Edit interaction' : 'Log interaction for ' + c.name;
+  $('#intfType').value = i?.type || 'email';
+  $('#intfDate').value = i?.date || new Date().toISOString().slice(0,10);
+  $('#intfWho').value = i?.who || '';
+  $('#intfSummary').value = i?.summary || '';
+  $('#intBtnDrawerDelete').style.display = intId ? 'inline-flex' : 'none';
+  $('#intDrawer').classList.add('open');
+  $('#intDrawerBackdrop').classList.add('open');
+}
+
+function intCloseDrawer() {
+  $('#intDrawer').classList.remove('open');
+  $('#intDrawerBackdrop').classList.remove('open');
+  editingInteractionId = null;
+}
+
+function intSave() {
+  const summary = $('#intfSummary').value.trim();
+  if (!summary) { alert('Summary is required.'); return; }
+  const c = CUSTOMERS.find(x => x.id === editingCustomerId);
+  if (!c) return;
+  const payload = {
+    type: $('#intfType').value,
+    date: $('#intfDate').value || new Date().toISOString().slice(0,10),
+    who: $('#intfWho').value.trim(),
+    summary
+  };
+  if (!c.interactions) c.interactions = [];
+  if (editingInteractionId) {
+    const i = c.interactions.findIndex(x => x.id === editingInteractionId);
+    c.interactions[i] = { ...c.interactions[i], ...payload };
+  } else {
+    c.interactions.push({ id: 'int_' + Date.now().toString(36), ...payload });
+  }
+  intCloseDrawer();
+  renderCustomers();
+  showSyncToast(`<strong>Interaction logged</strong>`);
+}
+
+function intDelete() {
+  const c = CUSTOMERS.find(x => x.id === editingCustomerId);
+  if (!c || !editingInteractionId) return;
+  if (!confirm('Delete this interaction?')) return;
+  c.interactions = c.interactions.filter(x => x.id !== editingInteractionId);
+  intCloseDrawer();
+  renderCustomers();
+}
+
+// ─── Drone linking ────────────────────────────────────────────
+
+function cstLinkDrone(customerId) {
+  const c = CUSTOMERS.find(x => x.id === customerId);
+  if (!c) return;
+  const unlinked = FLEET.filter(d => !(c.droneIds || []).includes(d.id));
+  if (unlinked.length === 0) {
+    alert('All drones in Fleet are already linked to this customer (or to another customer).');
+    return;
+  }
+  const options = unlinked.map((d, i) => `${i+1}. ${d.client} — ${d.serial} (${d.model})`).join('\n');
+  const choice = prompt(`Which drone to link to ${c.name}?\n\n${options}\n\nEnter the number:`);
+  const idx = parseInt(choice) - 1;
+  if (isNaN(idx) || idx < 0 || idx >= unlinked.length) return;
+  if (!c.droneIds) c.droneIds = [];
+  c.droneIds.push(unlinked[idx].id);
+  renderCustomers();
+  showSyncToast(`<strong>Drone linked</strong><br>${unlinked[idx].serial}`);
+}
+
+function cstUnlinkDrone(customerId, droneId) {
+  const c = CUSTOMERS.find(x => x.id === customerId);
+  if (!c) return;
+  if (!confirm('Unlink this drone from this customer?\n(The drone stays in the Fleet tracker.)')) return;
+  c.droneIds = (c.droneIds || []).filter(id => id !== droneId);
+  renderCustomers();
+}
+
+function switchToFleetAndOpen(droneId) {
+  document.querySelector('.nav-item[data-view="fleet"]').click();
+  setTimeout(() => flOpenDrawer(droneId), 100);
+}
+
+// ─── Event wiring ─────────────────────────────────────────────
+
+$('#cstBtnNew').addEventListener('click', () => cstOpenDrawer(null));
+$('#cstBtnEdit').addEventListener('click', () => cstOpenDrawer(selectedCustomerId));
+$('#cstBtnDelete').addEventListener('click', cstDeleteFromDetail);
+$('#cstDrawerClose').addEventListener('click', cstCloseDrawer);
+$('#cstBtnDrawerCancel').addEventListener('click', cstCloseDrawer);
+$('#cstDrawerBackdrop').addEventListener('click', cstCloseDrawer);
+$('#cstBtnDrawerSave').addEventListener('click', cstSave);
+$('#cstBtnDrawerDelete').addEventListener('click', cstDelete);
+
+$('#dealDrawerClose').addEventListener('click', dealCloseDrawer);
+$('#dealBtnDrawerCancel').addEventListener('click', dealCloseDrawer);
+$('#dealDrawerBackdrop').addEventListener('click', dealCloseDrawer);
+$('#dealBtnDrawerSave').addEventListener('click', dealSave);
+$('#dealBtnDrawerDelete').addEventListener('click', dealDelete);
+$('#dealfStage').addEventListener('change', (e) => {
+  $('#dealfProb').value = CST_DEAL_DEFAULT_PROB[e.target.value];
+  $('#dealLostReasonRow').style.display = e.target.value === 'lost' ? 'block' : 'none';
+});
+
+$('#intDrawerClose').addEventListener('click', intCloseDrawer);
+$('#intBtnDrawerCancel').addEventListener('click', intCloseDrawer);
+$('#intDrawerBackdrop').addEventListener('click', intCloseDrawer);
+$('#intBtnDrawerSave').addEventListener('click', intSave);
+$('#intBtnDrawerDelete').addEventListener('click', intDelete);
+
+$('#cstSearch').addEventListener('input', (e) => { cstSearchQuery = e.target.value; renderCustomers(); });
+
+document.querySelectorAll('#view-customers .cst-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#view-customers .cst-chip').forEach(c => c.classList.remove('cst-chip-active'));
+    chip.classList.add('cst-chip-active');
+    cstStatusFilter = chip.dataset.filter;
+    renderCustomers();
+  });
+});
+
+document.querySelectorAll('#view-customers .cst-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    cstActiveTab = tab.dataset.tab;
+    renderActiveTab();
+  });
+});
+
+// ESC closes any open customer drawer
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if ($('#cstDrawer').classList.contains('open')) cstCloseDrawer();
+  else if ($('#dealDrawer').classList.contains('open')) dealCloseDrawer();
+  else if ($('#intDrawer').classList.contains('open')) intCloseDrawer();
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// AFTER-SALES MODULE — jobs, dashboard, planned service, warranty
+// ═══════════════════════════════════════════════════════════════════
+
+function asDaysOpen(job) {
+  const start = new Date(job.openedDate);
+  const end = job.completedDate ? new Date(job.completedDate) : new Date();
+  return Math.max(0, Math.floor((end - start) / (1000 * 60 * 60 * 24)));
+}
+
+function asIsOpen(job) { return AS_OPEN_STATUSES.includes(job.status) || job.status === 'on_hold'; }
+
+function renderAftersales() {
+  // Top-level sub-tab dispatcher
+  document.querySelectorAll('.as-tab').forEach(t => {
+    t.classList.toggle('as-tab-active', t.dataset.astab === asActiveSubtab);
+  });
+  document.querySelectorAll('.as-subview').forEach(sv => sv.style.display = 'none');
+  $('#as-sub-' + asActiveSubtab).style.display = 'block';
+
+  if (asActiveSubtab === 'dashboard') renderAsDashboard();
+  else if (asActiveSubtab === 'jobs') renderAsJobs();
+  else if (asActiveSubtab === 'planned') renderAsPlanned();
+  else if (asActiveSubtab === 'warranty') renderAsWarranty();
+}
+
+function renderAsDashboard() {
+  const open = JOBS.filter(asIsOpen);
+  $('#asKpiOpen').textContent = open.length;
+  $('#asKpiApproval').textContent = JOBS.filter(j => j.status === 'awaiting_approval').length;
+  $('#asKpiRepair').textContent = JOBS.filter(j => j.status === 'in_repair').length;
+
+  // Avg turnaround on jobs closed in last 90 days
+  const closed90 = JOBS.filter(j =>
+    (j.status === 'closed' || j.status === 'delivered') &&
+    j.completedDate && (today - new Date(j.completedDate)) < 90 * 86400000
+  );
+  if (closed90.length > 0) {
+    const avg = closed90.reduce((s, j) => s + asDaysOpen(j), 0) / closed90.length;
+    $('#asKpiAvg').textContent = avg.toFixed(1);
+  } else {
+    $('#asKpiAvg').textContent = '—';
+  }
+
+  // Warranty hit rate
+  const submitted = JOBS.filter(j =>
+    j.warrantyStatus === 'submitted' ||
+    j.warrantyStatus === 'approved' ||
+    j.warrantyStatus === 'rejected'
+  ).length;
+  const approved = JOBS.filter(j => j.warrantyStatus === 'approved').length;
+  $('#asKpiWarrantyRate').textContent = submitted > 0 ? Math.round((approved / submitted) * 100) + '%' : '—';
+
+  // Funnel — clickable
+  const funnel = $('#asFunnel');
+  funnel.innerHTML = '';
+  Object.keys(AS_STATUS_LABEL).forEach(status => {
+    const count = JOBS.filter(j => j.status === status).length;
+    const cell = document.createElement('div');
+    cell.className = 'as-funnel-cell';
+    cell.innerHTML = `<div class="as-funnel-label">${AS_STATUS_LABEL[status]}</div><div class="as-funnel-count">${count}</div>`;
+    cell.addEventListener('click', () => {
+      asJobStatusFilter = status;
+      asActiveSubtab = 'jobs';
+      $('#asJobFilterStatus').value = status;
+      renderAftersales();
+    });
+    funnel.appendChild(cell);
+  });
+
+  // Due this week: open jobs with target date within next 7 days
+  const in7d = new Date(today); in7d.setDate(in7d.getDate() + 7);
+  const dueThisWeek = open.filter(j => j.targetDate && new Date(j.targetDate) <= in7d).sort((a,b) => (a.targetDate||'').localeCompare(b.targetDate||''));
+  const dueEl = $('#asDueThisWeek');
+  if (dueThisWeek.length === 0) {
+    dueEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:13px;">Nothing due this week. Enjoy it.</div>';
+  } else {
+    dueEl.innerHTML = dueThisWeek.map(j => asRenderMiniRow(j, 'target')).join('');
+    dueEl.querySelectorAll('.as-mini-row').forEach(r => {
+      r.addEventListener('click', () => jobOpenDrawer(r.dataset.id));
+    });
+  }
+
+  // Oldest open jobs
+  const oldest = [...open].sort((a, b) => asDaysOpen(b) - asDaysOpen(a)).slice(0, 5);
+  const oldestEl = $('#asOldestOpen');
+  if (oldest.length === 0) {
+    oldestEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:13px;">No open jobs.</div>';
+  } else {
+    oldestEl.innerHTML = oldest.map(j => asRenderMiniRow(j, 'age')).join('');
+    oldestEl.querySelectorAll('.as-mini-row').forEach(r => {
+      r.addEventListener('click', () => jobOpenDrawer(r.dataset.id));
+    });
+  }
+}
+
+function asRenderMiniRow(job, meta) {
+  const customer = CUSTOMERS.find(c => c.id === job.customerId);
+  const drone = FLEET.find(d => d.id === job.droneId);
+  const right = meta === 'target'
+    ? `<div style="font-family:'DM Mono',monospace;font-size:11px;color:${job.targetDate && new Date(job.targetDate) < today ? '#FF5C5C' : 'var(--text-muted)'};">due ${job.targetDate || '—'}</div>`
+    : `<div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${asDaysOpen(job)}d open</div>`;
+  return `
+    <div class="as-mini-row" data-id="${job.id}">
+      <div style="display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span class="as-mini-ref">${job.ref}</span>
+          <span class="as-type-pill as-type-${job.type}">${AS_TYPE_LABEL[job.type]}</span>
+          <span class="as-status-pill as-status-${job.status}">${AS_STATUS_LABEL[job.status]}</span>
+        </div>
+        <div class="as-mini-title" style="margin-top:2px;">${escapeHtml(customer?.name || '—')}</div>
+        <div class="as-mini-sub">${drone ? `${drone.model} · ${drone.serial}` : 'No drone linked'} · ${escapeHtml((job.reportedIssue || '').slice(0,80))}${(job.reportedIssue||'').length>80?'…':''}</div>
+      </div>
+      <div style="text-align:right;white-space:nowrap;">${right}</div>
+    </div>`;
+}
+
+function renderAsJobs() {
+  const q = asJobSearchQuery.toLowerCase().trim();
+  const filtered = JOBS.filter(j => {
+    if (asJobStatusFilter === 'open') {
+      if (!asIsOpen(j)) return false;
+    } else if (asJobStatusFilter !== 'all') {
+      if (j.status !== asJobStatusFilter) return false;
+    }
+    if (asJobTypeFilter !== 'all' && j.type !== asJobTypeFilter) return false;
+    if (q) {
+      const customer = CUSTOMERS.find(c => c.id === j.customerId);
+      const drone = FLEET.find(d => d.id === j.droneId);
+      const haystack = [j.ref, customer?.name, drone?.serial, j.technician, j.reportedIssue].filter(Boolean).join(' ').toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
+    return true;
+  });
+
+  // Sort: open first (by oldest days-open), then closed (newest first)
+  filtered.sort((a, b) => {
+    const aOpen = asIsOpen(a), bOpen = asIsOpen(b);
+    if (aOpen !== bOpen) return aOpen ? -1 : 1;
+    if (aOpen) return asDaysOpen(b) - asDaysOpen(a);
+    return (b.completedDate || '').localeCompare(a.completedDate || '');
+  });
+
+  const tbody = $('#asJobsTableBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '';
+    $('#asJobsEmpty').style.display = 'block';
+    return;
+  }
+  $('#asJobsEmpty').style.display = 'none';
+  tbody.innerHTML = filtered.map(j => {
+    const customer = CUSTOMERS.find(c => c.id === j.customerId);
+    const drone = FLEET.find(d => d.id === j.droneId);
+    return `
+      <tr data-id="${j.id}">
+        <td><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--orange);font-weight:600;">${j.ref}</span></td>
+        <td>
+          <div class="fl-client-name">${escapeHtml(customer?.name || '—')}</div>
+          <div class="fl-serial">${drone ? `${drone.model} · ${drone.serial}` : 'no drone'}</div>
+        </td>
+        <td><span class="as-type-pill as-type-${j.type}">${AS_TYPE_LABEL[j.type]}</span></td>
+        <td><span class="as-status-pill as-status-${j.status}">${AS_STATUS_LABEL[j.status]}</span></td>
+        <td style="font-size:12px;">${escapeHtml(j.technician || '—')}</td>
+        <td class="fl-hours-cell">${asIsOpen(j) ? asDaysOpen(j) + 'd' : '—'}</td>
+        <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${j.openedDate}</td>
+        <td class="fl-row-open">›</td>
+      </tr>`;
+  }).join('');
+  tbody.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('click', () => jobOpenDrawer(tr.dataset.id));
+  });
+}
+
+function renderAsPlanned() {
+  // Combine: Fleet drones needing service + existing scheduled jobs
+  const droneRows = FLEET.filter(d => {
+    const hrs = Math.max(0, (d.currentHours || 0) - (d.lastServiceHours || 0));
+    return hrs >= 200; // start showing from "approaching"
+  }).map(d => {
+    const customer = CUSTOMERS.find(c => (c.droneIds || []).includes(d.id));
+    const hrs = Math.max(0, (d.currentHours || 0) - (d.lastServiceHours || 0));
+    const status = flStatus(hrs);
+    // Does an open scheduled-service job already exist for this drone?
+    const existingJob = JOBS.find(j => j.droneId === d.id && j.type === 'scheduled' && asIsOpen(j));
+    return { drone: d, customer, hrs, status, existingJob };
+  }).sort((a, b) => b.hrs - a.hrs);
+
+  const el = $('#asPlannedService');
+  if (droneRows.length === 0) {
+    el.innerHTML = '<div style="padding:30px;text-align:center;color:var(--text-muted);font-size:13px;">No drones are approaching their 300h service interval. Go check the Fleet view.</div>';
+    return;
+  }
+  el.innerHTML = droneRows.map(r => {
+    const d = r.drone;
+    const customerName = r.customer ? r.customer.name : (d.client || 'Unknown customer');
+    return `
+      <div class="as-mini-row" data-drone-id="${d.id}">
+        <div style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span class="fl-model-pill fl-model-${d.model}">${d.model}</span>
+            <span class="fl-serial" style="font-family:'DM Mono',monospace;">${escapeHtml(d.serial)}</span>
+            <span class="fl-status-pill fl-status-${r.status}">${FL_STATUS_LABEL[r.status]}</span>
+            ${r.existingJob ? `<span class="as-status-pill as-status-${r.existingJob.status}">Job ${r.existingJob.ref} open</span>` : ''}
+          </div>
+          <div class="as-mini-title">${escapeHtml(customerName)}</div>
+          <div class="as-mini-sub">${d.currentHours.toFixed(0)}h total · ${r.hrs.toFixed(0)}h since last service${d.lastServiceDate ? ' (on '+d.lastServiceDate+')' : ' (no prior service logged)'}</div>
+        </div>
+        <div style="white-space:nowrap;">
+          ${r.existingJob
+            ? `<button class="btn btn-sm" onclick="jobOpenDrawer('${r.existingJob.id}')">Open job →</button>`
+            : `<button class="btn btn-sm btn-primary" onclick="asBookScheduledService('${d.id}')">+ Book service</button>`}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderAsWarranty() {
+  const claims = JOBS.filter(j => j.type === 'warranty' || j.warrantyStatus !== 'none');
+  $('#asWrTotal').textContent = claims.length;
+  $('#asWrSubmitted').textContent = claims.filter(j => j.warrantyStatus === 'submitted').length;
+  $('#asWrApproved').textContent = claims.filter(j => j.warrantyStatus === 'approved').length;
+  $('#asWrRejected').textContent = claims.filter(j => j.warrantyStatus === 'rejected').length;
+
+  const tbody = $('#asWrTableBody');
+  if (claims.length === 0) {
+    tbody.innerHTML = '';
+    $('#asWrEmpty').style.display = 'block';
+    return;
+  }
+  $('#asWrEmpty').style.display = 'none';
+  // Sort: submitted first, then newest
+  const ORDER = { submitted: 0, pending_pack: 1, approved: 2, rejected: 3, none: 4 };
+  claims.sort((a, b) => {
+    const so = (ORDER[a.warrantyStatus] ?? 5) - (ORDER[b.warrantyStatus] ?? 5);
+    if (so !== 0) return so;
+    return (b.openedDate || '').localeCompare(a.openedDate || '');
+  });
+  tbody.innerHTML = claims.map(j => {
+    const customer = CUSTOMERS.find(c => c.id === j.customerId);
+    const drone = FLEET.find(d => d.id === j.droneId);
+    const packReady = !!(j.logLink && j.techFindings && j.visualFindings);
+    return `
+      <tr data-id="${j.id}">
+        <td><span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--orange);font-weight:600;">${j.ref}</span></td>
+        <td>
+          <div class="fl-client-name">${escapeHtml(customer?.name || '—')}</div>
+          <div class="fl-serial">${drone ? `${drone.model} · ${drone.serial}` : 'no drone'}</div>
+        </td>
+        <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted);">${j.openedDate}</td>
+        <td><span class="as-status-pill ${packReady ? 'as-status-approved' : 'as-status-intake'}">${packReady ? 'Ready' : 'Incomplete'}</span></td>
+        <td><span class="as-status-pill as-wrstatus-${j.warrantyStatus}">${AS_WR_LABEL[j.warrantyStatus]}</span></td>
+        <td style="font-size:12px;color:var(--text-muted);">${j.warrantyStatus === 'approved' ? 'Parts supplied free' : (j.warrantyStatus === 'rejected' ? 'Converted to paid' : '—')}</td>
+        <td class="fl-row-open">›</td>
+      </tr>`;
+  }).join('');
+  tbody.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('click', () => jobOpenDrawer(tr.dataset.id));
+  });
+}
+
+// ─── Job drawer ──────────────────────────────────────────────
+
+function jobOpenDrawer(id) {
+  const isNew = !id;
+  editingJobId = id || null;
+  const job = id ? JOBS.find(x => x.id === id) : null;
+
+  // Populate customer dropdown
+  const custSelect = $('#jobfCustomer');
+  custSelect.innerHTML = '<option value="">— Select customer —</option>' +
+    CUSTOMERS.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+  custSelect.value = job?.customerId || '';
+
+  // Populate drone dropdown — filtered by selected customer
+  const rebuildDroneSelect = (customerId) => {
+    const droneSelect = $('#jobfDrone');
+    let drones = FLEET;
+    if (customerId) {
+      const customer = CUSTOMERS.find(c => c.id === customerId);
+      if (customer && customer.droneIds && customer.droneIds.length) {
+        drones = FLEET.filter(d => customer.droneIds.includes(d.id));
+      }
+    }
+    droneSelect.innerHTML = '<option value="">— No drone / not linked —</option>' +
+      drones.map(d => `<option value="${d.id}">${escapeHtml(d.model)} · ${escapeHtml(d.serial)} (${escapeHtml(d.client)})</option>`).join('');
+    droneSelect.value = job?.droneId || '';
+  };
+  rebuildDroneSelect(job?.customerId);
+  custSelect.onchange = () => rebuildDroneSelect(custSelect.value);
+
+  const newRef = isNew ? asNextJobRef() : job.ref;
+  $('#jobDrawerTitle').textContent = isNew ? 'New job' : 'Edit job';
+  $('#jobDrawerRef').textContent = newRef;
+
+  $('#jobfType').value = job?.type || 'damage';
+  $('#jobfStatus').value = job?.status || 'intake';
+  $('#jobfTechnician').value = job?.technician || '';
+  $('#jobfOpenedDate').value = job?.openedDate || new Date().toISOString().slice(0,10);
+  $('#jobfTargetDate').value = job?.targetDate || '';
+  $('#jobfCompletedDate').value = job?.completedDate || '';
+  $('#jobfReportedIssue').value = job?.reportedIssue || '';
+  $('#jobfVisualFindings').value = job?.visualFindings || '';
+  $('#jobfVisualPhotos').value = job?.visualPhotos || '';
+  $('#jobfTechFindings').value = job?.techFindings || '';
+  $('#jobfLogLink').value = job?.logLink || '';
+  $('#jobfWarrantyEligible').value = job?.warrantyEligible || 'not_assessed';
+  $('#jobfWarrantyStatus').value = job?.warrantyStatus || 'none';
+  $('#jobfCostEstimate').value = job?.costEstimate ?? '';
+  $('#jobfApproval').value = job?.approval || 'not_sent';
+  $('#jobfCostActual').value = job?.costActual ?? '';
+  $('#jobfCostSource').value = job?.costSource || 'client';
+  $('#jobfParts').value = job?.parts || '';
+  $('#jobfTestFunctional').value = job?.testFunctional || 'pending';
+  $('#jobfTestOperational').value = job?.testOperational || 'pending';
+  $('#jobfInternalNotes').value = job?.internalNotes || '';
+  $('#jobfNewEvent').value = '';
+
+  // Render timeline
+  renderJobTimeline(job?.timeline || []);
+
+  $('#jobBtnDelete').style.display = isNew ? 'none' : 'inline-flex';
+  $('#jobDrawer').classList.add('open');
+  $('#jobDrawerBackdrop').classList.add('open');
+}
+
+function renderJobTimeline(events) {
+  const wrap = $('#jobTimelineWrap');
+  if (!events || events.length === 0) {
+    wrap.innerHTML = '<div class="as-timeline-empty">No timeline events yet. Add one as things happen.</div>';
+    return;
+  }
+  const sorted = [...events].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  wrap.innerHTML = '<div class="as-timeline">' + sorted.map(e =>
+    `<div class="as-timeline-event"><div class="as-timeline-date">${e.date}</div><div>${escapeHtml(e.text)}</div></div>`
+  ).join('') + '</div>';
+}
+
+function jobCloseDrawer() {
+  $('#jobDrawer').classList.remove('open');
+  $('#jobDrawerBackdrop').classList.remove('open');
+  editingJobId = null;
+}
+
+function jobSave() {
+  const customerId = $('#jobfCustomer').value;
+  if (!customerId) { alert('A customer is required.'); return; }
+  const openedDate = $('#jobfOpenedDate').value || new Date().toISOString().slice(0,10);
+  const existing = editingJobId ? JOBS.find(x => x.id === editingJobId) : null;
+  const payload = {
+    ref: existing?.ref || asNextJobRef(),
+    type: $('#jobfType').value,
+    status: $('#jobfStatus').value,
+    customerId,
+    droneId: $('#jobfDrone').value || null,
+    technician: $('#jobfTechnician').value.trim(),
+    openedDate,
+    targetDate: $('#jobfTargetDate').value,
+    completedDate: $('#jobfCompletedDate').value,
+    reportedIssue: $('#jobfReportedIssue').value.trim(),
+    visualFindings: $('#jobfVisualFindings').value.trim(),
+    visualPhotos: $('#jobfVisualPhotos').value.trim(),
+    techFindings: $('#jobfTechFindings').value.trim(),
+    logLink: $('#jobfLogLink').value.trim(),
+    warrantyEligible: $('#jobfWarrantyEligible').value,
+    warrantyStatus: $('#jobfWarrantyStatus').value,
+    costEstimate: parseFloat($('#jobfCostEstimate').value) || 0,
+    costActual: parseFloat($('#jobfCostActual').value) || 0,
+    costSource: $('#jobfCostSource').value,
+    approval: $('#jobfApproval').value,
+    parts: $('#jobfParts').value.trim(),
+    testFunctional: $('#jobfTestFunctional').value,
+    testOperational: $('#jobfTestOperational').value,
+    internalNotes: $('#jobfInternalNotes').value.trim(),
+    timeline: existing?.timeline || []
+  };
+  if (editingJobId) {
+    const i = JOBS.findIndex(x => x.id === editingJobId);
+    // Auto-append status-change event
+    if (existing.status !== payload.status) {
+      payload.timeline = [...payload.timeline, { date: new Date().toISOString().slice(0,10), text: `Status changed: ${AS_STATUS_LABEL[existing.status]} → ${AS_STATUS_LABEL[payload.status]}` }];
+    }
+    JOBS[i] = { ...JOBS[i], ...payload };
+  } else {
+    const newId = 'j_' + Date.now().toString(36);
+    payload.timeline = [{ date: openedDate, text: `Job opened: ${AS_TYPE_LABEL[payload.type]}` }];
+    JOBS.push({ id: newId, ...payload });
+  }
+  // If the job is a closed scheduled service, reset the drone's service counter
+  if (payload.type === 'scheduled' && payload.status === 'closed' && payload.droneId) {
+    const drone = FLEET.find(d => d.id === payload.droneId);
+    if (drone) {
+      drone.lastServiceHours = drone.currentHours;
+      drone.lastServiceDate = payload.completedDate || new Date().toISOString().slice(0,10);
+      drone.lastUpdated = new Date().toISOString().slice(0,10);
+    }
+  }
+  jobCloseDrawer();
+  renderAftersales();
+  showSyncToast(`<strong>Job saved</strong><br>${payload.ref}`);
+}
+
+function jobDelete() {
+  if (!editingJobId) return;
+  const job = JOBS.find(x => x.id === editingJobId);
+  if (!confirm(`Delete ${job.ref}?\n\nThis removes the job and its entire timeline. Drone service counters are NOT affected.`)) return;
+  JOBS = JOBS.filter(x => x.id !== editingJobId);
+  jobCloseDrawer();
+  renderAftersales();
+  showSyncToast(`<strong>Job deleted</strong>`);
+}
+
+function jobAddEvent() {
+  const text = $('#jobfNewEvent').value.trim();
+  if (!text) return;
+  if (!editingJobId) {
+    alert('Save the job first, then add timeline events.');
+    return;
+  }
+  const job = JOBS.find(x => x.id === editingJobId);
+  if (!job.timeline) job.timeline = [];
+  job.timeline.push({ date: new Date().toISOString().slice(0,10), text });
+  $('#jobfNewEvent').value = '';
+  renderJobTimeline(job.timeline);
+}
+
+// Book a scheduled service job from the Planned Service view
+function asBookScheduledService(droneId) {
+  const drone = FLEET.find(d => d.id === droneId);
+  if (!drone) return;
+  const customer = CUSTOMERS.find(c => (c.droneIds || []).includes(droneId));
+  // Open a pre-filled new job drawer
+  jobOpenDrawer(null);
+  if (customer) $('#jobfCustomer').value = customer.id;
+  $('#jobfCustomer').dispatchEvent(new Event('change'));
+  setTimeout(() => {
+    $('#jobfDrone').value = droneId;
+    $('#jobfType').value = 'scheduled';
+    $('#jobfReportedIssue').value = `300-hour scheduled service. Drone at ${drone.currentHours.toFixed(0)}h total, ${(drone.currentHours - (drone.lastServiceHours||0)).toFixed(0)}h since last service.`;
+  }, 50);
+}
+
+// ─── Event wiring ─────────────────────────────────────────────
+
+document.querySelectorAll('#view-aftersales .as-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    asActiveSubtab = tab.dataset.astab;
+    renderAftersales();
+  });
+});
+
+$('#asBtnNewJob').addEventListener('click', () => jobOpenDrawer(null));
+$('#asJobSearch').addEventListener('input', (e) => { asJobSearchQuery = e.target.value; renderAsJobs(); });
+$('#asJobFilterStatus').addEventListener('change', (e) => { asJobStatusFilter = e.target.value; renderAsJobs(); });
+$('#asJobFilterType').addEventListener('change', (e) => { asJobTypeFilter = e.target.value; renderAsJobs(); });
+
+$('#jobDrawerClose').addEventListener('click', jobCloseDrawer);
+$('#jobBtnCancel').addEventListener('click', jobCloseDrawer);
+$('#jobDrawerBackdrop').addEventListener('click', jobCloseDrawer);
+$('#jobBtnSave').addEventListener('click', jobSave);
+$('#jobBtnDelete').addEventListener('click', jobDelete);
+$('#jobfBtnAddEvent').addEventListener('click', jobAddEvent);
+
+// ESC closes job drawer
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && $('#jobDrawer').classList.contains('open')) jobCloseDrawer();
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// FLEET MODULE — 300h service tracker for client-owned drones
+// ═══════════════════════════════════════════════════════════════════
+
+function flDaysSince(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  return Math.floor((today - d) / (1000 * 60 * 60 * 24));
+}
+
+function flComputed(drone) {
+  const hrsSinceService = Math.max(0, (drone.currentHours || 0) - (drone.lastServiceHours || 0));
+  const status = flStatus(hrsSinceService);
+  const dataAge = flDaysSince(drone.lastUpdated);
+  const isStale = dataAge !== null && dataAge > 45;
+  // Next check = 30 days from last update, or today if data is stale
+  const nextCheck = drone.lastUpdated
+    ? (() => { const d = new Date(drone.lastUpdated); d.setDate(d.getDate() + 30); return d.toISOString().slice(0,10); })()
+    : null;
+  return { hrsSinceService, status, dataAge, isStale, nextCheck };
+}
+
+function renderFleet() {
+  // KPIs
+  const total = FLEET.length;
+  let dueCount = 0, critCount = 0, staleCount = 0;
+  let totalHoursPerMonth = 0, hoursSamples = 0;
+  FLEET.forEach(d => {
+    const c = flComputed(d);
+    if (c.status === 'due' || c.status === 'critical' || c.status === 'overdue') dueCount++;
+    if (c.status === 'critical' || c.status === 'overdue') critCount++;
+    if (c.isStale) staleCount++;
+    // Estimate hours/month: currentHours / months since delivery
+    if (d.deliveryDate && d.currentHours > 0) {
+      const months = Math.max(1, (today - new Date(d.deliveryDate)) / (1000*60*60*24*30));
+      totalHoursPerMonth += d.currentHours / months;
+      hoursSamples++;
+    }
+  });
+  const avgHrs = hoursSamples ? (totalHoursPerMonth / hoursSamples).toFixed(1) : '—';
+
+  $('#flKpiTotal').textContent = total;
+  $('#flKpiDue').textContent = dueCount;
+  $('#flKpiCrit').textContent = critCount;
+  $('#flKpiStale').textContent = staleCount;
+  $('#flKpiAvg').textContent = avgHrs;
+
+  // Table
+  const tbody = $('#flTableBody');
+  const filtered = FLEET.filter(d => {
+    if (flStatusFilter === 'all') return true;
+    const c = flComputed(d);
+    if (flStatusFilter === 'stale') return c.isStale;
+    return c.status === flStatusFilter;
+  });
+
+  // Sort: overdue first, then critical, due, approaching, ok; within each, by hrsSinceService desc
+  const STATUS_ORDER = { overdue: 0, critical: 1, due: 2, approaching: 3, ok: 4 };
+  filtered.sort((a, b) => {
+    const ca = flComputed(a), cb = flComputed(b);
+    const so = STATUS_ORDER[ca.status] - STATUS_ORDER[cb.status];
+    if (so !== 0) return so;
+    return cb.hrsSinceService - ca.hrsSinceService;
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '';
+    $('#flEmpty').style.display = 'block';
+  } else {
+    $('#flEmpty').style.display = 'none';
+    tbody.innerHTML = filtered.map(d => {
+      const c = flComputed(d);
+      const statusLabel = FL_STATUS_LABEL[c.status];
+      const dataAgeClass = c.isStale ? 'fl-dataage-stale' : (c.dataAge !== null && c.dataAge > 30 ? 'fl-dataage-old' : 'fl-dataage-fresh');
+      const dataAgeText = c.dataAge === null ? '—' : (c.dataAge === 0 ? 'today' : c.dataAge + 'd ago');
+      const staleBadge = c.isStale ? ` <span class="fl-status-pill fl-status-stale" style="margin-left:6px;">STALE</span>` : '';
+      return `
+        <tr data-id="${d.id}">
+          <td>
+            <div class="fl-client-name">${escapeHtml(d.client)}</div>
+            <div class="fl-serial">${escapeHtml(d.serial)}</div>
+          </td>
+          <td><span class="fl-model-pill fl-model-${d.model}">${d.model}</span></td>
+          <td class="fl-hours-cell">${d.currentHours.toFixed(0)}h</td>
+          <td class="fl-hours-cell">
+            ${c.hrsSinceService.toFixed(0)}h
+            <div class="fl-hours-sub">${d.lastServiceDate ? 'svc ' + d.lastServiceDate : 'no service yet'}</div>
+          </td>
+          <td><span class="fl-status-pill fl-status-${c.status}">${statusLabel}</span>${staleBadge}</td>
+          <td><span class="fl-dataage ${dataAgeClass}">${dataAgeText}</span></td>
+          <td>
+            ${c.nextCheck ? escapeHtml(c.nextCheck) : '—'}
+            ${d.source === 'abz_portal' ? '<div class="fl-check-text" style="font-size:10px;color:var(--text-muted);">via ABZ portal</div>' : (d.source === 'client_email' ? '<div class="fl-check-text" style="font-size:10px;color:var(--text-muted);">via email check</div>' : '')}
+          </td>
+          <td class="fl-row-open">›</td>
+        </tr>
+      `;
+    }).join('');
+    // Wire row clicks
+    tbody.querySelectorAll('tr').forEach(tr => {
+      tr.addEventListener('click', () => flOpenDrawer(tr.dataset.id));
+    });
+  }
+}
+
+function flOpenDrawer(id) {
+  const isNew = !id;
+  editingFleetId = id || null;
+  const drone = id ? FLEET.find(x => x.id === id) : null;
+  $('#flDrawerTitle').textContent = isNew ? 'New drone' : `${drone.client} — ${drone.serial}`;
+  $('#flfClient').value = drone?.client || '';
+  $('#flfSerial').value = drone?.serial || '';
+  $('#flfModel').value = drone?.model || 'C10';
+  $('#flfDeliveryDate').value = drone?.deliveryDate || '';
+  $('#flfSaleDate').value = drone?.saleDate || '';
+  $('#flfCurrentHours').value = drone?.currentHours ?? '';
+  $('#flfLastServiceHours').value = drone?.lastServiceHours ?? 0;
+  $('#flfLastServiceDate').value = drone?.lastServiceDate || '';
+  $('#flfLastUpdated').value = drone?.lastUpdated || new Date().toISOString().slice(0,10);
+  $('#flfSource').value = drone?.source || 'abz_portal';
+  $('#flfContact').value = drone?.contact || '';
+  $('#flfNotes').value = drone?.notes || '';
+  $('#flBtnDelete').style.display = isNew ? 'none' : 'inline-flex';
+  $('#flBtnLogService').style.display = isNew ? 'none' : 'inline-flex';
+  $('#flBtnCopyEmail').style.display = isNew ? 'none' : 'inline-flex';
+  $('#flDrawer').classList.add('open');
+  $('#flDrawerBackdrop').classList.add('open');
+}
+
+function flCloseDrawer() {
+  $('#flDrawer').classList.remove('open');
+  $('#flDrawerBackdrop').classList.remove('open');
+  editingFleetId = null;
+}
+
+function flSave() {
+  const client = $('#flfClient').value.trim();
+  const serial = $('#flfSerial').value.trim();
+  const model = $('#flfModel').value;
+  const currentHours = parseFloat($('#flfCurrentHours').value);
+  if (!client || !serial || isNaN(currentHours)) {
+    alert('Client, serial number, and current flight hours are required.');
+    return;
+  }
+  const payload = {
+    client,
+    serial,
+    model,
+    deliveryDate: $('#flfDeliveryDate').value,
+    saleDate: $('#flfSaleDate').value,
+    currentHours,
+    lastServiceHours: parseFloat($('#flfLastServiceHours').value) || 0,
+    lastServiceDate: $('#flfLastServiceDate').value,
+    lastUpdated: $('#flfLastUpdated').value || new Date().toISOString().slice(0,10),
+    source: $('#flfSource').value,
+    contact: $('#flfContact').value.trim(),
+    notes: $('#flfNotes').value.trim()
+  };
+  if (editingFleetId) {
+    const i = FLEET.findIndex(x => x.id === editingFleetId);
+    FLEET[i] = { ...FLEET[i], ...payload };
+  } else {
+    const newId = 'd' + Date.now().toString(36);
+    FLEET.push({ id: newId, ...payload });
+  }
+  flCloseDrawer();
+  renderFleet();
+  showSyncToast(`<strong>Drone saved</strong><br>${client} — ${serial}`);
+}
+
+function flDelete() {
+  if (!editingFleetId) return;
+  const drone = FLEET.find(x => x.id === editingFleetId);
+  if (!confirm(`Delete ${drone.client} — ${drone.serial}?\n\nThis removes the drone from your fleet tracker. Service history is lost.`)) return;
+  FLEET = FLEET.filter(x => x.id !== editingFleetId);
+  flCloseDrawer();
+  renderFleet();
+  showSyncToast(`<strong>Drone deleted</strong><br>${drone.client} — ${drone.serial}`);
+}
+
+function flLogService() {
+  if (!editingFleetId) return;
+  const currentHours = parseFloat($('#flfCurrentHours').value);
+  if (isNaN(currentHours)) {
+    alert('Enter the current flight hours first — that\'s the hours at which this service is being performed.');
+    return;
+  }
+  if (!confirm(`Log 300-hour service at ${currentHours} flight hours?\n\nThis resets the service counter. Hours since last service becomes zero.`)) return;
+  const todayStr = new Date().toISOString().slice(0,10);
+  $('#flfLastServiceHours').value = currentHours;
+  $('#flfLastServiceDate').value = todayStr;
+  $('#flfLastUpdated').value = todayStr;
+  flSave();
+}
+
+function flCopyEmailToClipboard() {
+  if (!editingFleetId) return;
+  const drone = FLEET.find(x => x.id === editingFleetId);
+  const todayStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const emailText =
+`Subject: Monthly flight-hours check — ${drone.serial}
+
+Dear ${drone.client.split(/[ \-—,]/)[0]} team,
+
+As part of our warranty and maintenance support for your ABZ drone (${drone.model}, serial ${drone.serial}), we monitor flight hours monthly so we can schedule the mandatory 300-hour service in good time.
+
+Could you please reply with the current flight hours as shown on the drone or on your ABZ account, as of today, ${todayStr}?
+
+Our records show ${drone.currentHours.toFixed(0)} hours at our last check on ${drone.lastUpdated || 'unknown date'}. The 300-hour service is critical — missing it voids warranty coverage on subsequent claims, so we'd rather book it a little early than risk the cut-off.
+
+Kind regards,
+Demetris Papachrisostomou
+COO, Centiqus Holdings Ltd
++357 99 348 239  ·  demetris@centiqus.com.cy`;
+
+  navigator.clipboard.writeText(emailText).then(() => {
+    showSyncToast(`<strong>Email copied to clipboard</strong><br>Paste into your mail client. Subject and body are pre-filled.`);
+  }).catch(() => {
+    alert('Could not copy to clipboard. Email text:\n\n' + emailText);
+  });
+}
+
+// Wire up fleet events
+$('#flBtnNew').addEventListener('click', () => flOpenDrawer(null));
+$('#flDrawerClose').addEventListener('click', flCloseDrawer);
+$('#flBtnCancel').addEventListener('click', flCloseDrawer);
+$('#flDrawerBackdrop').addEventListener('click', flCloseDrawer);
+$('#flBtnSave').addEventListener('click', flSave);
+$('#flBtnDelete').addEventListener('click', flDelete);
+$('#flBtnLogService').addEventListener('click', flLogService);
+$('#flBtnCopyEmail').addEventListener('click', flCopyEmailToClipboard);
+$('#flFilterStatus').addEventListener('change', (e) => { flStatusFilter = e.target.value; renderFleet(); });
+
+// ESC closes fleet drawer
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && $('#flDrawer').classList.contains('open')) flCloseDrawer();
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// AUTHENTICATION & AUTHORIZATION MODULE
+// ═══════════════════════════════════════════════════════════════════
+// Path A security: client-side auth, stops accidental access only.
+// Determined users with DevTools can bypass. For the sensitive CTQ-WR-002
+// content, keep the file in Drive under its own access control.
+//
+// Storage:
+//   - USERS lives in the main JSON backup (exported/imported alongside
+//     CUSTOMERS, FLEET, JOBS). localStorage mirror for convenience.
+//   - Passwords are SHA-256(salt + password), salt is 16 random bytes.
+//   - Session is a token in sessionStorage, keyed to the user's email.
+//     Clears on browser close, which is the right default for Path A.
+// ═══════════════════════════════════════════════════════════════════
+
+// ─── Permission matrix ──────────────────────────────────────────
+// Areas: documents, customers, fleet, aftersales, scheduler, crew, settings
+// Levels: 'none' (hidden), 'view' (read), 'edit' (read+write), 'admin' (+manage)
+// Specials: view_financials (deal values, costs, goodwill), manage_users, export_data
+const ROLES = {
+  admin: {
+    label: 'Admin',
+    levels: { documents: 'view', customers: 'admin', fleet: 'admin', aftersales: 'admin',
+              scheduler: 'admin', crew: 'admin', settings: 'admin' },
+    specials: ['view_financials', 'manage_users', 'export_data']
+  },
+  coo: {
+    label: 'COO',
+    levels: { documents: 'view', customers: 'edit', fleet: 'edit', aftersales: 'edit',
+              scheduler: 'edit', crew: 'edit', settings: 'none' },
+    specials: ['view_financials', 'export_data']
+  },
+  tech: {
+    label: 'Tech Manager',
+    levels: { documents: 'view', customers: 'view', fleet: 'edit', aftersales: 'edit',
+              scheduler: 'view', crew: 'view', settings: 'none' },
+    specials: []
+  },
+  pilot: {
+    label: 'Pilot',
+    levels: { documents: 'view', customers: 'view', fleet: 'view', aftersales: 'view',
+              scheduler: 'view', crew: 'view', settings: 'none' },
+    specials: ['log_interactions']
+  },
+  compliance: {
+    label: 'Compliance',
+    levels: { documents: 'view', customers: 'view', fleet: 'view', aftersales: 'view',
+              scheduler: 'view', crew: 'view', settings: 'none' },
+    specials: ['view_financials']
+  },
+  readonly: {
+    label: 'Read-only',
+    levels: { documents: 'view', customers: 'view', fleet: 'view', aftersales: 'view',
+              scheduler: 'view', crew: 'view', settings: 'none' },
+    specials: []
+  }
+};
+
+// USERS and session state
+let USERS = [];
+let CURRENT_USER = null;
+let editingUserId = null;
+
+// ─── Password hashing (SHA-256 with per-user salt) ─────────────
+async function hashPassword(password, saltHex) {
+  const salt = saltHex || genSaltHex();
+  const data = new TextEncoder().encode(salt + password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashHex = Array.from(new Uint8Array(hashBuffer))
+    .map(b => b.toString(16).padStart(2, '0')).join('');
+  return { hash: hashHex, salt };
+}
+function genSaltHex() {
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// ─── USER storage (mirror to localStorage for cross-session persistence) ─
+const USERS_STORAGE_KEY = 'centiqus_hub_users_v1';
+
+function loadUsersFromStorage() {
+  try {
+    const raw = localStorage.getItem(USERS_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) USERS = parsed;
+    }
+  } catch (e) { console.warn('Could not load users:', e); }
+}
+function saveUsersToStorage() {
+  try { localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(USERS)); }
+  catch (e) { console.warn('Could not save users:', e); }
+}
+
+// ─── Session ────────────────────────────────────────────────────
+const SESSION_KEY = 'centiqus_hub_session_v1';
+
+function saveSession(userId) {
+  const token = genSaltHex();
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify({ userId, token, at: Date.now() }));
+}
+function readSession() {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    // Sessions expire after 12h idle
+    if (Date.now() - parsed.at > 12 * 60 * 60 * 1000) {
+      sessionStorage.removeItem(SESSION_KEY);
+      return null;
+    }
+    return parsed;
+  } catch (e) { return null; }
+}
+function clearSession() { sessionStorage.removeItem(SESSION_KEY); }
+
+// ─── Permission helpers ─────────────────────────────────────────
+function hasPermission(area, action) {
+  if (!CURRENT_USER) return false;
+  const role = ROLES[CURRENT_USER.role];
+  if (!role) return false;
+  const level = role.levels[area];
+  if (!level || level === 'none') return false;
+  if (action === 'view')   return ['view','edit','admin'].includes(level);
+  if (action === 'edit' || action === 'create' || action === 'delete')
+                           return ['edit','admin'].includes(level);
+  if (action === 'admin')  return level === 'admin';
+  return false;
+}
+function hasSpecial(permission) {
+  if (!CURRENT_USER) return false;
+  const role = ROLES[CURRENT_USER.role];
+  return role && role.specials && role.specials.includes(permission);
+}
+
+// ─── UI: apply permissions to nav and action buttons ───────────
+function applyPermissionsToUI() {
+  if (!CURRENT_USER) return;
+
+  // Update user indicator
+  $('#userIndicator').style.display = 'flex';
+  $('#userIndicatorEmail').textContent = CURRENT_USER.email;
+  const roleEl = $('#userIndicatorRole');
+  roleEl.textContent = ROLES[CURRENT_USER.role].label;
+  roleEl.className = 'user-indicator-role role-' + CURRENT_USER.role;
+
+  // Hide admin-only nav items for non-admins
+  const isAdmin = CURRENT_USER.role === 'admin';
+  document.querySelectorAll('[data-nav-admin-only]').forEach(el => {
+    el.classList.toggle('perm-hidden', !isAdmin);
+  });
+
+  // Hide nav items for areas the user has no view access to
+  const navMap = {
+    'calendar': 'scheduler', 'missions': 'scheduler', 'workload': 'scheduler',
+    'crew': 'crew',
+    'documents': 'documents',
+    'customers': 'customers',
+    'fleet': 'fleet',
+    'aftersales': 'aftersales',
+    'settings': 'settings'
+  };
+  document.querySelectorAll('.nav-item[data-view]').forEach(el => {
+    const view = el.dataset.view;
+    const area = navMap[view];
+    if (!area) return;
+    const allowed = hasPermission(area, 'view');
+    el.classList.toggle('perm-hidden', !allowed);
+  });
+
+  // Hide create / save / delete buttons based on role.
+  // For non-admins in non-edit areas, hide the main "+ New" buttons.
+  const editButtons = [
+    { btn: '#cstBtnNew',    area: 'customers' },
+    { btn: '#cstBtnEdit',   area: 'customers' },
+    { btn: '#cstBtnDelete', area: 'customers' },
+    { btn: '#flBtnNew',     area: 'fleet' },
+    { btn: '#asBtnNewJob',  area: 'aftersales' }
+  ];
+  editButtons.forEach(({ btn, area }) => {
+    const el = document.querySelector(btn);
+    if (el) el.classList.toggle('perm-hidden', !hasPermission(area, 'edit'));
+  });
+
+  // If current view is now forbidden, bounce user to a safe view
+  const currentViewArea = navMap[currentView];
+  if (currentViewArea && !hasPermission(currentViewArea, 'view')) {
+    const fallback = hasPermission('customers','view') ? 'customers'
+                   : hasPermission('documents','view') ? 'documents'
+                   : 'documents';
+    const navItem = document.querySelector(`.nav-item[data-view="${fallback}"]`);
+    if (navItem) navItem.click();
+  }
+}
+
+// ─── Auth init (called on page load) ────────────────────────────
+async function authInit() {
+  loadUsersFromStorage();
+
+  // If no users, show admin setup form
+  if (USERS.length === 0) {
+    document.body.classList.add('auth-screen');
+    $('#loginShell').style.display = 'flex';
+    $('#appShell').style.display = 'none';
+    $('#loginForm').style.display = 'none';
+    $('#setupForm').style.display = 'block';
+    wireAuthForms();
+    return;
+  }
+
+  // Check for existing session
+  const sess = readSession();
+  if (sess) {
+    const user = USERS.find(u => u.id === sess.userId);
+    if (user) {
+      CURRENT_USER = user;
+      showApp();
+      return;
+    }
+  }
+
+  // Show login
+  document.body.classList.add('auth-screen');
+  $('#loginShell').style.display = 'flex';
+  $('#appShell').style.display = 'none';
+  $('#loginForm').style.display = 'block';
+  $('#setupForm').style.display = 'none';
+  wireAuthForms();
+}
+
+function showApp() {
+  document.body.classList.remove('auth-screen');
+  $('#loginShell').style.display = 'none';
+  $('#appShell').style.display = 'flex';
+  // Record last login
+  CURRENT_USER.lastLogin = new Date().toISOString();
+  saveUsersToStorage();
+  applyPermissionsToUI();
+  render();
+}
+
+function showAuthError(formId, msg) {
+  const el = $('#' + formId);
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => { el.style.display = 'none'; }, 5000);
+}
+
+function wireAuthForms() {
+  const loginBtn = $('#loginBtn');
+  const setupBtn = $('#setupBtn');
+  // Remove any existing listeners by cloning (safe idempotent)
+  const newLogin = loginBtn.cloneNode(true);
+  loginBtn.parentNode.replaceChild(newLogin, loginBtn);
+  const newSetup = setupBtn.cloneNode(true);
+  setupBtn.parentNode.replaceChild(newSetup, setupBtn);
+
+  $('#loginBtn').addEventListener('click', doLogin);
+  $('#setupBtn').addEventListener('click', doSetupAdmin);
+
+  $('#loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  $('#setupPasswordConfirm').addEventListener('keydown', e => { if (e.key === 'Enter') doSetupAdmin(); });
+}
+
+async function doLogin() {
+  const email = $('#loginEmail').value.trim().toLowerCase();
+  const password = $('#loginPassword').value;
+  if (!email || !password) {
+    showAuthError('loginError', 'Enter your email and password.');
+    return;
+  }
+  const user = USERS.find(u => u.email.toLowerCase() === email);
+  if (!user) {
+    showAuthError('loginError', 'Invalid email or password.');
+    return;
+  }
+  const { hash } = await hashPassword(password, user.salt);
+  if (hash !== user.passwordHash) {
+    showAuthError('loginError', 'Invalid email or password.');
+    return;
+  }
+  CURRENT_USER = user;
+  saveSession(user.id);
+  showApp();
+}
+
+async function doSetupAdmin() {
+  const email = $('#setupEmail').value.trim().toLowerCase();
+  const password = $('#setupPassword').value;
+  const confirm = $('#setupPasswordConfirm').value;
+  if (!email || !email.includes('@')) {
+    showAuthError('setupError', 'Enter a valid email.');
+    return;
+  }
+  if (password.length < 8) {
+    showAuthError('setupError', 'Password must be at least 8 characters.');
+    return;
+  }
+  if (password !== confirm) {
+    showAuthError('setupError', 'Passwords do not match.');
+    return;
+  }
+  const { hash, salt } = await hashPassword(password);
+  const user = {
+    id: 'u_' + Date.now().toString(36),
+    email, name: 'Admin', role: 'admin',
+    passwordHash: hash, salt,
+    createdAt: new Date().toISOString(),
+    lastLogin: null
+  };
+  USERS.push(user);
+  saveUsersToStorage();
+  CURRENT_USER = user;
+  saveSession(user.id);
+  showApp();
+}
+
+function doLogout() {
+  if (!confirm('Sign out?')) return;
+  clearSession();
+  CURRENT_USER = null;
+  location.reload();
+}
+
+// ─── User management (admin-only Settings view) ────────────────
+function renderUsers() {
+  const tbody = $('#usersTableBody');
+  if (USERS.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:30px;">No users yet.</td></tr>';
+    return;
+  }
+  // Sort: admins first, then alpha
+  const sorted = [...USERS].sort((a, b) => {
+    const ra = a.role === 'admin' ? 0 : 1;
+    const rb = b.role === 'admin' ? 0 : 1;
+    if (ra !== rb) return ra - rb;
+    return a.email.localeCompare(b.email);
+  });
+  tbody.innerHTML = sorted.map(u => {
+    const role = ROLES[u.role];
+    const lastLogin = u.lastLogin ? new Date(u.lastLogin).toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' }) : 'never';
+    const created = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-GB') : '—';
+    const isMe = CURRENT_USER && u.id === CURRENT_USER.id;
+    return `
+      <tr data-id="${u.id}">
+        <td><strong>${escapeHtml(u.email)}</strong>${isMe ? ' <span style="color:var(--orange);font-size:10px;">(you)</span>' : ''}</td>
+        <td>${escapeHtml(u.name || '—')}</td>
+        <td><span class="role-pill role-${u.role}">${role ? role.label : u.role}</span></td>
+        <td style="color:var(--text-muted);font-size:12px;">${created}</td>
+        <td style="color:var(--text-muted);font-size:12px;">${lastLogin}</td>
+        <td><button class="btn btn-sm" onclick="userOpenDrawer('${u.id}')">Edit</button></td>
+      </tr>`;
+  }).join('');
+}
+
+function userOpenDrawer(id) {
+  if (!hasPermission('settings', 'admin')) {
+    alert('Only admins can manage users.');
+    return;
+  }
+  const isNew = !id;
+  editingUserId = id || null;
+  const u = id ? USERS.find(x => x.id === id) : null;
+  const isMe = u && CURRENT_USER && u.id === CURRENT_USER.id;
+
+  $('#userDrawerTitle').textContent = isNew ? 'New user' : 'Edit ' + u.email;
+  $('#userfEmail').value = u?.email || '';
+  $('#userfEmail').disabled = !isNew; // can't change an existing email
+  $('#userfName').value = u?.name || '';
+  $('#userfRole').value = u?.role || 'readonly';
+  $('#userfRole').disabled = isMe; // can't demote yourself
+  $('#userfPassword').value = '';
+  $('#userfPasswordHint').textContent = isNew ? '*' : '(leave blank to keep existing)';
+  $('#userfPasswordNote').textContent = isNew
+    ? 'You\'ll share this password with the user. Minimum 8 characters.'
+    : 'Leave blank to keep their existing password, or enter a new one to reset.';
+  $('#userBtnDelete').style.display = (isNew || isMe) ? 'none' : 'inline-flex';
+  $('#userDrawer').classList.add('open');
+  $('#userDrawerBackdrop').classList.add('open');
+}
+
+function userCloseDrawer() {
+  $('#userDrawer').classList.remove('open');
+  $('#userDrawerBackdrop').classList.remove('open');
+  editingUserId = null;
+}
+
+async function userSave() {
+  const email = $('#userfEmail').value.trim().toLowerCase();
+  const name = $('#userfName').value.trim();
+  const role = $('#userfRole').value;
+  const password = $('#userfPassword').value;
+
+  if (!email || !email.includes('@')) {
+    alert('Valid email required.'); return;
+  }
+  if (!editingUserId && password.length < 8) {
+    alert('Password must be at least 8 characters.'); return;
+  }
+  if (editingUserId && password && password.length < 8) {
+    alert('New password must be at least 8 characters.'); return;
+  }
+
+  if (editingUserId) {
+    const u = USERS.find(x => x.id === editingUserId);
+    u.name = name;
+    if (CURRENT_USER.id !== u.id) u.role = role; // can't demote self
+    if (password) {
+      const { hash, salt } = await hashPassword(password);
+      u.passwordHash = hash;
+      u.salt = salt;
+    }
+  } else {
+    // Prevent duplicates
+    if (USERS.find(x => x.email.toLowerCase() === email)) {
+      alert('A user with this email already exists.');
+      return;
+    }
+    const { hash, salt } = await hashPassword(password);
+    USERS.push({
+      id: 'u_' + Date.now().toString(36),
+      email, name, role,
+      passwordHash: hash, salt,
+      createdAt: new Date().toISOString(),
+      lastLogin: null
+    });
+  }
+  saveUsersToStorage();
+  userCloseDrawer();
+  renderUsers();
+  showSyncToast(`<strong>User saved</strong><br>${email}`);
+}
+
+function userDelete() {
+  if (!editingUserId) return;
+  const u = USERS.find(x => x.id === editingUserId);
+  if (!u) return;
+  if (CURRENT_USER && u.id === CURRENT_USER.id) {
+    alert('You cannot delete yourself.');
+    return;
+  }
+  // Don't allow deleting the last admin
+  const adminCount = USERS.filter(x => x.role === 'admin').length;
+  if (u.role === 'admin' && adminCount <= 1) {
+    alert('Cannot delete the last admin. Create another admin first, or change this user\'s role.');
+    return;
+  }
+  if (!confirm(`Delete user ${u.email}?\n\nThey will lose access immediately. Their historical records are kept.`)) return;
+  USERS = USERS.filter(x => x.id !== editingUserId);
+  saveUsersToStorage();
+  userCloseDrawer();
+  renderUsers();
+  showSyncToast(`<strong>User deleted</strong>`);
+}
+
+// ─── Wire up auth UI event handlers ─────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // This block runs once regardless; guards inside in case elements don't exist yet
+});
+
+// Logout click
+$('#userIndicatorLogout')?.addEventListener('click', doLogout);
+
+// Users & Access view hook
+$('#userBtnNew')?.addEventListener('click', () => userOpenDrawer(null));
+$('#userDrawerClose')?.addEventListener('click', userCloseDrawer);
+$('#userBtnCancel')?.addEventListener('click', userCloseDrawer);
+$('#userDrawerBackdrop')?.addEventListener('click', userCloseDrawer);
+$('#userBtnSave')?.addEventListener('click', userSave);
+$('#userBtnDelete')?.addEventListener('click', userDelete);
+
+// ESC closes user drawer
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && $('#userDrawer')?.classList.contains('open')) userCloseDrawer();
+});
+
+// Hook the settings view into render
+const originalRenderForSettings = render;
+
+// ─── AUTH BOOTSTRAP (at end of script, runs last) ─────────
+authInit();
+
 </script>
+</div><!-- /appShell -->
 </body>
 </html>
